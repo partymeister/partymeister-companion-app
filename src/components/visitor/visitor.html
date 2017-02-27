@@ -1,0 +1,19 @@
+<!--
+  Generated template for the Visitor component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
+<div *ngIf="searching" class="spinner-container">
+    <ion-spinner></ion-spinner>
+</div>
+
+<div padding>
+    <h4>{{originalVisitors.length}} people have signed up!</h4>
+    <ul>
+        <li *ngFor="let visitor of visitors">
+            <i class="flag-icon flag-icon-{{visitor.country_code | lowercase}}"></i> {{visitor.handle}} <span *ngIf="visitor.groups != ''"> / {{visitor.groups}}</span>
+        </li>
+    </ul>
+</div>

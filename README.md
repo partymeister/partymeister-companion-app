@@ -1,0 +1,1 @@
+# partymeister-companion-app

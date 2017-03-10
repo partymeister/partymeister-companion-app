@@ -48,14 +48,6 @@
     "cordova-plugin-file-transfer",
     "phonegap-plugin-barcodescanner"
   ],
-  "cordovaPlatforms": [
-    "ios",
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
-  ],
   "description": "partymeister-companion-app: An Ionic project",
   "config": {
     "ionic_bundler": "webpack",

@@ -5,10 +5,11 @@ import {CacheService} from "ionic-cache/ionic-cache";
 
 import {HomePage} from '../pages/home/home';
 import {SettingsPage} from '../pages/settings/settings';
+import {RegistrationPage} from '../pages/registration/registration';
 import {NavigationProvider} from '../providers/navigation';
 import ImgCache           from 'imgcache.js';
 
-let components = {'HomePage': HomePage, 'SettingsPage': SettingsPage};
+let components = {'HomePage': HomePage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage};
 
 @Component({
     templateUrl: 'app.html'

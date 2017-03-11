@@ -5,37 +5,36 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
     <ion-navbar>
-        <ion-title>Registration</ion-title>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{title}}</ion-title>
     </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
     <form [formGroup]="form" (ngSubmit)="logForm()">
         <ion-item>
-            <ion-label stacked>Handle</ion-label>
+            <ion-label>Handle</ion-label>
             <ion-input type="text" formControlName="handle"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label stacked>Group</ion-label>
+            <ion-label>Group</ion-label>
             <ion-input type="text" formControlName="group"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label stacked>Country</ion-label>
+            <ion-label>Country</ion-label>
             <ion-select formControlName="country">
-                <ion-option value="f" selected="true">Female</ion-option>
-                <ion-option value="m">Male</ion-option>
+                <ion-option *ngFor="let c of countries" [value]="c.cca2">{{c.name.common}}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item>
-            <ion-icon (click)="openCamera()" name="camera" item-right></ion-icon>
-            <ion-label stacked>Access Key</ion-label>
+            <button ion-button type="button" (click)="openCamera($event)" color="light" item-right><ion-icon name="camera"></ion-icon></button>
+            <ion-label>Access Key</ion-label>
             <ion-input type="text" formControlName="access_key"></ion-input>
         </ion-item>
-        <button ion-button block (click)="openCamera()">Camera</button>
         <button ion-button type="submit" block [disabled]="!form.valid">Register</button>
     </form>
 </ion-content>

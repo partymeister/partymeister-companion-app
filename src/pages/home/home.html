@@ -14,9 +14,12 @@
 </ion-header>
 
 <ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <div *ngFor="let block of page?.content.blocks">
         <gallery-component *ngIf="block.component == 'Component_Gallery'" [block]="block"></gallery-component>
         <text-component *ngIf="block.component == 'Component_Text'" [block]="block"></text-component>
-        <visitor-component *ngIf="block.component == 'Component_Visitor_List'" [block]="block"></visitor-component>
+        <visitor-component *ngIf="block.component == 'Component_Visitor_List'" [block]="block" (notifyRefresher)="getRefresherNotification($event)"></visitor-component>
     </div>
 </ion-content>

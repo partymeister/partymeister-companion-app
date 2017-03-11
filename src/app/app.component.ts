@@ -8,6 +8,8 @@ import {SettingsPage} from '../pages/settings/settings';
 import {RegistrationPage} from '../pages/registration/registration';
 import {NavigationProvider} from '../providers/navigation';
 import ImgCache           from 'imgcache.js';
+import {Auth, User} from '@ionic/cloud-angular';
+import {SettingsProvider} from '../providers/settings';
 
 let components = {'HomePage': HomePage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage};
 
@@ -30,11 +32,12 @@ export class PartyMeisterCompanionApp {
     constructor(public platform: Platform,
                 public menu: MenuController,
                 private navigationProvider: NavigationProvider,
-                cache: CacheService) {
+                cache: CacheService,
+                public auth: Auth,
+                public menuCtrl: MenuController,
+                private settings: SettingsProvider,) {
 
         this.cache = cache;
-
-        this.initializeApp();
 
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
@@ -69,6 +72,8 @@ export class PartyMeisterCompanionApp {
                 this.pages.push(parent);
             }
         });
+
+        this.initializeApp();
         // // set our app's pages
         // this.pages = [
         //     {title: 'HomePage', component: HomePage},
@@ -101,11 +106,22 @@ export class PartyMeisterCompanionApp {
             ImgCache.options.debug = true;
             // page is set until img cache has started
             ImgCache.init(() => {
-                    this.nav.setRoot(HomePage);
+                    if (this.auth.isAuthenticated()) {
+                        console.log("authenticated");
+                        this.nav.setRoot(HomePage, {
+                            "url": "https://2016.revision-party.net/frontend/default/en/app_about/app_visitors.json",
+                            "title": "Visitors"
+                        });
+                    } else {
+                        console.log("not authenticated");
+                        this.nav.setRoot(RegistrationPage, {title: "Registration"});
+                    }
                 },
                 () => {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
+
+            this.menuCtrl.open();
         });
     }
 

@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button clear (click)="closeMe()">
+      Close
+    </button>
+    <ion-title>Sign up</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label>Handle</ion-label>
+      <ion-input type="text" formControlName="login"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Group</ion-label>
+      <ion-input type="text" formControlName="groups"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Country</ion-label>
+      <ion-select formControlName="country">
+        <ion-option *ngFor="let c of countries" [value]="c.cca2">{{c.name.common}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <button ion-button type="submit" block [disabled]="!form.valid">Sign up</button>
+  </form>
+</ion-content>

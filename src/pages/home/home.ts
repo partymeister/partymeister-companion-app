@@ -23,11 +23,29 @@ export class HomePage {
     constructor(public navCtrl: NavController, public navParams: NavParams, private pageProvider: PagesProvider) {
         this.title = navParams.data.title;
         if (navParams.data.url) {
-            pageProvider.load(navParams.data.url).subscribe(result => {
+            pageProvider.load(navParams.data.url, false).subscribe(result => {
                 this.page = result;
                 console.log(result);
+                console.log("Page " + navParams.data.url + " loaded");
             })
         }
+    }
+
+    doRefresh(refresher?) {
+        console.log("Do refresh");
+        this.pageProvider.load(this.navParams.data.url, true).subscribe(result => {
+            this.page = result;
+            console.log(result);
+            console.log("Page " + this.navParams.data.url + " loaded");
+            if(refresher){
+                refresher.complete();
+            }
+        })
+    }
+
+    getRefresherNotification(event) {
+        console.log("Got the info to refresh this fucker!");
+        this.doRefresh();
     }
 
     ionViewDidLoad() {

@@ -20,8 +20,8 @@ export class NavigationProvider {
 
   // Load the navigation tree
   load(): Observable<NavigationItem[]> {
-    let request = this.http.get(`https://dl.dropboxusercontent.com/u/166337/pm-companion-app-menu.json`);
-    return this.cache.loadFromObservable('navigation', request, 'navigation', 5).map(res => <NavigationItem[]>res.json());
+    let request = this.http.get(`https://dl.dropboxusercontent.com/u/166337/pm-companion-app-menu-new.json`);
+    return this.cache.loadFromObservable('navigation', request, 'navigation', 5).map(res => <NavigationItem[]>res.json().remote);
   }
 
 }

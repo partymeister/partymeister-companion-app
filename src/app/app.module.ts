@@ -4,7 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 
 import {PartyMeisterCompanionApp} from './app.component';
-import {HomePage} from '../pages/home/home';
+import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
 import {RegistrationPage} from '../pages/registration/registration';
 import {PagesProvider} from '../providers/pages';
@@ -30,7 +30,7 @@ const cloudSettings: CloudSettings = {
 @NgModule({
     declarations: [
         PartyMeisterCompanionApp,
-        HomePage,
+        ContentPage,
         SettingsPage,
         RegistrationPage,
         TextComponent,
@@ -52,7 +52,7 @@ const cloudSettings: CloudSettings = {
     bootstrap: [IonicApp],
     entryComponents: [
         PartyMeisterCompanionApp,
-        HomePage,
+        ContentPage,
         SettingsPage,
         RegistrationPage,
         SignupModalPage,

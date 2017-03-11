@@ -12,11 +12,11 @@ import {PagesProvider} from '../../providers/pages';
  Ionic pages and navigation.
  */
 @Component({
-    selector: 'page-home',
-    templateUrl: 'home.html'
+    selector: 'page-content',
+    templateUrl: 'content.html'
 })
 
-export class HomePage {
+export class ContentPage {
     page: Page;
     title: string;
 

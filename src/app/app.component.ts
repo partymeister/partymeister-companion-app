@@ -3,7 +3,7 @@ import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {CacheService} from "ionic-cache/ionic-cache";
 
-import {HomePage} from '../pages/home/home';
+import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
 import {RegistrationPage} from '../pages/registration/registration';
 import {NavigationProvider} from '../providers/navigation';
@@ -11,7 +11,7 @@ import ImgCache           from 'imgcache.js';
 import {Auth, User} from '@ionic/cloud-angular';
 import {SettingsProvider} from '../providers/settings';
 
-let components = {'HomePage': HomePage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage};
+let components = {'ContentPage': ContentPage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage};
 
 @Component({
     templateUrl: 'app.html'
@@ -20,7 +20,7 @@ export class PartyMeisterCompanionApp {
     @ViewChild(Nav) nav: Nav;
 
     // make HelloIonicPage the root (or first) page
-    rootPage: any = HomePage;
+    rootPage: any = ContentPage;
     pages: Array<{title: string, component: any, params?: any}>;
     showSubmenu: {};
     cache: CacheService;
@@ -108,7 +108,7 @@ export class PartyMeisterCompanionApp {
             ImgCache.init(() => {
                     if (this.auth.isAuthenticated()) {
                         console.log("authenticated");
-                        this.nav.setRoot(HomePage, {
+                        this.nav.setRoot(ContentPage, {
                             "url": "https://2016.revision-party.net/frontend/default/en/app_about/app_visitors.json",
                             "title": "Visitors"
                         });

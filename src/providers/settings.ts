@@ -1,8 +1,5 @@
 import {Injectable, Inject} from '@angular/core';
-import { EnvVariables } from '../app/environment-variables/environment-variables.token';
-
-console.log(EnvVariables);
-
+import {EnvVariables} from '../app/environment-variables/environment-variables.token';
 
 @Injectable()
 export class SettingsProvider {

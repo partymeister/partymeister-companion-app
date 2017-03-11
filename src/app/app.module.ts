@@ -14,6 +14,7 @@ import {SettingsProvider} from '../providers/settings';
 import {TextComponent} from '../components/text/text';
 import {GalleryComponent} from '../components/gallery/gallery';
 import {VisitorComponent} from '../components/visitor/visitor';
+import {TimetableComponent} from '../components/timetable/timetable';
 import {SignupModalPage} from '../pages/signup-modal/signup-modal';
 import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
@@ -37,6 +38,7 @@ const cloudSettings: CloudSettings = {
         TextComponent,
         GalleryComponent,
         VisitorComponent,
+        TimetableComponent,
         SignupModalPage,
         LazyImgComponent,
     ],

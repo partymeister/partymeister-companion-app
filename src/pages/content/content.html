@@ -21,6 +21,7 @@
         <lazy-img *ngIf="block.component == 'Component_Text' && block.content.attachments.image[0]" [src]="block.content.attachments.image[0].modified_file.replace('http', 'https')"></lazy-img>
         <gallery-component *ngIf="block.component == 'Component_Gallery'" [block]="block"></gallery-component>
         <text-component *ngIf="block.component == 'Component_Text'" [block]="block"></text-component>
+        <timetable-component *ngIf="block.component == 'Component_Event_Schedule'" [block]="block"></timetable-component>
         <visitor-component *ngIf="block.component == 'Component_Visitor_List'" [block]="block" (notifyRefresher)="getRefresherNotification($event)"></visitor-component>
     </div>
 </ion-content>

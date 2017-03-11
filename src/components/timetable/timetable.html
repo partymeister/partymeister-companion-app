@@ -1,0 +1,32 @@
+<!--
+  Generated template for the Timetable component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
+<div *ngIf="searching" class="spinner-container">
+    <ion-spinner></ion-spinner>
+</div>
+<div padding>
+    <span *ngIf="items.length == 0">I'm sorry but I found no match for your search ;(</span>
+    <div *ngFor="let day of items;">
+        <h4>{{day.key.substr(0, 10) | date:'EEEE'}}</h4>
+
+        <table class="events" style="margin: 20px;">
+            <tbody *ngFor="let hour of day.val;">
+            <tr *ngFor="let event of hour.val;">
+                <td width="50"><span *ngIf="event.index == 0">{{hour.key}}</span></td>
+                <td width="100" style="padding-bottom: 5px;">
+                    <ion-badge style="font-weight: normal; color: #222;" [style.background-color]="event.val[event.key].web_color">
+                        {{event.val[event.key].type}}
+                    </ion-badge>
+                </td>
+                <td>
+                    {{event.val[event.key].name}}
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

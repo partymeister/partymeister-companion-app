@@ -22,9 +22,10 @@ export class PagesProvider {
     load(data: string, force: boolean): Observable<Page> {
         let request = this.http.get(`${data}`);
         if (force) {
-            return request.map(res => <Page>res.json());
+            this.cache.clearGroup('page_' + Md5.hashStr(data));
+            return this.cache.loadFromObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 1).map(res => <Page>res.json());
         }
-        return this.cache.loadFromObservable('page_' + Md5.hashStr(data), request, 'pages', 60*60).map(res => <Page>res.json());
+        return this.cache.loadFromObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 60*60).map(res => <Page>res.json());
     }
 
 }

@@ -4,6 +4,8 @@
   See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
   for more info on Angular 2 Components.
 -->
-<h4 padding *ngIf="block.content.headline" [innerHTML]="block?.content?.headline"></h4>
-<h5 padding *ngIf="block.content.subline" [innerHTML]="block?.content?.subline"></h5>
-<div padding [innerHTML]="block?.content?.body"></div>
+<div padding>
+    <h4 *ngIf="block.content.headline" [innerHTML]="block?.content?.headline"></h4>
+    <h5 *ngIf="block.content.subline" [innerHTML]="block?.content?.subline"></h5>
+    <div #el><div [innerHTML]="html"></div></div>
+</div>

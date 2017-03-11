@@ -18,6 +18,7 @@ import {SignupModalPage} from '../pages/signup-modal/signup-modal';
 import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
 import { LazyImgComponent } from '../components/lazyimg/lazyimg';
+import {LinkService} from '../services/link';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import {CountryProvider} from '../providers/country';
 import {EnvironmentsModule} from '../app/environment-variables/environment-variables.module'
@@ -59,7 +60,7 @@ const cloudSettings: CloudSettings = {
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider]
+        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider, LinkService]
 })
 export class AppModule {
 }

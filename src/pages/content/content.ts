@@ -25,14 +25,11 @@ export class ContentPage {
         if (navParams.data.url) {
             pageProvider.load(navParams.data.url, false).subscribe(result => {
                 this.page = result;
-                console.log(result);
-                console.log("Page " + navParams.data.url + " loaded");
             })
         }
     }
 
     doRefresh(refresher?) {
-        console.log("Do refresh");
         this.pageProvider.load(this.navParams.data.url, true).subscribe(result => {
             this.page = result;
             console.log(result);
@@ -44,12 +41,7 @@ export class ContentPage {
     }
 
     getRefresherNotification(event) {
-        console.log("Got the info to refresh this fucker!");
         this.doRefresh();
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad HomePage');
     }
 
 }

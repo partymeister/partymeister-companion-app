@@ -10,6 +10,7 @@ import {NavigationProvider} from '../providers/navigation';
 import ImgCache           from 'imgcache.js';
 import {Auth, User} from '@ionic/cloud-angular';
 import {SettingsProvider} from '../providers/settings';
+import {LinkService} from '../services/link';
 
 let components = {'ContentPage': ContentPage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage};
 
@@ -21,7 +22,7 @@ export class PartyMeisterCompanionApp {
 
     // make HelloIonicPage the root (or first) page
     rootPage: any = ContentPage;
-    pages: Array<{title: string, component: any, params?: any}>;
+    pages: Array<{title: string, component: any, params?: any, children: any[]}>;
     showSubmenu: {};
     cache: CacheService;
 
@@ -35,7 +36,8 @@ export class PartyMeisterCompanionApp {
                 cache: CacheService,
                 public auth: Auth,
                 public menuCtrl: MenuController,
-                private settings: SettingsProvider,) {
+                private settings: SettingsProvider,
+                private linkService: LinkService) {
 
         this.cache = cache;
 
@@ -72,6 +74,32 @@ export class PartyMeisterCompanionApp {
                 this.pages.push(parent);
             }
         });
+
+        linkService.linkClicked$.subscribe(
+            link => {
+                let targetPage: any = null;
+                // find link
+                for (let page of this.pages) {
+                    if (page.params != undefined && page.params.url != undefined){
+                        if (page.params.url == link) {
+                            targetPage = page;
+                        }
+                    }
+                    if (page.children.length > 0) {
+                        for (let child of page.children) {
+                            if (child.params != undefined && child.params.url != undefined){
+                                if (child.params.url == link) {
+                                    targetPage = child;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (targetPage != null) {
+                    this.nav.push(targetPage.component, targetPage.params);
+                    // this.openPage(targetPage);
+                }
+            });
 
         this.initializeApp();
         // // set our app's pages

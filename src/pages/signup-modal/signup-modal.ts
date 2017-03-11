@@ -6,7 +6,6 @@ import {CountryPickerService} from 'angular2-countrypicker';
 import {CountryProvider} from '../../providers/country';
 import {SettingsProvider} from '../../providers/settings';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
 
 /*
  Generated class for the SignupModal page.

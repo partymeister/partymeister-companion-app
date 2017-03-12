@@ -1,4 +1,9 @@
 page-intro {
+  button {
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.8),
+    0px 8px 13px rgba(0,0,0,0.4),
+    0px 18px 23px rgba(0,0,0,0.1);
+  }
 
   ion-slide.city {
     background: url(../assets/images/slider-bg-city.jpg);
@@ -27,8 +32,11 @@ page-intro {
   }
 
   .slide-image {
-    max-width: 60%;
-    margin: 20%;
+    max-width: 70%;
+    margin: 20% 15%;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.8),
+    0px 8px 13px rgba(0,0,0,0.4),
+    0px 18px 23px rgba(0,0,0,0.1);
   }
 
   b {
@@ -40,6 +48,9 @@ page-intro {
     font-size: 1em;
     line-height: 1.5;
     color: #fff;
+    text-shadow: 0px 4px 3px rgba(0,0,0,0.8),
+    0px 8px 13px rgba(0,0,0,0.4),
+    0px 18px 23px rgba(0,0,0,0.1);
 
     b {
       color: #000000;

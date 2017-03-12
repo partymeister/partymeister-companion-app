@@ -35,7 +35,7 @@ export class ContentPage {
             console.log(result);
             console.log("Page " + this.navParams.data.url + " loaded");
             if(refresher){
-                // refresher.complete();
+                refresher.complete();
             }
         })
     }

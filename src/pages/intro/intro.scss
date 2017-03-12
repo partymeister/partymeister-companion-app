@@ -1,5 +1,18 @@
 page-intro {
 
+  ion-slide.city {
+    background: url(../assets/images/slider-bg-city.jpg);
+    background-size: cover;
+  }
+  ion-slide.street {
+    background: url(../assets/images/slider-bg-street.jpg);
+    background-size: cover;
+  }
+  ion-slide.tunnel {
+    background: url(../assets/images/slider-bg-tunnel.jpg);
+    background-size: cover;
+  }
+
   .toolbar-background {
     background: #fff;
     border-color: transparent;
@@ -24,7 +37,7 @@ page-intro {
 
   p {
     padding: 0 40px;
-    font-size: 14px;
+    font-size: 1em;
     line-height: 1.5;
     color: #fff;
 

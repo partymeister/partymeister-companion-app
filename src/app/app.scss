@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/v2/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,9 +12,12 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 @import "../assets/css/flag-icon.css";
 @import "../theme/fonts.scss";
+
+ion-content {
+  background-image: url(../assets/images/page-bg.png);
+}
 
 #sidenav {
   ion-item {
@@ -47,9 +48,11 @@
     }
   }
 }
+
 ion-item {
   min-height: 40px !important;
 }
+
 .item-inner {
   min-height: 40px !important;
 }

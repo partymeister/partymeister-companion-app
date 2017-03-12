@@ -6,6 +6,7 @@ import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import {PartyMeisterCompanionApp} from './app.component';
 import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
+import {IntroPage} from '../pages/intro/intro';
 import {RegistrationPage} from '../pages/registration/registration';
 import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
@@ -22,6 +23,7 @@ import { LazyImgComponent } from '../components/lazyimg/lazyimg';
 import {LinkService} from '../services/link';
 import { CountryPickerModule } from 'angular2-countrypicker';
 import {CountryProvider} from '../providers/country';
+import { Storage } from '@ionic/storage';
 import {EnvironmentsModule} from '../app/environment-variables/environment-variables.module'
 
 const cloudSettings: CloudSettings = {
@@ -34,6 +36,7 @@ const cloudSettings: CloudSettings = {
         PartyMeisterCompanionApp,
         ContentPage,
         SettingsPage,
+        IntroPage,
         RegistrationPage,
         TextComponent,
         GalleryComponent,
@@ -57,12 +60,13 @@ const cloudSettings: CloudSettings = {
         PartyMeisterCompanionApp,
         ContentPage,
         SettingsPage,
+        IntroPage,
         RegistrationPage,
         SignupModalPage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider, LinkService]
+        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider, LinkService, Storage]
 })
 export class AppModule {
 }

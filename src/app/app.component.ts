@@ -5,14 +5,16 @@ import {CacheService} from "ionic-cache/ionic-cache";
 
 import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
+import {IntroPage} from '../pages/intro/intro';
 import {RegistrationPage} from '../pages/registration/registration';
 import {NavigationProvider} from '../providers/navigation';
 import ImgCache           from 'imgcache.js';
 import {Auth, User} from '@ionic/cloud-angular';
 import {SettingsProvider} from '../providers/settings';
 import {LinkService} from '../services/link';
+import { Storage } from '@ionic/storage';
 
-let components = {'ContentPage': ContentPage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage};
+let components = {'ContentPage': ContentPage, 'SettingsPage': SettingsPage, 'RegistrationPage': RegistrationPage, 'IntroPage': IntroPage};
 
 @Component({
     templateUrl: 'app.html'
@@ -37,6 +39,7 @@ export class PartyMeisterCompanionApp {
                 public auth: Auth,
                 public menuCtrl: MenuController,
                 private settings: SettingsProvider,
+                private storage: Storage,
                 private linkService: LinkService) {
 
         this.cache = cache;
@@ -96,8 +99,12 @@ export class PartyMeisterCompanionApp {
                     }
                 }
                 if (targetPage != null) {
-                    this.nav.push(targetPage.component, targetPage.params);
-                    // this.openPage(targetPage);
+                    if (this.nav.getActive().component.name == 'IntroPage') {
+                        this.openPage(targetPage);
+                        this.menuCtrl.open();
+                    } else {
+                        this.nav.push(targetPage.component, targetPage.params);
+                    }
                 }
             });
 
@@ -125,6 +132,7 @@ export class PartyMeisterCompanionApp {
 
     initializeApp() {
         this.platform.ready().then(() => {
+
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             StatusBar.styleDefault();
@@ -137,19 +145,28 @@ export class PartyMeisterCompanionApp {
                     if (this.auth.isAuthenticated()) {
                         console.log("authenticated");
                         this.nav.setRoot(ContentPage, {
-                            "url": "https://2016.revision-party.net/frontend/default/en/app_about/app_visitors.json",
+                            "url": "https://2017.revision-party.net/frontend/default/en/app_about/app_visitors.json",
                             "title": "Visitors"
                         });
+                        this.menuCtrl.open();
                     } else {
                         console.log("not authenticated");
-                        this.nav.setRoot(RegistrationPage, {title: "Registration"});
+                        this.storage.get('introShown').then((result) => {
+                            if (result == null) {
+                                this.nav.setRoot(IntroPage);
+                            } else {
+                                this.nav.setRoot(ContentPage, {
+                                    "url": "https://2017.revision-party.net/app_at_a_glance.json",
+                                    "title": "Revision At A Glance"
+                                });
+                                this.menuCtrl.open();
+                            }
+                        });
                     }
                 },
                 () => {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
-
-            this.menuCtrl.open();
         });
     }
 

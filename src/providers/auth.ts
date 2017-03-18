@@ -30,6 +30,10 @@ export class AuthProvider {
         this.user = <User>user;
         this.storage.set('user', user);
         this.authenticated = true;
+
+        return new Promise((resolve, reject) => {
+            resolve(true);
+        });
     }
 
     doLogout() {

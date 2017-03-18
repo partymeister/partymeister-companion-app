@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, ViewChild, Input} from '@angular/core';
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar, Splashscreen} from 'ionic-native';
 import {CacheService} from "ionic-cache/ionic-cache";
@@ -34,6 +34,7 @@ export class PartyMeisterCompanionApp {
     pages: Array<{title: string, component: any, params?: any, children: any[]}>;
     showSubmenu: {};
     cache: CacheService;
+    public operationType: string = 'remote';
 
     menuItemHandler(page): void {
         this.showSubmenu[page.title] = !this.showSubmenu[page.title];
@@ -57,6 +58,7 @@ export class PartyMeisterCompanionApp {
         this.showSubmenu = {};
 
         navigationProvider.operationType().subscribe(operationType => {
+            this.storage.set('operationType', operationType);
             navigationProvider.load(operationType).subscribe(navigationItems => {
                 for (let item of navigationItems) {
                     let parent = {

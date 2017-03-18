@@ -6,7 +6,9 @@ import {CountryPickerService} from 'angular2-countrypicker';
 import {CountryProvider} from '../../providers/country';
 import {SettingsProvider} from '../../providers/settings';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {AlertController} from 'ionic-angular';
+import {AlertController, App} from 'ionic-angular';
+import {AuthProvider} from '../../providers/auth';
+import {ContentPage} from '../content/content';
 
 /*
  Generated class for the Registration page.
@@ -24,15 +26,16 @@ export class RegistrationPage {
     title: string;
     public countries: any[];
 
-    constructor(private alertCtrl: AlertController, private settingsProvider: SettingsProvider, private http: Http, private countryProvider: CountryProvider, private countryPickerService: CountryPickerService, public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+    constructor(private appCtrl: App, private authProvider: AuthProvider, private alertCtrl: AlertController, private settingsProvider: SettingsProvider, private http: Http, private countryProvider: CountryProvider, private countryPickerService: CountryPickerService, public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
         this.title = navParams.data.title;
+        console.log(navParams);
         this.form = this.formBuilder.group({
-            login: ['', Validators.required],
+            login: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
             group: [''],
             country: ['DE', Validators.required],
             access_key: ['', Validators.required],
-            password: ['', Validators.required],
-            password_repeat: ['', Validators.required]
+            password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
+            password_repeat: ['',Validators.compose([Validators.required, Validators.minLength(3)])]
         }, {validator: RegistrationPage.matchPasswords});
         this.countryPickerService.getCountries().subscribe(countries =>
             this.countries = countryProvider.sortCountries(countries)
@@ -66,7 +69,9 @@ export class RegistrationPage {
 
         this.http.post(SettingsProvider.variables.REGISTRATION_API, bodyString, options) // ...using post request
             .subscribe(result => {
-                    console.log(result);
+                    this.authProvider.doLogin(result.json().data).then(res => {
+                        this.navCtrl.setRoot(ContentPage, { title: "Visitors", url:"https://local.revision-party.net/visitors.json", force: true});
+                    });
                 },
                 err => {
                     let alert = this.alertCtrl.create({

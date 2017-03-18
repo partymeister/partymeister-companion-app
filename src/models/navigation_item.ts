@@ -16,4 +16,5 @@ export interface NavigationParameter {
     subitem: boolean;
     isProtected: boolean;
     showWhenLoggedIn: boolean;
+    force: boolean;
 }

@@ -4,6 +4,7 @@ import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {SettingsProvider} from '../../providers/settings';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {RegistrationPage} from '../registration/registration';
+import {ContentPage} from '../content/content';
 import {AlertController} from 'ionic-angular';
 import {AuthProvider} from '../../providers/auth';
 
@@ -33,7 +34,7 @@ export class LoginPage {
     }
 
     goToRegistrationPage() {
-        this.navCtrl.push(RegistrationPage);
+        this.navCtrl.push(RegistrationPage, {title: 'Registration'});
     }
 
     submit() {
@@ -43,9 +44,10 @@ export class LoginPage {
 
         this.http.post(SettingsProvider.variables.LOGIN_API, bodyString, options) // ...using post request
             .subscribe(result => {
-                    console.log("LoginPage: login successful");
-                    this.authProvider.doLogin(result.json().data);
-                    this.menuCtrl.open();
+                    this.authProvider.doLogin(result.json().data).then(res => {
+                        this.navCtrl.setRoot(ContentPage, { title: "Visitors", url:"https://local.revision-party.net/visitors.json", force: true});
+                        this.menuCtrl.open();
+                    });
                 },
                 err => {
                     let alert = this.alertCtrl.create({

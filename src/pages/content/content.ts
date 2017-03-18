@@ -22,8 +22,9 @@ export class ContentPage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private pageProvider: PagesProvider) {
         this.title = navParams.data.title;
+        let force = navParams.data.force;
         if (navParams.data.url) {
-            pageProvider.load(navParams.data.url, false).subscribe(result => {
+            pageProvider.load(navParams.data.url, force).subscribe(result => {
                 this.page = result;
             })
         }
@@ -32,8 +33,6 @@ export class ContentPage {
     doRefresh(refresher?) {
         this.pageProvider.load(this.navParams.data.url, true).subscribe(result => {
             this.page = result;
-            console.log(result);
-            console.log("Page " + this.navParams.data.url + " loaded");
             if(refresher){
                 refresher.complete();
             }

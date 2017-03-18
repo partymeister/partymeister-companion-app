@@ -1,8 +1,11 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {VisitorProvider} from '../../providers/visitor';
-import {ModalController, NavParams} from 'ionic-angular';
+import {ModalController, Nav, NavParams} from 'ionic-angular';
 import {SignupModalPage} from '../../pages/signup-modal/signup-modal';
+import {Storage} from '@ionic/storage';
+import {AuthProvider} from '../../providers/auth';
+import {RegistrationPage} from '../../pages/registration/registration';
 
 
 /*
@@ -25,8 +28,9 @@ export class VisitorComponent {
     searchTerm: string = '';
     searchControl: FormControl;
     searching: any = false;
+    public operationType: string = 'remote';
 
-    constructor(public visitorService: VisitorProvider, public modalCtrl: ModalController) {
+    constructor(public visitorService: VisitorProvider, public modalCtrl: ModalController, private storage: Storage, public authProvider: AuthProvider, private navCtrl: Nav) {
         this.searchControl = new FormControl();
     }
 
@@ -40,6 +44,10 @@ export class VisitorComponent {
             this.searching = false;
             this.setFilteredItems();
         });
+
+        this.storage.get('operationType').then(res => {
+            this.operationType = res;
+        })
     }
 
     onSearchInput() {
@@ -47,9 +55,7 @@ export class VisitorComponent {
     }
 
     setFilteredItems() {
-
         this.visitors = this.visitorService.filterItems(this.originalVisitors, this.searchTerm);
-
     }
 
     presentSignupModal() {
@@ -66,5 +72,9 @@ export class VisitorComponent {
 
     sendRefreshToParent() {
         this.notifyRefresher.emit(true);
+    }
+
+    goToRegistrationPage() {
+        this.navCtrl.push(RegistrationPage, {title: 'Registration'});
     }
 }

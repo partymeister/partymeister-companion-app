@@ -10,9 +10,10 @@
 </div>
 
 <div padding>
-    <span *ngIf="visitors.length == 0">I'm sorry but I found no match for your search ;(</span>
+    <span *ngIf="searchTerm != '' && visitors.length == 0">I'm sorry but I found no match for your search ;(</span>
     <h4>{{originalVisitors.length}} people have signed up!</h4>
-    <button (click)="presentSignupModal()" ion-button block>Sign up</button>
+    <button *ngIf="operationType == 'remote'" (click)="presentSignupModal()" ion-button block>Sign up</button>
+    <button *ngIf="operationType == 'local' && !authProvider.isAuthenticated()" (click)="goToRegistrationPage()" ion-button block>Register with your Access Key</button>
     <ul>
         <li *ngFor="let visitor of visitors">
             <i class="flag-icon flag-icon-{{visitor.country_code | lowercase}}"></i> {{visitor.handle}} <span *ngIf="visitor.groups != ''"> / {{visitor.groups}}</span>

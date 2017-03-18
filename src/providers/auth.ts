@@ -26,6 +26,10 @@ export class AuthProvider {
         });
     }
 
+    uniqid() {
+        return this.user.uniqid;
+    }
+
     doLogin(user) {
         this.user = <User>user;
         this.storage.set('user', user);

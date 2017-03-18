@@ -9,6 +9,7 @@ import {SettingsPage} from '../pages/settings/settings';
 import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {RegistrationPage} from '../pages/registration/registration';
+import {EntryPage} from '../pages/entry/entry';
 import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
 import {VisitorProvider} from '../providers/visitor';
@@ -18,6 +19,7 @@ import {GalleryComponent} from '../components/gallery/gallery';
 import {VisitorComponent} from '../components/visitor/visitor';
 import {TimetableComponent} from '../components/timetable/timetable';
 import {SignupModalPage} from '../pages/signup-modal/signup-modal';
+import {EntryModalPage} from '../pages/entry-modal/entry-modal';
 import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
 import {LazyImgComponent} from '../components/lazyimg/lazyimg';
@@ -40,12 +42,14 @@ const cloudSettings: CloudSettings = {
         SettingsPage,
         IntroPage,
         LoginPage,
+        EntryPage,
         RegistrationPage,
         TextComponent,
         GalleryComponent,
         VisitorComponent,
         TimetableComponent,
         SignupModalPage,
+        EntryModalPage,
         LazyImgComponent,
     ],
     imports: [
@@ -67,6 +71,8 @@ const cloudSettings: CloudSettings = {
         LoginPage,
         RegistrationPage,
         SignupModalPage,
+        EntryModalPage,
+        EntryPage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

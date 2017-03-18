@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button clear (click)="closeMe()">
+      Close
+    </button>
+    <ion-title>My entry</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list inset>
+
+    <ion-list-header>
+      <h2>{{entry.title}} by {{entry.author}}</h2>
+    </ion-list-header>
+    <ion-item>
+      {{entry.competition}} Competition <span class="item-note"># {{entry.id}}</span>
+    </ion-item>
+    <ion-item *ngIf="entry.description" class="item item-text-wrap">
+      <p>{{entry.description}}</p>
+    </ion-item>
+    <ion-list-header *ngIf="entry.options.length > 0" class="item item-divider">
+      Entry options
+    </ion-list-header>
+    <ion-item *ngIf="entry.options.length > 0" class="item item-text-wrap">
+      <ul *ngFor="let option of entry.options">
+        <li>{{option}}</li>
+      </ul>
+    </ion-item>
+    <ion-list-header *ngIf="entry.preview.url" class="item item-divider">
+      Beamslide preview
+    </ion-list-header>
+
+    <ion-item *ngIf="entry.preview.url" class="item item-image">
+      <lazy-img [src]="entry.preview.url"></lazy-img>
+    </ion-item>
+    <ion-list-header>
+      Uploader information
+    </ion-list-header>
+    <ion-item class="item item-text-wrap">
+      <p>{{entry.uploader_data.name}}</p>
+      <p>{{entry.uploader_data.street}}</p>
+      <p>{{entry.uploader_data.zip}} {{entry.uploader_data.city}}, {{entry.uploader_data.country}}</p>
+      <p>{{entry.uploader_data.email}}</p>
+      <p>{{entry.uploader_data.phone}}</p>
+    </ion-item>
+    <ion-list-header *ngIf="entry.composer_required === true" class="item item-divider">
+      Composer information
+    </ion-list-header>
+    <ion-item *ngIf="entry.composer_required === true" class="item item-text-wrap">
+      <p>{{entry.composer_data.name}}</p>
+      <p>{{entry.composer_data.street}}</p>
+      <p>{{entry.composer_data.zip}} {{entry.composer_data.city}}, {{entry.composer_data.country}}</p>
+      <p>{{entry.composer_data.email}}</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

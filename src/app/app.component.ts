@@ -7,6 +7,7 @@ import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
 import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
+import {EntryPage} from '../pages/entry/entry';
 import {RegistrationPage} from '../pages/registration/registration';
 import {NavigationProvider} from '../providers/navigation';
 import ImgCache           from 'imgcache.js';
@@ -21,6 +22,7 @@ let components = {
     'RegistrationPage': RegistrationPage,
     'IntroPage': IntroPage,
     'LoginPage': LoginPage,
+    'EntryPage': EntryPage,
 };
 
 @Component({

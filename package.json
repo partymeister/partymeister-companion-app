@@ -32,6 +32,7 @@
     "ionicons": "3.0.0",
     "ng-formly": "^1.0.0-rc.0",
     "rxjs": "5.0.0-beta.12",
+    "sprintf-js": "^1.0.3",
     "sw-toolbox": "3.4.0",
     "ts-md5": "^1.2.0",
     "zone.js": "0.6.26"

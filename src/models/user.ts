@@ -3,5 +3,5 @@ export interface User {
     handle: string;
     groups: string;
     country: string;
-    uniquid: string;
+    uniqid: string;
 }

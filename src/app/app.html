@@ -6,6 +6,7 @@
         </div>
 
         <ion-list id="sidenav" style="margin-top: 100px;">
+            <ion-list-header *ngIf="this.authProvider.user?.handle"><h5>Hello {{this.authProvider.user.handle}}</h5></ion-list-header>
             <template ngFor let-p [ngForOf]="pages" let-i="index">{{p.parameters}}
                 <ion-item *ngIf="showPage(p)" (click)="menuItemHandler(p)" (click)="openPage(p)">
                     <i class="{{p.icon}}"></i>

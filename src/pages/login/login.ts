@@ -44,7 +44,7 @@ export class LoginPage {
         this.http.post(SettingsProvider.variables.LOGIN_API, bodyString, options) // ...using post request
             .subscribe(result => {
                     console.log("LoginPage: login successful");
-                    this.authProvider.doLogin();
+                    this.authProvider.doLogin(result.json().data);
                     this.menuCtrl.open();
                 },
                 err => {

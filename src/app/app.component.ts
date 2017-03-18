@@ -47,7 +47,7 @@ export class PartyMeisterCompanionApp {
                 private settings: SettingsProvider,
                 private storage: Storage,
                 private linkService: LinkService,
-                private authProvider: AuthProvider) {
+                public authProvider: AuthProvider) {
 
         this.cache = cache;
 
@@ -86,7 +86,6 @@ export class PartyMeisterCompanionApp {
                     }
                     this.pages.push(parent);
                 }
-                console.log(this.pages);
             });
         });
 
@@ -155,14 +154,12 @@ export class PartyMeisterCompanionApp {
             // page is set until img cache has started
             ImgCache.init(() => {
                     if (this.authProvider.isAuthenticated()) {
-                        console.log("authenticated");
                         this.nav.setRoot(ContentPage, {
                             "url": "https://2017.revision-party.net/frontend/default/en/app_about/app_visitors.json",
                             "title": "Visitors"
                         });
                         this.menuCtrl.open();
                     } else {
-                        console.log("not authenticated");
                         this.storage.get('introShown').then((result) => {
                             if (result == null) {
                                 this.nav.setRoot(IntroPage);

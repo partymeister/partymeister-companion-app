@@ -65,6 +65,9 @@ ion-menu {
       }
     }
   }
+  ion-list-header h5 {
+    color: color($colors, light)
+  }
   .item {
     padding-left: 45px;
     background-color: transparent !important;

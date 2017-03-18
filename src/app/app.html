@@ -1,27 +1,27 @@
 <ion-menu [content]="content">
 
-  <ion-content>
-      <div ion-fixed style="text-align: center;">
-          <img src="assets/images/menu-header-2017.png" style="margin-top: 30px; width: 80%;">
-      </div>
+    <ion-content>
+        <div ion-fixed style="text-align: center;">
+            <img src="assets/images/menu-header-2017.png" style="margin-top: 30px; width: 80%;">
+        </div>
 
-    <ion-list id="sidenav" style="margin-top: 100px;">
-      <template ngFor let-p [ngForOf]="pages" let-i="index">
-        <ion-item (click)="menuItemHandler(p)" (click)="openPage(p)">
-            <i class="{{p.icon}}"></i>
-          {{p.title}}
-        </ion-item>
-          <ion-item-group ng-if="p.children.length > 0" submenu [class.visible]="showSubmenu[p.title]">
-              <template ngFor let-s [ngForOf]="p.children">
-                  <ion-item submenu-item (click)="openPage(s)">
-                      <i class="{{s.icon}}"></i>
-                      {{s.title}}
-                  </ion-item>
-              </template>
-          </ion-item-group>
-      </template>
-    </ion-list>
-  </ion-content>
+        <ion-list id="sidenav" style="margin-top: 100px;">
+            <template ngFor let-p [ngForOf]="pages" let-i="index">{{p.parameters}}
+                <ion-item *ngIf="showPage(p)" (click)="menuItemHandler(p)" (click)="openPage(p)">
+                    <i class="{{p.icon}}"></i>
+                    {{p.title}}
+                </ion-item>
+                <ion-item-group ng-if="p.children.length > 0" submenu [class.visible]="showSubmenu[p.title]">
+                    <template ngFor let-s [ngForOf]="p.children">
+                        <ion-item *ngIf="showPage(s)" submenu-item (click)="openPage(s)">
+                            <i class="{{s.icon}}"></i>
+                            {{s.title}}
+                        </ion-item>
+                    </template>
+                </ion-item-group>
+            </template>
+        </ion-list>
+    </ion-content>
 
 </ion-menu>
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

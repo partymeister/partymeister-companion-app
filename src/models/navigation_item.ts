@@ -4,6 +4,7 @@ export interface NavigationItem {
     "protected": boolean;
     "showWhenLoggedIn": boolean;
     "container": string;
+    "callFunction": string;
     "parameters": NavigationParameter;
     "items": NavigationItem[];
 }
@@ -13,4 +14,6 @@ export interface NavigationParameter {
     url: string;
     type: string;
     subitem: boolean;
+    isProtected: boolean;
+    showWhenLoggedIn: boolean;
 }

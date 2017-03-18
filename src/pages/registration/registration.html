@@ -15,10 +15,10 @@
 
 
 <ion-content padding>
-    <form [formGroup]="form" (ngSubmit)="logForm()">
+    <form [formGroup]="form" (ngSubmit)="submit()">
         <ion-item>
             <ion-label>Handle</ion-label>
-            <ion-input type="text" formControlName="handle"></ion-input>
+            <ion-input type="text" formControlName="login"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Group</ion-label>
@@ -34,6 +34,14 @@
             <button ion-button type="button" (click)="openCamera($event)" color="light" item-right><ion-icon name="camera"></ion-icon></button>
             <ion-label>Access Key</ion-label>
             <ion-input type="text" formControlName="access_key"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Password</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>Repeat</ion-label>
+            <ion-input type="password" formControlName="password_repeat"></ion-input>
         </ion-item>
         <button ion-button type="submit" block [disabled]="!form.valid">Register</button>
     </form>

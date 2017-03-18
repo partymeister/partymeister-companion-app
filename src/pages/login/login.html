@@ -1,0 +1,37 @@
+<!--
+  Generated template for the Login page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <form padding [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label>Handle</ion-label>
+      <ion-input type="text" formControlName="login"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block [disabled]="!form.valid">Log in</button>
+    <div *ngIf="error" class="">Login unsuccessful</div>
+
+  </form>
+  <div padding>
+    <h5 style="text-align: center;">Not registered yet?</h5>
+    <p>
+      <button ion-button type="button" block (click)="goToRegistrationPage()">Register with your Access Key</button>
+    </p>
+  </div>
+</ion-content>

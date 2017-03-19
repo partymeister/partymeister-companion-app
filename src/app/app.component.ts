@@ -8,6 +8,7 @@ import {SettingsPage} from '../pages/settings/settings';
 import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {EntryPage} from '../pages/entry/entry';
+import {LiveVotePage} from '../pages/livevote/livevote';
 import {RegistrationPage} from '../pages/registration/registration';
 import {NavigationProvider} from '../providers/navigation';
 import ImgCache           from 'imgcache.js';
@@ -23,6 +24,7 @@ let components = {
     'IntroPage': IntroPage,
     'LoginPage': LoginPage,
     'EntryPage': EntryPage,
+    'LiveVotePage': LiveVotePage,
 };
 
 @Component({

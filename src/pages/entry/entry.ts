@@ -7,7 +7,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {sprintf} from "sprintf-js";
 import {AuthProvider} from '../../providers/auth';
 import {ModalController, Nav} from 'ionic-angular';
-import {EntryModalPage} from '../../pages/entry-modal/entry-modal';
+import {EntryModalPage} from '../entry-modal/entry-modal';
 
 /*
  Generated class for the Entries page.
@@ -26,9 +26,21 @@ export class EntryPage {
     constructor(private modalCtrl: ModalController, private authProvider: AuthProvider, private cache: CacheService, private http: Http, public navCtrl: NavController, public navParams: NavParams) {
         this.title = navParams.data.title;
 
+        this.entrySubscription();
+
+    }
+
+    entrySubscription(refresher?) {
         this.loadEntries().subscribe(result => {
             this.entries = result;
+            if (refresher) {
+                refresher.complete();
+            }
         });
+    }
+
+    doRefresh(refresher?) {
+        this.entrySubscription(refresher);
     }
 
     loadEntries() {

@@ -1,7 +1,7 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CloudSettings, CloudModule} from '@ionic/cloud-angular';
+// import {CloudSettings, CloudModule} from '@ionic/cloud-angular';
 
 import {PartyMeisterCompanionApp} from './app.component';
 import {ContentPage} from '../pages/content/content';
@@ -20,6 +20,7 @@ import {VisitorComponent} from '../components/visitor/visitor';
 import {TimetableComponent} from '../components/timetable/timetable';
 import {SignupModalPage} from '../pages/signup-modal/signup-modal';
 import {EntryModalPage} from '../pages/entry-modal/entry-modal';
+import {LiveVotePage} from '../pages/livevote/livevote';
 import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
 import {LazyImgComponent} from '../components/lazyimg/lazyimg';
@@ -29,12 +30,13 @@ import {CountryProvider} from '../providers/country';
 import {AuthProvider} from '../providers/auth';
 import {Storage} from '@ionic/storage';
 import {EnvironmentsModule} from '../app/environment-variables/environment-variables.module'
+import { Ionic2RatingModule } from '../lib/ionic2-rating/ionic2-rating.module';
 
-const cloudSettings: CloudSettings = {
-    'core': {
-        'app_id': '99fa434f'
-    }
-};
+// const cloudSettings: CloudSettings = {
+//     'core': {
+//         'app_id': '99fa434f'
+//     }
+// };
 @NgModule({
     declarations: [
         PartyMeisterCompanionApp,
@@ -50,17 +52,19 @@ const cloudSettings: CloudSettings = {
         TimetableComponent,
         SignupModalPage,
         EntryModalPage,
+        LiveVotePage,
         LazyImgComponent,
     ],
     imports: [
         IonicModule.forRoot(PartyMeisterCompanionApp),
-        CloudModule.forRoot(cloudSettings),
+        // CloudModule.forRoot(cloudSettings),
         FormsModule,
         ReactiveFormsModule,
         CountryPickerModule.forRoot({
             baseUrl: 'assets/'
         }),
         EnvironmentsModule,
+        Ionic2RatingModule // Put ionic2-rating module here
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -73,6 +77,7 @@ const cloudSettings: CloudSettings = {
         SignupModalPage,
         EntryModalPage,
         EntryPage,
+        LiveVotePage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

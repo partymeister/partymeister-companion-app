@@ -1,0 +1,46 @@
+<!--
+  Generated template for the Livevote page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{title}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <h4 padding *ngIf="competition_name != ''">{{competition_name}}</h4>
+    <h5 padding *ngIf="competition_name == '' && subscriptionActive == true">No live voting at the moment! The page will refresh automatically once it
+        is available.</h5>
+    <h5 padding *ngIf="subscriptionActive == false">Fetching live voting information...</h5>
+
+    <ion-card *ngFor="let entry of entries">
+        <ion-card-content>
+            <ion-card-title>
+                {{entry.title}}
+                <ion-badge item-right>#{{entry.entry_number}}</ion-badge>
+            </ion-card-title>
+            <p *ngIf="entry.anonymous === false">
+                {{entry.author}}
+            </p>
+            <rating style="text-align: center;" [(ngModel)]="entry.rating"
+                    readOnly="false"
+                    max="5"
+                    emptyStarIconName="star-outline"
+                    starIconName="star"
+                    nullable="false"
+                    (ngModelChange)="onModelChange($event, entry)"></rating>
+        </ion-card-content>
+
+    </ion-card>
+
+</ion-content>

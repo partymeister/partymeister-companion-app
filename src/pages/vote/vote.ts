@@ -34,6 +34,8 @@ export class VotePage {
     getVotingEntries(refresher?) {
         this.voteProvider.getVotingEntries().subscribe(result => {
             this.subscriptionActive = true;
+            this.competitions = {};
+            this.competition_keys = [];
 
             result.filter(element => {
                 if (this.competitions[element.competition_id] == null) {

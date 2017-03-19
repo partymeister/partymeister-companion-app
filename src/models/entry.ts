@@ -9,6 +9,8 @@ export interface Entry {
     options: string[];
     uploader_data: {};
     composer_data: {};
+    audio_preview: boolean;
+    mp3: {};
 }
 
 export interface Image{

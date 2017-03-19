@@ -18,4 +18,29 @@ page-vote {
       }
     }
   }
+  ion-select {
+    max-width: 65% !important;
+  }
+
+  audio {
+    width: 100%;
+  }
+  .deadline {
+    background-color: color($colors, 'danger') !important;
+  }
+}
+
+.toast-success > div {
+  background-color: color($colors, 'secondary') !important;
+}
+
+.toast-success div.toast-message, .toast-success button {
+  color: color($colors, 'dark') !important;
+}
+
+.toast-danger > div {
+  background-color: color($colors, 'danger') !important;
+}
+.toast-danger div.toast-message, .toast-danger button{
+  color: color($colors, 'light') !important;
 }

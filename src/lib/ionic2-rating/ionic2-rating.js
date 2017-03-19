@@ -154,7 +154,7 @@ export var Ionic2Rating = (function () {
         { type: Component, args: [{
                     selector: 'rating',
                     styles: ["\n    ul.rating li {\n      display: inline;\n      border: 0px;\n      background: none;\n      padding: 5px 10px;\n    }\n    ul.rating li i {\n      font-size: 30px;\n    }\n  "],
-                    template: "\n    <ul class=\"rating\" (keydown)=\"onKeyDown($event)\">\n      <li tappable (click)=\"rate(0)\"><ion-icon name=\"close-circle-outline\">\n        </ion-icon>\n</li><li *ngFor=\"let starIndex of starIndexes\" tappable (click)=\"rate(starIndex + 1)\">\n        <ion-icon [name]=\"getStarIconName(starIndex)\">\n        </ion-icon>\n      </li>\n    </ul>",
+                    template: "\n    <ul class=\"rating\" (keydown)=\"onKeyDown($event)\">\n      <li *ngIf=\"!readOnly\" tappable (click)=\"rate(0)\"><ion-icon name=\"close-circle-outline\">\n        </ion-icon>\n</li><li *ngFor=\"let starIndex of starIndexes\" tappable (click)=\"rate(starIndex + 1)\">\n        <ion-icon [name]=\"getStarIconName(starIndex)\">\n        </ion-icon>\n      </li>\n    </ul>",
                     providers: [RATING_CONTROL_VALUE_ACCESSOR]
                 },] },
     ];

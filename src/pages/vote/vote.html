@@ -30,7 +30,16 @@
     <h5 padding *ngIf="subscriptionActive == false">Fetching voting information...</h5>
 
     <div *ngIf="competition_id != null">
+        <ion-card class="deadline" *ngIf="competitions[competition_id].entries[0].deadline_reached">
+            <ion-card-content>
+                <strong>The voting deadline is over!</strong>
+            </ion-card-content>
+        </ion-card>
         <ion-card *ngFor="let entry of competitions[competition_id].entries">
+            <audio *ngIf="entry.audio_preview" controls>
+                <source src="https://local.revision-party.net/mp3/{{entry.id}}.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
             <lazy-img *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url"></lazy-img>
             <ion-card-content>
                 <ion-card-title>
@@ -41,7 +50,7 @@
                     {{entry.author}}
                 </p>
                 <rating style="text-align: center;" [(ngModel)]="entry.rating"
-                        readOnly="false"
+                        readOnly="{{deadlineReached}}"
                         max="5"
                         emptyStarIconName="star-outline"
                         starIconName="star"

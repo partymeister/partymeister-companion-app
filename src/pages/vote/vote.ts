@@ -14,6 +14,7 @@ export class VotePage {
     public competition_keys: any[] = [];
     public competition_id: number;
     public subscriptionActive: boolean = false;
+    public deadlineReached: boolean = false;
 
     formControl: FormControl;
 
@@ -31,11 +32,15 @@ export class VotePage {
     }
 
 
-    getVotingEntries(refresher?) {
-        this.voteProvider.getVotingEntries().subscribe(result => {
+    getVotingEntries(force?, refresher?) {
+        this.voteProvider.getVotingEntries(force).subscribe(result => {
             this.subscriptionActive = true;
             this.competitions = {};
             this.competition_keys = [];
+            this.deadlineReached = false;
+            if (result[0].deadline_reached) {
+                this.deadlineReached = true;
+            }
 
             result.filter(element => {
                 if (this.competitions[element.competition_id] == null) {
@@ -60,7 +65,7 @@ export class VotePage {
     }
 
     doRefresh(refresher?) {
-        this.getVotingEntries(refresher);
+        this.getVotingEntries(true, refresher);
     }
 
     onModelChange(points, entry) {

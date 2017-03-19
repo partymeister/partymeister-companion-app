@@ -14,4 +14,6 @@ export interface VoteEntry {
     screenshot: {};
     status: number;
     title: string;
+    rating: number;
+    vote: any;
 }

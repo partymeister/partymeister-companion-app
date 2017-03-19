@@ -21,12 +21,14 @@ import {TimetableComponent} from '../components/timetable/timetable';
 import {SignupModalPage} from '../pages/signup-modal/signup-modal';
 import {EntryModalPage} from '../pages/entry-modal/entry-modal';
 import {LiveVotePage} from '../pages/livevote/livevote';
+import {VotePage} from '../pages/vote/vote';
 import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
 import {LazyImgComponent} from '../components/lazyimg/lazyimg';
 import {LinkService} from '../services/link';
 import {CountryPickerModule} from 'angular2-countrypicker';
 import {CountryProvider} from '../providers/country';
+import {VoteProvider} from '../providers/vote';
 import {AuthProvider} from '../providers/auth';
 import {Storage} from '@ionic/storage';
 import {EnvironmentsModule} from '../app/environment-variables/environment-variables.module'
@@ -53,6 +55,7 @@ import { Ionic2RatingModule } from '../lib/ionic2-rating/ionic2-rating.module';
         SignupModalPage,
         EntryModalPage,
         LiveVotePage,
+        VotePage,
         LazyImgComponent,
     ],
     imports: [
@@ -78,10 +81,11 @@ import { Ionic2RatingModule } from '../lib/ionic2-rating/ionic2-rating.module';
         EntryModalPage,
         EntryPage,
         LiveVotePage,
+        VotePage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider, LinkService, AuthProvider, Storage]
+        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider, LinkService, AuthProvider, VoteProvider, Storage]
 })
 export class AppModule {
 }

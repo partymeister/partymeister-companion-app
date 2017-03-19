@@ -26,8 +26,8 @@
     <ion-card *ngFor="let entry of entries">
         <ion-card-content>
             <ion-card-title>
-                {{entry.title}}
                 <ion-badge item-right>#{{entry.entry_number}}</ion-badge>
+                {{entry.title}}
             </ion-card-title>
             <p *ngIf="entry.anonymous === false">
                 {{entry.author}}

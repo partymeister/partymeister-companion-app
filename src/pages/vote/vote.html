@@ -1,0 +1,55 @@
+<!--
+  Generated template for the Livevote page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{title}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <ion-item *ngIf="competition_id != null">
+        <ion-label>Competition</ion-label>
+        <ion-select [(ngModel)]="competition_id">
+            <ion-option *ngFor="let key of competition_keys" value="{{competitions[key].id}}">
+                {{competitions[key].name}}
+            </ion-option>
+        </ion-select>
+    </ion-item>
+    <h5 padding *ngIf="competition_id == null && subscriptionActive == true">No competitions to vote for at the moment :(</h5>
+    <h5 padding *ngIf="subscriptionActive == false">Fetching voting information...</h5>
+
+    <div *ngIf="competition_id != null">
+        <ion-card *ngFor="let entry of competitions[competition_id].entries">
+            <lazy-img *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url"></lazy-img>
+            <ion-card-content>
+                <ion-card-title>
+                    <ion-badge item-right>#{{entry.entry_number}}</ion-badge>
+                    {{entry.title}}
+                </ion-card-title>
+                <p *ngIf="entry.anonymous === false">
+                    {{entry.author}}
+                </p>
+                <rating style="text-align: center;" [(ngModel)]="entry.rating"
+                        readOnly="false"
+                        max="5"
+                        emptyStarIconName="star-outline"
+                        starIconName="star"
+                        nullable="false"
+                        (ngModelChange)="onModelChange($event, entry)"></rating>
+            </ion-card-content>
+
+        </ion-card>
+    </div>
+
+</ion-content>

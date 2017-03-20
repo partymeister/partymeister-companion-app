@@ -66,6 +66,7 @@ export class PartyMeisterCompanionApp {
         navigationProvider.operationType().subscribe(operationType => {
             this.storage.set('operationType', operationType);
             navigationProvider.load(operationType).subscribe(navigationItems => {
+                this.pages = [];
                 for (let item of navigationItems) {
                     let parent = {
                         title: item.title,

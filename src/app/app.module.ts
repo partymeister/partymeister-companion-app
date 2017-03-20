@@ -1,8 +1,7 @@
 import {NgModule, ErrorHandler} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-// import {CloudSettings, CloudModule} from '@ionic/cloud-angular';
-
+import {ConnectivityService} from '../providers/connectivity-service';
 import {PartyMeisterCompanionApp} from './app.component';
 import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
@@ -10,6 +9,7 @@ import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {RegistrationPage} from '../pages/registration/registration';
 import {EntryPage} from '../pages/entry/entry';
+import {MasterPage} from '../pages/master/master';
 import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
 import {VisitorProvider} from '../providers/visitor';
@@ -30,15 +30,13 @@ import {CountryPickerModule} from 'angular2-countrypicker';
 import {CountryProvider} from '../providers/country';
 import {VoteProvider} from '../providers/vote';
 import {AuthProvider} from '../providers/auth';
-import {Storage} from '@ionic/storage';
+import {EntryProvider} from '../providers/entry';
+import {IonicStorageModule} from '@ionic/storage';
 import {EnvironmentsModule} from '../app/environment-variables/environment-variables.module'
-import { Ionic2RatingModule } from '../lib/ionic2-rating/ionic2-rating.module';
+import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
+import {Injector} from "@angular/core";
+import {ServiceLocator} from '../services/service-locator';
 
-// const cloudSettings: CloudSettings = {
-//     'core': {
-//         'app_id': '99fa434f'
-//     }
-// };
 @NgModule({
     declarations: [
         PartyMeisterCompanionApp,
@@ -60,13 +58,13 @@ import { Ionic2RatingModule } from '../lib/ionic2-rating/ionic2-rating.module';
     ],
     imports: [
         IonicModule.forRoot(PartyMeisterCompanionApp),
-        // CloudModule.forRoot(cloudSettings),
         FormsModule,
         ReactiveFormsModule,
         CountryPickerModule.forRoot({
             baseUrl: 'assets/'
         }),
         EnvironmentsModule,
+        IonicStorageModule.forRoot(),
         Ionic2RatingModule // Put ionic2-rating module here
     ],
     bootstrap: [IonicApp],
@@ -85,7 +83,22 @@ import { Ionic2RatingModule } from '../lib/ionic2-rating/ionic2-rating.module';
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        PagesProvider, NavigationProvider, CacheService, Md5, VisitorProvider, CountryProvider, SettingsProvider, LinkService, AuthProvider, VoteProvider, Storage]
+        PagesProvider,
+        NavigationProvider,
+        CacheService,
+        Md5,
+        VisitorProvider,
+        CountryProvider,
+        SettingsProvider,
+        LinkService,
+        AuthProvider,
+        VoteProvider,
+        EntryProvider,
+        ConnectivityService
+    ]
 })
 export class AppModule {
+    constructor(private injector: Injector) {
+        ServiceLocator.injector = this.injector;
+    }
 }

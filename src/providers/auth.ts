@@ -1,15 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {SettingsProvider} from './settings';
 import 'rxjs/add/operator/map';
 import {Storage} from '@ionic/storage';
 import {User} from '../models/user';
 
-/*
- Generated class for the Auth provider.
-
- See https://angular.io/docs/ts/latest/guide/dependency-injection.html
- for more info on providers and Angular 2 DI.
- */
 @Injectable()
 export class AuthProvider {
 
@@ -48,6 +43,25 @@ export class AuthProvider {
 
     isAuthenticated() {
         return this.authenticated;
+    }
+
+    loginRequest(data) {
+        let bodyString = JSON.stringify(data); // Stringify payload
+        let headers = new Headers({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN}); // ... Set content type to JSON
+        let options = new RequestOptions({headers: headers}); // Create a request option
+
+        return this.http.post(SettingsProvider.variables.LOGIN_API, bodyString, options)
+            .map(res => {
+                return res;
+            });
+    }
+
+    registrationRequest(data) {
+        let bodyString = JSON.stringify(data); // Stringify payload
+        let headers = new Headers({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN}); // ... Set content type to JSON
+        let options = new RequestOptions({headers: headers}); // Create a request option
+
+        return this.http.post(SettingsProvider.variables.REGISTRATION_API, bodyString, options).map(res => { return res;} );
     }
 
 }

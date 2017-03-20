@@ -20,7 +20,7 @@ export class NavigationProvider {
 
     // Get App operation type
     operationType(): Observable<string> {
-        return this.http.get(`https://local.revision-party.net/revision2017.txt`).map(res => res.text().trim());
+        return Observable.timer(0, 10000).mergeMap(() => this.http.get(`https://local.revision-party.net/revision2017.txt`).map(res => res.text().trim()));
     }
 
     // Load the navigation tree

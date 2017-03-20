@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {VoteProvider} from '../../providers/vote';
 import {FormControl} from '@angular/forms';
+import {MasterPage} from '../master/master';
 
 @Component({
     selector: 'page-vote',
     templateUrl: 'vote.html'
 })
-export class VotePage {
-    public title: string;
+export class VotePage extends MasterPage {
     public entries: any[] = [];
     public competitions: {} = {};
     public competition_keys: any[] = [];
@@ -19,7 +19,8 @@ export class VotePage {
     formControl: FormControl;
 
     constructor(private voteProvider: VoteProvider, public navCtrl: NavController, public navParams: NavParams) {
-        this.title = navParams.data.title;
+        super(navCtrl, navParams);
+
         this.formControl = new FormControl();
     }
 

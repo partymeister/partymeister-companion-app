@@ -9,7 +9,7 @@ import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {RegistrationPage} from '../pages/registration/registration';
 import {EntryPage} from '../pages/entry/entry';
-import {MasterPage} from '../pages/master/master';
+import {NetworkConnectionComponent} from '../components/network-connection/network-connection';
 import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
 import {VisitorProvider} from '../providers/visitor';
@@ -50,6 +50,7 @@ import {ServiceLocator} from '../services/service-locator';
         GalleryComponent,
         VisitorComponent,
         TimetableComponent,
+        NetworkConnectionComponent,
         SignupModalPage,
         EntryModalPage,
         LiveVotePage,

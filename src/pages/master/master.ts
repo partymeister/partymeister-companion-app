@@ -11,28 +11,11 @@ export class MasterPage {
     public connectivityService: ConnectivityService;
     protected authProvider: AuthProvider;
 
-
     constructor(public navCtrl: NavController, public navParams: NavParams) {
         this.title = navParams.data.title;
         this.force = navParams.data.force;
 
         this.connectivityService = ServiceLocator.injector.get(ConnectivityService);
         this.authProvider = ServiceLocator.injector.get(AuthProvider);
-
-        this.addConnectivityListeners();
-    }
-
-    addConnectivityListeners(){
-        let onOnline = () => {
-            console.log('ONLINE');
-        };
-
-        let onOffline = () => {
-            console.log('OFFLINE');
-        };
-
-        document.addEventListener('online', onOnline, false);
-        document.addEventListener('offline', onOffline, false);
-
     }
 }

@@ -18,6 +18,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+    <network-connection [isOnline]="connectivityService.online"></network-connection>
     <h4 padding *ngIf="competition_name != ''">{{competition_name}}</h4>
     <h5 padding *ngIf="competition_name == '' && subscriptionActive == true">No live voting at the moment! The page will refresh automatically once it
         is available.</h5>

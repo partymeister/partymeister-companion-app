@@ -17,6 +17,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+    <network-connection [isOnline]="connectivityService.online"></network-connection>
     <div *ngFor="let block of page?.content.blocks">
         <lazy-img *ngIf="block.component == 'Component_Text' && block.content.attachments.image[0]" [src]="block.content.attachments.image[0].modified_file.replace('http', 'https')"></lazy-img>
         <gallery-component *ngIf="block.component == 'Component_Gallery'" [block]="block"></gallery-component>

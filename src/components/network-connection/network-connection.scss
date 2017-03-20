@@ -1,0 +1,12 @@
+network-connection {
+  ion-card {
+    margin: 0 !important;
+    width: 100% !important;
+  }
+  .offline {
+    background-color: color($colors, 'danger') !important;
+    font-weight: bold;
+    color: color($colors, 'light') !important;
+    text-align: center;
+  }
+}

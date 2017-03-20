@@ -18,6 +18,7 @@
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+    <network-connection [isOnline]="connectivityService.online"></network-connection>
     <ion-item *ngIf="competition_id != null">
         <ion-label>Competition</ion-label>
         <ion-select [(ngModel)]="competition_id">

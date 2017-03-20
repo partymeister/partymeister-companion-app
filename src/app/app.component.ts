@@ -17,6 +17,8 @@ import {SettingsProvider} from '../providers/settings';
 import {LinkService} from '../services/link';
 import {Storage} from '@ionic/storage';
 import {AuthProvider} from '../providers/auth';
+import {ConnectivityService} from '../providers/connectivity-service';
+import {Network} from 'ionic-native';
 
 let components = {
     'ContentPage': ContentPage,
@@ -54,7 +56,8 @@ export class PartyMeisterCompanionApp {
                 private settings: SettingsProvider,
                 private storage: Storage,
                 private linkService: LinkService,
-                public authProvider: AuthProvider) {
+                public authProvider: AuthProvider,
+                private connectivityService: ConnectivityService) {
 
         this.cache = cache;
 
@@ -158,6 +161,8 @@ export class PartyMeisterCompanionApp {
             StatusBar.styleDefault();
             Splashscreen.hide();
 
+            this.addConnectivityListeners();
+
             // activated debug mode
             ImgCache.options.debug = true;
             // page is set until img cache has started
@@ -185,6 +190,36 @@ export class PartyMeisterCompanionApp {
                 () => {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
+        });
+    }
+
+    addConnectivityListeners() {
+        let onOnline = () => {
+            console.log("ONLINE");
+            this.connectivityService.online = true;
+        };
+
+        let onOffline = () => {
+            console.log("OFFLINE");
+            this.connectivityService.online = false;
+        };
+
+        window.addEventListener('online', onOnline, false);
+        window.addEventListener('offline', onOffline, false);
+
+        let disconnectSubscription = Network.onDisconnect().subscribe(() => {
+            console.log('network DISconnected!');
+            this.connectivityService.online = false;
+        });
+
+        let connectSubscription = Network.onConnect().subscribe(() => {
+            // We just got a connection but we need to wait briefly
+            // before we determine the connection type.  Might need to wait 
+            // prior to doing any api requests as well.
+            setTimeout(() => {
+                console.log('network connected!');
+                this.connectivityService.online = true;
+            }, 3000);
         });
     }
 

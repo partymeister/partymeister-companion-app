@@ -24,6 +24,10 @@ export class ContentPage extends MasterPage {
     }
 
     doRefresh(refresher?) {
+        if (this.connectivityService.isOffline()) {
+            refresher.complete();
+            return;
+        }
         this.pageProvider.load(this.navParams.data.url, true).subscribe(result => {
             this.page = result;
             if(refresher){

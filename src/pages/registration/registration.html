@@ -14,8 +14,9 @@
 </ion-header>
 
 
-<ion-content padding>
-    <form [formGroup]="form" (ngSubmit)="submit()">
+<ion-content>
+    <network-connection [isOnline]="connectivityService.online"></network-connection>
+    <form padding [formGroup]="form" (ngSubmit)="submit()">
         <ion-item>
             <ion-label>Handle</ion-label>
             <ion-input type="text" formControlName="login"></ion-input>

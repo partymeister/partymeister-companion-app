@@ -18,6 +18,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <network-connection [isOnline]="connectivityService.online"></network-connection>
     <ion-card *ngFor="let entry of entries">
       <lazy-img *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url"></lazy-img>
       <ion-card-content>

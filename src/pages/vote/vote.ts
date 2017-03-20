@@ -66,6 +66,12 @@ export class VotePage extends MasterPage {
     }
 
     doRefresh(refresher?) {
+        if (this.connectivityService.isOffline()) {
+            if (refresher) {
+                refresher.complete();
+            }
+            return;
+        }
         this.getVotingEntries(true, refresher);
     }
 

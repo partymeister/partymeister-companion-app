@@ -32,6 +32,12 @@ export class EntryPage extends MasterPage {
     }
 
     doRefresh(refresher?) {
+        if (this.connectivityService.isOffline()) {
+            if (refresher) {
+                refresher.complete();
+            }
+            return;
+        }
         this.entrySubscription(refresher);
     }
 

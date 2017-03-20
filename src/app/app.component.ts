@@ -19,6 +19,7 @@ import {Storage} from '@ionic/storage';
 import {AuthProvider} from '../providers/auth';
 import {ConnectivityService} from '../providers/connectivity-service';
 import {Network} from 'ionic-native';
+import { OneSignal } from 'ionic-native';
 
 let components = {
     'ContentPage': ContentPage,
@@ -132,25 +133,6 @@ export class PartyMeisterCompanionApp {
             });
 
         this.initializeApp();
-        // // set our app's pages
-        // this.pages = [
-        //     {title: 'HomePage', component: HomePage},
-        //     {
-        //         title: 'General',
-        //         component: HomePage,
-        //         params: 'https://2016.revision-party.net/frontend/default/en/app_about/app_general.json'
-        //     },
-        //     {
-        //         title: 'Location',
-        //         component: HomePage,
-        //         params: 'https://2016.revision-party.net/frontend/default/en/app_about/app_location.json'
-        //     },
-        //     {
-        //         title: 'Tickets',
-        //         component: HomePage,
-        //         params: 'https://2016.revision-party.net/frontend/default/en/app_about/app_tickets.json'
-        //     },
-        // ];
     }
 
     initializeApp() {
@@ -162,6 +144,9 @@ export class PartyMeisterCompanionApp {
             Splashscreen.hide();
 
             this.addConnectivityListeners();
+            if (this.platform.is('cordova')) {
+                this.addOneSignalConfiguration();
+            }
 
             // activated debug mode
             ImgCache.options.debug = true;
@@ -191,6 +176,22 @@ export class PartyMeisterCompanionApp {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
         });
+    }
+
+    addOneSignalConfiguration() {
+        OneSignal.startInit('3fdb8164-8438-4afb-b4f4-95ec317ebd88', '794542674802');
+
+        OneSignal.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.InAppAlert);
+
+        OneSignal.handleNotificationReceived().subscribe(() => {
+            // do something when notification is received
+        });
+
+        OneSignal.handleNotificationOpened().subscribe(() => {
+            // do something when a notification is opened
+        });
+
+        OneSignal.endInit();
     }
 
     addConnectivityListeners() {

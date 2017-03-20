@@ -8,5 +8,41 @@
 </ion-header>
 
 <ion-content>
-    Settings page
+    <ion-list>
+        <ion-list-header>
+            Push notifications
+            <p>
+                <small>You can customize which kinds of notifications you want to receive. You'll receive general
+                    notifications in any case.
+                </small>
+            </p>
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Competition starts</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Competitions"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Seminar starts</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Seminars"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Deadline approaches</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Deadlines"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Event starts</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Events"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Nightshuttle arrives</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Nightshuttle"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>On-location info</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Location"></ion-toggle>
+        </ion-item>
+    </ion-list>
+    <div style="text-align: center;">
+        <small>App version: {{appVersion}}</small>
+    </div>
 </ion-content>

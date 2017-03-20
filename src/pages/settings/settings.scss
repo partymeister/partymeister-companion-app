@@ -1,3 +1,15 @@
 page-settings {
-
+  ion-list-header, ion-item, p {
+    color: color($colors, light) !important;
+  }
+  ion-label {
+    white-space: inherit !important;
+    font-size: 1.5rem;
+  }
+  ion-toggle .toggle-icon {
+    //background-color: #e6e6e6;
+  }
+  ion-toggle .toggle-inner {
+    background-color: color($colors, light) !important;
+  }
 }

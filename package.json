@@ -51,7 +51,9 @@
     "cordova-plugin-file",
     "cordova-plugin-file-transfer",
     "phonegap-plugin-barcodescanner",
-    "cordova-plugin-network-information"
+    "cordova-plugin-network-information",
+    "cordova-plugin-app-version",
+    "onesignal-cordova-plugin"
   ],
   "description": "partymeister-companion-app: An Ionic project",
   "config": {

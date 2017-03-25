@@ -62,9 +62,16 @@ export class SettingsPage {
 
     enableDeveloperMode() {
         this.developerModeTaps++;
+
         if (this.developerModeTaps >= 7) {
-            this.storage.set('developerMode', true);
-            this.developerMode = true;
+            this.developerMode = !this.developerMode;
+            this.developerModeTaps = 0;
+            this.storage.set('developerMode', this.developerMode);
+            if (this.developerMode == false) {
+                this.storage.set('forcedOperationMode', false);
+                this.operationTypes.local = false;
+                this.operationTypes.remote = false;
+            }
         }
     }
 

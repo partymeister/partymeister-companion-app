@@ -42,7 +42,20 @@
             <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Location"></ion-toggle>
         </ion-item>
     </ion-list>
+    <ion-list *ngIf="developerMode == true">
+        <ion-list-header>
+            Developer mode
+        </ion-list-header>
+        <ion-item>
+            <ion-label>Force local menu</ion-label>
+            <ion-toggle (ionChange)="setOperationType('local')" [(ngModel)]="operationTypes.local"></ion-toggle>
+        </ion-item>
+        <ion-item>
+            <ion-label>Force remote menu</ion-label>
+            <ion-toggle (ionChange)="setOperationType('remote')" [(ngModel)]="operationTypes.remote"></ion-toggle>
+        </ion-item>
+    </ion-list>
     <div style="text-align: center;">
-        <small>App version: {{appVersion}}</small>
+        <small (click)="enableDeveloperMode()">App version: {{appVersion}}</small>
     </div>
 </ion-content>

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {NavigationItem, NavigationParameter} from '../models/navigation_item';
 import {Observable} from 'rxjs/Rx';
+import {Subject}    from 'rxjs/Subject';
 import {CacheService} from "ionic-cache/ionic-cache";
 
 import 'rxjs/add/operator/map';
@@ -14,6 +15,17 @@ import 'rxjs/add/operator/map';
  */
 @Injectable()
 export class NavigationProvider {
+
+    // Observable string sources
+    private forceNavigationUpdate = new Subject<any>();
+
+    // Observable string streams
+    updated$ = this.forceNavigationUpdate.asObservable();
+
+    // Service message commands
+    updateNavigation(operationType) {
+        this.forceNavigationUpdate.next(operationType);
+    }
 
     constructor(public http: Http, public cache: CacheService) {
     }

@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
 import { AppVersion } from 'ionic-native';
 import { OneSignal } from 'ionic-native';
+import {Storage} from '@ionic/storage';
+import {NavigationProvider} from '../../providers/navigation';
 
 /*
  Generated class for the Settings page.
@@ -16,8 +18,11 @@ import { OneSignal } from 'ionic-native';
 export class SettingsPage {
     public notifications: {} = {Competitions: false, Deadlines: false, Seminars: false, Events: false, Nightshuttle: false, Location: false};
     public appVersion: string;
+    public operationTypes = {local: false, remote: false};
+    private developerModeTaps: number = 0;
+    public developerMode: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform, private storage: Storage, private navigationProvider: NavigationProvider) {
 
     }
 
@@ -26,7 +31,41 @@ export class SettingsPage {
             this.appVersion = 'Browser - no version available';
         });
 
+        this.storage.get('developerMode').then(res => {
+            if (res == true) {
+                this.developerMode = true;
+                this.storage.get('forcedOperationType').then(operationType => {
+                    this.operationTypes[operationType] = true;
+                });
+            }
+        });
+
         this.getTags();
+    }
+
+    setOperationType(type: String) {
+        if (type == 'local' && this.operationTypes.local == true) {
+            this.operationTypes.remote = false;
+            this.storage.set('forcedOperationType', 'local');
+            this.navigationProvider.updateNavigation('local');
+        } else if (type == 'remote' && this.operationTypes.remote == true) {
+            this.operationTypes.local = false;
+            this.storage.set('forcedOperationType', 'remote');
+            this.navigationProvider.updateNavigation('remote');
+        } else if (this.operationTypes.remote == false && this.operationTypes.local == false) {
+            this.storage.set('forcedOperationType', false);
+            this.storage.get('operationType').then(operationType => {
+                this.navigationProvider.updateNavigation(operationType);
+            })
+        }
+    }
+
+    enableDeveloperMode() {
+        this.developerModeTaps++;
+        if (this.developerModeTaps >= 7) {
+            this.storage.set('developerMode', true);
+            this.developerMode = true;
+        }
     }
 
     getTags() {

@@ -19,7 +19,7 @@ import {Storage} from '@ionic/storage';
 import {AuthProvider} from '../providers/auth';
 import {ConnectivityService} from '../providers/connectivity-service';
 import {Network} from 'ionic-native';
-import { OneSignal } from 'ionic-native';
+import {OneSignal} from 'ionic-native';
 
 let components = {
     'ContentPage': ContentPage,
@@ -38,11 +38,9 @@ let components = {
 export class PartyMeisterCompanionApp {
     @ViewChild(Nav) nav: Nav;
 
-    // make HelloIonicPage the root (or first) page
     rootPage: any = ContentPage;
-    pages: Array<{title: string, component: any, params?: any, children: any[]}>;
+    pages: Array<{ title: string, component: any, params?: any, children: any[] }>;
     showSubmenu: {};
-    cache: CacheService;
     public operationType: string = 'remote';
 
     menuItemHandler(page): void {
@@ -52,23 +50,26 @@ export class PartyMeisterCompanionApp {
     constructor(public platform: Platform,
                 public menu: MenuController,
                 private navigationProvider: NavigationProvider,
-                cache: CacheService,
+                private cache: CacheService,
                 public menuCtrl: MenuController,
-                private settings: SettingsProvider,
                 private storage: Storage,
                 private linkService: LinkService,
                 public authProvider: AuthProvider,
                 private connectivityService: ConnectivityService) {
 
-        this.cache = cache;
-
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
-        navigationProvider.operationType().subscribe(operationType => {
-            this.storage.set('operationType', operationType);
-            navigationProvider.load(operationType).subscribe(navigationItems => {
-                this.pages = navigationProvider.parseItems(navigationItems, components);
-                this.showSubmenu = navigationProvider.getSubmenus(navigationItems);
+        this.navigationProvider.operationType().subscribe(operationType => {
+            this.storage.get('forcedOperationType').then(forcedOperationType => {
+                let actualOperationType = operationType;
+                if (forcedOperationType != false) {
+                    this.storage.set('operationType', forcedOperationType);
+                    actualOperationType = forcedOperationType;
+                } else {
+                    this.storage.set('operationType', operationType);
+                }
+                this.loadNavigation(actualOperationType);
+
             });
         }, err => {
             // Load local menu as a fallback
@@ -77,6 +78,10 @@ export class PartyMeisterCompanionApp {
                 this.pages = navigationProvider.parseItems(navigationItems, components);
                 this.showSubmenu = navigationProvider.getSubmenus(navigationItems);
             });
+        });
+
+        this.navigationProvider.updated$.subscribe( operationType => {
+            this.loadNavigation(operationType);
         });
 
         linkService.linkClicked$.subscribe(
@@ -111,6 +116,13 @@ export class PartyMeisterCompanionApp {
             });
 
         this.initializeApp();
+    }
+
+    loadNavigation(operationType) {
+        this.navigationProvider.load(operationType).subscribe(navigationItems => {
+            this.pages = this.navigationProvider.parseItems(navigationItems, components);
+            this.showSubmenu =this.navigationProvider.getSubmenus(navigationItems);
+        });
     }
 
     initializeApp() {

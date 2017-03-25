@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {LinkService} from '../../services/link';
 import {Storage} from '@ionic/storage';
+import {SettingsProvider} from '../../providers/settings';
 
 @Component({
     selector: 'page-intro',
@@ -13,7 +14,13 @@ export class IntroPage {
     }
 
     navigateHome() {
-        this.linkService.clickLink('https://2017.revision-party.net/app_at_a_glance.json');
-        this.storage.set('introShown', true);
+        this.storage.get('operationType').then(res => {
+            if (res == null || res == 'remote') {
+                this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+            } else {
+                this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+            }
+            this.storage.set('introShown', true);
+        });
     }
 }

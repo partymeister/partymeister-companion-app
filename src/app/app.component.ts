@@ -64,58 +64,36 @@ export class PartyMeisterCompanionApp {
 
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
-        this.pages = [];
-        this.showSubmenu = {};
-
         navigationProvider.operationType().subscribe(operationType => {
             this.storage.set('operationType', operationType);
             navigationProvider.load(operationType).subscribe(navigationItems => {
-                this.pages = [];
-                for (let item of navigationItems) {
-                    let parent = {
-                        title: item.title,
-                        icon: item.icon,
-                        component: components[item.container],
-                        callFunction: item.callFunction,
-                        params: item.parameters,
-                        children: []
-
-                    };
-                    this.showSubmenu[item.title] = false;
-                    if (item.items) {
-                        let children = [];
-                        for (let subitem of item.items) {
-                            let parameters = subitem.parameters;
-                            parameters.subitem = true;
-                            children.push({
-                                title: subitem.title,
-                                icon: subitem.icon,
-                                component: components[subitem.container],
-                                callFunction: subitem.callFunction,
-                                params: subitem.parameters
-                            });
-                        }
-                        parent.children = children;
-                    }
-                    this.pages.push(parent);
-                }
+                this.pages = navigationProvider.parseItems(navigationItems, components);
+                this.showSubmenu = navigationProvider.getSubmenus(navigationItems);
+            });
+        }, err => {
+            // Load local menu as a fallback
+            navigationProvider.loadOffline('remote').subscribe(navigationItems => {
+                this.storage.set('operationType', 'remote');
+                this.pages = navigationProvider.parseItems(navigationItems, components);
+                this.showSubmenu = navigationProvider.getSubmenus(navigationItems);
             });
         });
 
         linkService.linkClicked$.subscribe(
-            link => {
+            data => {
+                console.log(data);
                 let targetPage: any = null;
                 // find link
                 for (let page of this.pages) {
                     if (page.params != undefined && page.params.url != undefined) {
-                        if (page.params.url == link) {
+                        if (page.params.url == data.link) {
                             targetPage = page;
                         }
                     }
                     if (page.children.length > 0) {
                         for (let child of page.children) {
                             if (child.params != undefined && child.params.url != undefined) {
-                                if (child.params.url == link) {
+                                if (child.params.url == data.link) {
                                     targetPage = child;
                                 }
                             }
@@ -123,7 +101,7 @@ export class PartyMeisterCompanionApp {
                     }
                 }
                 if (targetPage != null) {
-                    if (this.nav.getActive().component.name == 'IntroPage') {
+                    if (data.root) {
                         this.openPage(targetPage);
                         this.menuCtrl.open();
                     } else {
@@ -244,6 +222,13 @@ export class PartyMeisterCompanionApp {
     openPage(page) {
         if (page.callFunction == 'doLogout') {
             this.authProvider.doLogout();
+            this.storage.get('operationType').then(res => {
+                if (res == null || res == 'remote') {
+                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+                } else {
+                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+                }
+            });
             return;
         }
         if (page.children && page.children.length > 0) {

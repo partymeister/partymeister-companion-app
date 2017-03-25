@@ -71,6 +71,9 @@ export class SettingsPage {
                 this.storage.set('forcedOperationMode', false);
                 this.operationTypes.local = false;
                 this.operationTypes.remote = false;
+                this.storage.get('operationType').then(operationType => {
+                    this.navigationProvider.updateNavigation(operationType);
+                });
             }
         }
     }

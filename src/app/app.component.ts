@@ -62,7 +62,7 @@ export class PartyMeisterCompanionApp {
         this.navigationProvider.operationType().subscribe(operationType => {
             this.storage.get('forcedOperationType').then(forcedOperationType => {
                 let actualOperationType = operationType;
-                if (forcedOperationType != false) {
+                if (forcedOperationType != false && forcedOperationType != null) {
                     this.storage.set('operationType', forcedOperationType);
                     actualOperationType = forcedOperationType;
                 } else {
@@ -75,8 +75,9 @@ export class PartyMeisterCompanionApp {
             // Load local menu as a fallback
             navigationProvider.loadOffline('remote').subscribe(navigationItems => {
                 this.storage.set('operationType', 'remote');
-                this.pages = navigationProvider.parseItems(navigationItems, components);
-                this.showSubmenu = navigationProvider.getSubmenus(navigationItems);
+                let result = navigationProvider.parseItems(navigationItems, components);
+                this.showSubmenu = result.submenu;
+                this.pages = result.pages;
             });
         });
 
@@ -86,7 +87,6 @@ export class PartyMeisterCompanionApp {
 
         linkService.linkClicked$.subscribe(
             data => {
-                console.log(data);
                 let targetPage: any = null;
                 // find link
                 for (let page of this.pages) {
@@ -120,8 +120,9 @@ export class PartyMeisterCompanionApp {
 
     loadNavigation(operationType) {
         this.navigationProvider.load(operationType).subscribe(navigationItems => {
-            this.pages = this.navigationProvider.parseItems(navigationItems, components);
-            this.showSubmenu =this.navigationProvider.getSubmenus(navigationItems);
+            let result =  this.navigationProvider.parseItems(navigationItems, components);
+            this.showSubmenu = result.submenu;
+            this.pages = result.pages;
         });
     }
 

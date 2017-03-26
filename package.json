@@ -30,6 +30,7 @@
     "ionic-cache": "^1.1.2",
     "ionic2-rating": "^1.2.0",
     "ionicons": "3.0.0",
+    "jsbarcode": "git+https://github.com/lindell/JsBarcode.git",
     "rxjs": "5.0.1",
     "sprintf-js": "^1.0.3",
     "sw-toolbox": "3.4.0",

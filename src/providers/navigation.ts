@@ -55,14 +55,6 @@ export class NavigationProvider {
         );
     }
 
-    getSubmenus(navigationItems: NavigationItem[]) {
-        let submenu = {};
-        for (let item of navigationItems) {
-            submenu[item.title] = false;
-        }
-        return submenu;
-    }
-
     parseItems(navigationItems: NavigationItem[], components) {
         let pages = [];
         let submenu = {};
@@ -94,7 +86,7 @@ export class NavigationProvider {
             }
             pages.push(parent);
         }
-        return pages;
+        return {pages: pages, submenu: submenu};
     }
 
 }

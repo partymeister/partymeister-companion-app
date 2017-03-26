@@ -32,7 +32,6 @@ import {VoteProvider} from '../providers/vote';
 import {AuthProvider} from '../providers/auth';
 import {EntryProvider} from '../providers/entry';
 import {IonicStorageModule} from '@ionic/storage';
-import {EnvironmentsModule} from '../app/environment-variables/environment-variables.module'
 import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
 import {Injector} from "@angular/core";
 import {ServiceLocator} from '../services/service-locator';
@@ -64,7 +63,6 @@ import {ServiceLocator} from '../services/service-locator';
         CountryPickerModule.forRoot({
             baseUrl: 'assets/'
         }),
-        EnvironmentsModule,
         IonicStorageModule.forRoot(),
         Ionic2RatingModule // Put ionic2-rating module here
     ],

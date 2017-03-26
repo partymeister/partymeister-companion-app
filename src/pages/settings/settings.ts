@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, Platform} from 'ionic-angular';
-import { AppVersion } from 'ionic-native';
-import { OneSignal } from 'ionic-native';
+import { AppVersion } from '@ionic-native/app-version';
+import { OneSignal } from '@ionic-native/onesignal';
 import {Storage} from '@ionic/storage';
 import {NavigationProvider} from '../../providers/navigation';
 
@@ -17,18 +17,26 @@ import {NavigationProvider} from '../../providers/navigation';
 })
 export class SettingsPage {
     public notifications: {} = {Competitions: false, Deadlines: false, Seminars: false, Events: false, Nightshuttle: false, Location: false};
-    public appVersion: string;
+    public version: string;
     public operationTypes = {local: false, remote: false};
     private developerModeTaps: number = 0;
     public developerMode: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private platform: Platform, private storage: Storage, private navigationProvider: NavigationProvider) {
+    constructor(
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private platform: Platform,
+        private storage: Storage,
+        private navigationProvider: NavigationProvider,
+        private appVersion: AppVersion,
+        private oneSignal: OneSignal
+    ) {
 
     }
 
     ionViewDidLoad() {
-        AppVersion.getVersionNumber().then(res => this.appVersion = res).catch(err => {
-            this.appVersion = 'Browser - no version available';
+        this.appVersion.getVersionNumber().then(res => this.appVersion = res).catch(err => {
+            this.version = 'Browser - no version available';
         });
 
         this.storage.get('developerMode').then(res => {
@@ -80,7 +88,7 @@ export class SettingsPage {
 
     getTags() {
         if (this.platform.is('cordova')) {
-            OneSignal.getTags().then(res => {
+            this.oneSignal.getTags().then(res => {
                 for (let key in res) {
                     if (res.hasOwnProperty(key)) {
                         this.notifications[key] = !!res[key];
@@ -94,7 +102,7 @@ export class SettingsPage {
 
     setTags() {
         if (this.platform.is('cordova')) {
-            OneSignal.sendTags(this.notifications);
+            this.oneSignal.sendTags(this.notifications);
         }
     }
 

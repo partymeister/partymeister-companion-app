@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {BarcodeScanner} from 'ionic-native';
+import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {CountryPickerService} from 'angular2-countrypicker';
 import {CountryProvider} from '../../providers/country';
 import {AlertController} from 'ionic-angular';
@@ -17,7 +17,15 @@ export class RegistrationPage extends MasterPage {
     private form: FormGroup;
     public countries: any[];
 
-    constructor(private alertCtrl: AlertController, private countryProvider: CountryProvider, private countryPickerService: CountryPickerService, public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+    constructor(
+        private alertCtrl: AlertController,
+        private countryProvider: CountryProvider,
+        private countryPickerService: CountryPickerService,
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private formBuilder: FormBuilder,
+        private barcodeScanner: BarcodeScanner
+    ) {
         super(navCtrl, navParams);
 
         this.form = this.formBuilder.group({
@@ -44,7 +52,7 @@ export class RegistrationPage extends MasterPage {
     }
 
     openCamera(event) {
-        BarcodeScanner.scan().then((barcodeData) => {
+        this.barcodeScanner.scan().then((barcodeData) => {
             this.form.patchValue({access_key: barcodeData.text});
         }, (err) => {
             // An error occurred

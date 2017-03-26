@@ -35,6 +35,14 @@ import {IonicStorageModule} from '@ionic/storage';
 import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
 import {Injector} from "@angular/core";
 import {ServiceLocator} from '../services/service-locator';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {Network} from '@ionic-native/network';
+import {OneSignal} from '@ionic-native/onesignal';
+import {BarcodeScanner} from '@ionic-native/barcode-scanner';
+import { Camera, CameraOptions } from '@ionic-native/camera';
+import {AppVersion} from '@ionic-native/app-version';
+
 
 @NgModule({
     declarations: [
@@ -93,7 +101,14 @@ import {ServiceLocator} from '../services/service-locator';
         AuthProvider,
         VoteProvider,
         EntryProvider,
-        ConnectivityService
+        ConnectivityService,
+        StatusBar,
+        SplashScreen,
+        Network,
+        OneSignal,
+        BarcodeScanner,
+        Camera,
+        AppVersion
     ]
 })
 export class AppModule {

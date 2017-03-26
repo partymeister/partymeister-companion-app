@@ -1,6 +1,9 @@
 import {Component, ViewChild, Input} from '@angular/core';
 import {Platform, MenuController, Nav} from 'ionic-angular';
-import {StatusBar, Splashscreen} from 'ionic-native';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import { Network } from '@ionic-native/network';
+import {OneSignal} from '@ionic-native/onesignal';
 import {CacheService} from "ionic-cache/ionic-cache";
 
 import {ContentPage} from '../pages/content/content';
@@ -18,8 +21,6 @@ import {LinkService} from '../services/link';
 import {Storage} from '@ionic/storage';
 import {AuthProvider} from '../providers/auth';
 import {ConnectivityService} from '../providers/connectivity-service';
-import {Network} from 'ionic-native';
-import {OneSignal} from 'ionic-native';
 
 let components = {
     'ContentPage': ContentPage,
@@ -55,7 +56,12 @@ export class PartyMeisterCompanionApp {
                 private storage: Storage,
                 private linkService: LinkService,
                 public authProvider: AuthProvider,
-                private connectivityService: ConnectivityService) {
+                private connectivityService: ConnectivityService,
+                private splashScreen: SplashScreen,
+                private statusBar: StatusBar,
+                private oneSignal: OneSignal,
+                private network: Network
+    ) {
 
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
@@ -81,30 +87,14 @@ export class PartyMeisterCompanionApp {
             });
         });
 
-        this.navigationProvider.updated$.subscribe( operationType => {
+        this.navigationProvider.updated$.subscribe(operationType => {
             this.loadNavigation(operationType);
         });
 
         linkService.linkClicked$.subscribe(
             data => {
-                let targetPage: any = null;
-                // find link
-                for (let page of this.pages) {
-                    if (page.params != undefined && page.params.url != undefined) {
-                        if (page.params.url == data.link) {
-                            targetPage = page;
-                        }
-                    }
-                    if (page.children.length > 0) {
-                        for (let child of page.children) {
-                            if (child.params != undefined && child.params.url != undefined) {
-                                if (child.params.url == data.link) {
-                                    targetPage = child;
-                                }
-                            }
-                        }
-                    }
-                }
+                let targetPage = linkService.searchPage(this.pages, data.link);
+                console.log(targetPage);
                 if (targetPage != null) {
                     if (data.root) {
                         this.openPage(targetPage);
@@ -120,7 +110,7 @@ export class PartyMeisterCompanionApp {
 
     loadNavigation(operationType) {
         this.navigationProvider.load(operationType).subscribe(navigationItems => {
-            let result =  this.navigationProvider.parseItems(navigationItems, components, this.showSubmenu);
+            let result = this.navigationProvider.parseItems(navigationItems, components, this.showSubmenu);
             this.showSubmenu = result.submenu;
             this.pages = result.pages;
         });
@@ -131,8 +121,8 @@ export class PartyMeisterCompanionApp {
 
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            StatusBar.styleDefault();
-            Splashscreen.hide();
+            this.statusBar.styleDefault();
+            this.splashScreen.hide();
 
             this.addConnectivityListeners();
             if (this.platform.is('cordova')) {
@@ -170,19 +160,19 @@ export class PartyMeisterCompanionApp {
     }
 
     addOneSignalConfiguration() {
-        OneSignal.startInit('3fdb8164-8438-4afb-b4f4-95ec317ebd88', '794542674802');
+        this.oneSignal.startInit('3fdb8164-8438-4afb-b4f4-95ec317ebd88', '794542674802');
 
-        OneSignal.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.InAppAlert);
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
-        OneSignal.handleNotificationReceived().subscribe(() => {
+        this.oneSignal.handleNotificationReceived().subscribe(() => {
             // do something when notification is received
         });
 
-        OneSignal.handleNotificationOpened().subscribe(() => {
+        this.oneSignal.handleNotificationOpened().subscribe(() => {
             // do something when a notification is opened
         });
 
-        OneSignal.endInit();
+        this.oneSignal.endInit();
     }
 
     addConnectivityListeners() {
@@ -199,12 +189,12 @@ export class PartyMeisterCompanionApp {
         window.addEventListener('online', onOnline, false);
         window.addEventListener('offline', onOffline, false);
 
-        let disconnectSubscription = Network.onDisconnect().subscribe(() => {
+        let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
             console.log('network DISconnected!');
             this.connectivityService.online = false;
         });
 
-        let connectSubscription = Network.onConnect().subscribe(() => {
+        let connectSubscription = this.network.onConnect().subscribe(() => {
             // We just got a connection but we need to wait briefly
             // before we determine the connection type.  Might need to wait 
             // prior to doing any api requests as well.
@@ -235,13 +225,7 @@ export class PartyMeisterCompanionApp {
     openPage(page) {
         if (page.callFunction == 'doLogout') {
             this.authProvider.doLogout();
-            this.storage.get('operationType').then(res => {
-                if (res == null || res == 'remote') {
-                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
-                } else {
-                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
-                }
-            });
+            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_LOGOUT_PAGE, true);
             return;
         }
         if (page.children && page.children.length > 0) {

@@ -55,9 +55,8 @@ export class NavigationProvider {
         );
     }
 
-    parseItems(navigationItems: NavigationItem[], components) {
+    parseItems(navigationItems: NavigationItem[], components, submenu: {} = {}) {
         let pages = [];
-        let submenu = {};
         for (let item of navigationItems) {
             let parent = {
                 title: item.title,
@@ -68,7 +67,9 @@ export class NavigationProvider {
                 children: []
 
             };
-            submenu[item.title] = false;
+            if (!submenu.hasOwnProperty(item.title)) {
+                submenu[item.title] = false;
+            }
             if (item.items) {
                 let children = [];
                 for (let subitem of item.items) {

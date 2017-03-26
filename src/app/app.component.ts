@@ -120,7 +120,7 @@ export class PartyMeisterCompanionApp {
 
     loadNavigation(operationType) {
         this.navigationProvider.load(operationType).subscribe(navigationItems => {
-            let result =  this.navigationProvider.parseItems(navigationItems, components);
+            let result =  this.navigationProvider.parseItems(navigationItems, components, this.showSubmenu);
             this.showSubmenu = result.submenu;
             this.pages = result.pages;
         });

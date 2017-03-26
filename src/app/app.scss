@@ -65,6 +65,9 @@ ion-menu {
       }
     }
   }
+  .list-header-md {
+    border-top: none !important;
+  }
   ion-list-header h5 {
     color: color($colors, light)
   }

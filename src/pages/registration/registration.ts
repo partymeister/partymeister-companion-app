@@ -10,7 +10,7 @@ import {MasterPage} from '../master/master';
 
 @Component({
     selector: 'page-registration',
-    templateUrl: 'registration.html'
+    templateUrl: 'registration.html',
 })
 
 export class RegistrationPage extends MasterPage {
@@ -36,9 +36,15 @@ export class RegistrationPage extends MasterPage {
             password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
             password_repeat: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
         }, {validator: RegistrationPage.matchPasswords});
+
         this.countryPickerService.getCountries().subscribe(countries =>
             this.countries = countryProvider.sortCountries(countries)
-        )
+        );
+
+        this.form.valueChanges.subscribe(data => {
+            this.form.patchValue({access_key: data.access_key.toUpperCase()}, {onlySelf: true, emitEvent: false});
+        })
+
     }
 
     static matchPasswords(cg: FormGroup): {[err: string]: any} {
@@ -48,10 +54,12 @@ export class RegistrationPage extends MasterPage {
         if ((pwd1.touched || pwd2.touched) && pwd1.value !== pwd2.value) {
             rv['passwordMismatch'] = true;
         }
+
         return rv;
     }
 
     openCamera(event) {
+
         this.barcodeScanner.scan().then((barcodeData) => {
             this.form.patchValue({access_key: barcodeData.text});
         }, (err) => {

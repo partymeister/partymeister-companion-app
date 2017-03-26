@@ -42,7 +42,8 @@
             <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Location"></ion-toggle>
         </ion-item>
     </ion-list>
-    <ion-list *ngIf="developerMode == true">
+
+    <ion-list *ngIf="developerMode == true" class="developer-mode">
         <ion-list-header>
             Developer mode
         </ion-list-header>
@@ -55,7 +56,8 @@
             <ion-toggle (ionChange)="setOperationType('remote')" [(ngModel)]="operationTypes.remote"></ion-toggle>
         </ion-item>
     </ion-list>
-    <div style="text-align: center;">
+
+    <div style="text-align: center; margin: 10px;">
         <small (click)="enableDeveloperMode()">App version: {{version}}</small>
     </div>
 </ion-content>

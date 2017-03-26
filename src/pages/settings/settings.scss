@@ -12,4 +12,10 @@ page-settings {
   ion-toggle .toggle-inner {
     background-color: color($colors, light) !important;
   }
+  .list-md.developer-mode {
+    margin-top: 40px;
+    .list-header-md {
+      border-top: none !important;
+    }
+  }
 }

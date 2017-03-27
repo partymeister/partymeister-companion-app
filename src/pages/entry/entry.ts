@@ -12,6 +12,7 @@ import {MasterPage} from '../master/master';
 })
 export class EntryPage extends MasterPage {
     public entries: Entry[];
+    public subscriptionActive: boolean = false;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private entryProvider: EntryProvider) {
         super(navCtrl, navParams);
@@ -24,6 +25,7 @@ export class EntryPage extends MasterPage {
 
     entrySubscription(refresher?) {
         this.entryProvider.loadEntries().subscribe(result => {
+            this.subscriptionActive = true;
             this.entries = result;
             if (refresher) {
                 refresher.complete();

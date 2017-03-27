@@ -15,4 +15,20 @@ page-entry-modal {
     font-size: 1.4rem;
   }
 
+  .item-inner {
+    border-bottom: none !important;
+  }
+
+  .list-header-md {
+    margin-top: 20px;
+    border-top: none !important;
+  }
+
+  .button-clear-md {
+    float: right;
+  }
+  .toolbar-title-md {
+    line-height: 3.6rem;
+  }
+
 }

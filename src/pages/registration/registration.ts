@@ -30,7 +30,7 @@ export class RegistrationPage extends MasterPage {
 
         this.form = this.formBuilder.group({
             login: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-            group: [''],
+            groups: [''],
             country: ['DE', Validators.required],
             access_key: ['', Validators.required],
             password: ['', Validators.compose([Validators.required, Validators.minLength(3)])],

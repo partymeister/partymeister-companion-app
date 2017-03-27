@@ -23,9 +23,9 @@ export class PagesProvider {
         let request = this.http.get(`${data}`);
         if (force) {
             this.cache.clearGroup('page_' + Md5.hashStr(data));
-            return this.cache.loadFromObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 1).map(res => <Page>res.json());
+            return this.cache.loadFromDelayedObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 1).map(res => <Page>res.json());
         }
-        return this.cache.loadFromObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 60*60).map(res => <Page>res.json());
+        return this.cache.loadFromDelayedObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 60*60).map(res => <Page>res.json());
     }
 
 }

@@ -38,7 +38,7 @@ export class NavigationProvider {
     // Load the navigation tree
     load(type): Observable<NavigationItem[]> {
         let request = this.http.get(`https://dl.dropboxusercontent.com/u/166337/pm-companion-app-menu-new.json`);
-        return this.cache.loadFromObservable('navigation', request, 'navigation', 5).map(res => {
+        return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', 5).map(res => {
                 let result = res.json();
                 return <NavigationItem[]>result[type];
             }
@@ -48,7 +48,7 @@ export class NavigationProvider {
     // Load the navigation tree from disk
     loadOffline(type): Observable<NavigationItem[]> {
         let request = this.http.get('./assets/data/offline-menu.json');
-        return this.cache.loadFromObservable('navigation', request, 'navigation', 5).map(res => {
+        return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', 5).map(res => {
                 let result = res.json();
                 return <NavigationItem[]>result[type];
             }

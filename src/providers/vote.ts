@@ -43,7 +43,7 @@ export class VoteProvider {
                 return <VoteEntry[]>res.json().data;
             });
         }
-        return this.cache.loadFromObservable('vote_entries', request, 'vote_entries', 60).map(res => {
+        return this.cache.loadFromDelayedObservable('vote_entries', request, 'vote_entries', 60).map(res => {
             if (res.status == 204) {
                 return [];
             }

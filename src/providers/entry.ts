@@ -18,7 +18,7 @@ export class EntryProvider {
         let options = new RequestOptions({headers: headers}); // Create a request option
 
         let request = this.http.get(sprintf(SettingsProvider.variables.ENTRY_API, this.authProvider.uniqid()) + '?' + Math.floor((Math.random() * 1000000) + 1), options);
-        return this.cache.loadFromObservable('entries', request, 'entries', 1).map(res => {
+        return this.cache.loadFromDelayedObservable('entries', request, 'entries', 1).map(res => {
                 return <Entry[]>res.json().data;
             }
         );

@@ -13,4 +13,10 @@ visitor-component {
   li {
     padding-bottom: 5px;
   }
+  .hideDiv {
+    display: none;
+  }
+  .showDiv {
+    display: block !important;
+  }
 }

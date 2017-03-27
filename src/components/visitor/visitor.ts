@@ -28,6 +28,8 @@ export class VisitorComponent {
     searchTerm: string = '';
     searchControl: FormControl;
     searching: any = false;
+    public hideContent: boolean = true;
+
     public operationType: string = 'remote';
 
     constructor(public visitorService: VisitorProvider, public modalCtrl: ModalController, private storage: Storage, public authProvider: AuthProvider, private navCtrl: Nav) {
@@ -35,6 +37,7 @@ export class VisitorComponent {
     }
 
     ngOnInit() {
+        this.hideContent = true;
         this.visitors = this.block.content.visitors;
         this.originalVisitors = this.block.content.visitors;
 
@@ -47,7 +50,8 @@ export class VisitorComponent {
 
         this.storage.get('operationType').then(res => {
             this.operationType = res;
-        })
+            this.hideContent = false;
+        });
     }
 
     onSearchInput() {

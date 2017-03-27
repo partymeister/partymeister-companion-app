@@ -46,6 +46,13 @@ export class PartyMeisterCompanionApp {
 
     menuItemHandler(page): void {
         this.showSubmenu[page.title] = !this.showSubmenu[page.title];
+
+        // close all other submenus
+        for (var i in this.showSubmenu) {
+            if (this.showSubmenu.hasOwnProperty(i) && i != page.title) {
+                this.showSubmenu[i] = false;
+            }
+        }
     }
 
     constructor(public platform: Platform,
@@ -139,6 +146,7 @@ export class PartyMeisterCompanionApp {
                             "title": "Visitors"
                         });
                         this.menuCtrl.open();
+                        this.splashScreen.hide();
                     } else {
                         this.storage.get('introShown').then((result) => {
                             if (result == null) {
@@ -149,6 +157,7 @@ export class PartyMeisterCompanionApp {
                                     "title": "Revision At A Glance"
                                 });
                                 this.menuCtrl.open();
+                                this.splashScreen.hide();
                             }
                         });
                     }
@@ -229,6 +238,7 @@ export class PartyMeisterCompanionApp {
             return;
         }
         if (page.children && page.children.length > 0) {
+
             return;
         }
         // close the menu when clicking a link from the menu

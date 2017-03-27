@@ -35,7 +35,7 @@ export class SettingsPage {
     }
 
     ionViewDidLoad() {
-        this.appVersion.getVersionNumber().then(res => this.appVersion = res).catch(err => {
+        this.appVersion.getVersionNumber().then(res => this.version = res).catch(err => {
             this.version = 'Browser - no version available';
         });
 

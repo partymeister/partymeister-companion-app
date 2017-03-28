@@ -3,6 +3,8 @@ import {NavController, NavParams, MenuController} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {AlertController} from 'ionic-angular';
 import {MasterPage} from '../master/master';
+import {LinkService} from '../../services/link';
+import {SettingsProvider} from '../../providers/settings';
 
 // FIXME: make this into a provider or service
 import {RegistrationPage} from '../registration/registration';
@@ -17,7 +19,14 @@ export class LoginPage extends MasterPage {
     private form: FormGroup;
     public countries: any[];
 
-    constructor(private menuCtrl: MenuController, private alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, private formBuilder: FormBuilder) {
+    constructor(
+        private menuCtrl: MenuController,
+        private alertCtrl: AlertController,
+        public navCtrl: NavController,
+        public navParams: NavParams,
+        private formBuilder: FormBuilder,
+        private linkService: LinkService,
+    ) {
         super(navCtrl, navParams);
 
         this.form = this.formBuilder.group({
@@ -34,11 +43,7 @@ export class LoginPage extends MasterPage {
         this.authProvider.loginRequest(this.form.value)
             .subscribe(result => {
                     this.authProvider.doLogin(result.json().data).then(res => {
-                        this.navCtrl.setRoot(ContentPage, {
-                            title: "Visitors",
-                            url: "https://local.revision-party.net/visitors.json",
-                            force: true
-                        });
+                        this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
                         this.menuCtrl.open();
                     });
                 },

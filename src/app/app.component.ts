@@ -2,7 +2,7 @@ import {Component, ViewChild, Input} from '@angular/core';
 import {Platform, MenuController, Nav} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-import { Network } from '@ionic-native/network';
+import {Network} from '@ionic-native/network';
 import {OneSignal} from '@ionic-native/onesignal';
 import {CacheService} from "ionic-cache/ionic-cache";
 
@@ -11,6 +11,7 @@ import {SettingsPage} from '../pages/settings/settings';
 import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {EntryPage} from '../pages/entry/entry';
+import {TicketPage} from '../pages/ticket/ticket';
 import {LiveVotePage} from '../pages/livevote/livevote';
 import {VotePage} from '../pages/vote/vote';
 import {RegistrationPage} from '../pages/registration/registration';
@@ -31,6 +32,7 @@ let components = {
     'EntryPage': EntryPage,
     'LiveVotePage': LiveVotePage,
     'VotePage': VotePage,
+    'TicketPage': TicketPage,
 };
 
 @Component({
@@ -43,6 +45,7 @@ export class PartyMeisterCompanionApp {
     pages: Array<{ title: string, component: any, params?: any, children: any[] }>;
     showSubmenu: {};
     public operationType: string = 'remote';
+    private initialized: boolean = false;
 
     menuItemHandler(page): void {
         this.showSubmenu[page.title] = !this.showSubmenu[page.title];
@@ -67,8 +70,7 @@ export class PartyMeisterCompanionApp {
                 private splashScreen: SplashScreen,
                 private statusBar: StatusBar,
                 private oneSignal: OneSignal,
-                private network: Network
-    ) {
+                private network: Network) {
 
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
@@ -91,6 +93,7 @@ export class PartyMeisterCompanionApp {
                 let result = navigationProvider.parseItems(navigationItems, components);
                 this.showSubmenu = result.submenu;
                 this.pages = result.pages;
+                this.initializeApp();
             });
         });
 
@@ -111,8 +114,6 @@ export class PartyMeisterCompanionApp {
                     }
                 }
             });
-
-        this.initializeApp();
     }
 
     loadNavigation(operationType) {
@@ -120,11 +121,16 @@ export class PartyMeisterCompanionApp {
             let result = this.navigationProvider.parseItems(navigationItems, components, this.showSubmenu);
             this.showSubmenu = result.submenu;
             this.pages = result.pages;
+            this.initializeApp();
         });
     }
 
     initializeApp() {
+        if (this.initialized == true) {
+            return;
+        }
         this.platform.ready().then(() => {
+            this.initialized = true;
 
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
@@ -140,27 +146,15 @@ export class PartyMeisterCompanionApp {
             ImgCache.options.debug = true;
             // page is set until img cache has started
             ImgCache.init(() => {
-                    if (this.authProvider.isAuthenticated()) {
-                        this.nav.setRoot(ContentPage, {
-                            "url": "https://2017.revision-party.net/frontend/default/en/app_about/app_visitors.json",
-                            "title": "Visitors"
-                        });
+                    this.storage.get('operationType').then(operationType => {
+                        if (operationType == 'local') {
+                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+                        } else {
+                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+                        }
                         this.menuCtrl.open();
                         this.splashScreen.hide();
-                    } else {
-                        this.storage.get('introShown').then((result) => {
-                            if (result == null) {
-                                this.nav.setRoot(IntroPage);
-                            } else {
-                                this.nav.setRoot(ContentPage, {
-                                    "url": "https://2017.revision-party.net/app_at_a_glance.json",
-                                    "title": "Revision At A Glance"
-                                });
-                                this.menuCtrl.open();
-                                this.splashScreen.hide();
-                            }
-                        });
-                    }
+                    });
                 },
                 () => {
                     console.error('ImgCache init: error! Check the log for errors');

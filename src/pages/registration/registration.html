@@ -19,11 +19,11 @@
     <form padding [formGroup]="form" (ngSubmit)="submit()">
         <ion-item>
             <ion-label>Handle</ion-label>
-            <ion-input type="text" formControlName="login"></ion-input>
+            <ion-input type="text" formControlName="login" autocapitalize=none></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Group</ion-label>
-            <ion-input type="text" formControlName="groups"></ion-input>
+            <ion-input type="text" formControlName="groups" autocapitalize=none></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>Country</ion-label>

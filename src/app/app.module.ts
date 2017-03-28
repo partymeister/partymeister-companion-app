@@ -9,6 +9,7 @@ import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {RegistrationPage} from '../pages/registration/registration';
 import {EntryPage} from '../pages/entry/entry';
+import {TicketPage} from '../pages/ticket/ticket';
 import {NetworkConnectionComponent} from '../components/network-connection/network-connection';
 import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
@@ -31,6 +32,7 @@ import {CountryProvider} from '../providers/country';
 import {VoteProvider} from '../providers/vote';
 import {AuthProvider} from '../providers/auth';
 import {EntryProvider} from '../providers/entry';
+import {TicketProvider} from '../providers/ticket';
 import {IonicStorageModule} from '@ionic/storage';
 import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
 import {Injector} from "@angular/core";
@@ -62,6 +64,7 @@ import {AppVersion} from '@ionic-native/app-version';
         EntryModalPage,
         LiveVotePage,
         VotePage,
+        TicketPage,
         LazyImgComponent,
     ],
     imports: [
@@ -87,6 +90,7 @@ import {AppVersion} from '@ionic-native/app-version';
         EntryPage,
         LiveVotePage,
         VotePage,
+        TicketPage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
@@ -101,6 +105,7 @@ import {AppVersion} from '@ionic-native/app-version';
         AuthProvider,
         VoteProvider,
         EntryProvider,
+        TicketProvider,
         ConnectivityService,
         StatusBar,
         SplashScreen,

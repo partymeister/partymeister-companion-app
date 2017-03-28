@@ -1,0 +1,8 @@
+page-entry {
+  ion-card-title, ion-card-content p {
+    color: color($colors, light) !important;
+  }
+  .item-inner {
+    border-bottom: none !important;
+  }
+}

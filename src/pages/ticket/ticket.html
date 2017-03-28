@@ -1,0 +1,50 @@
+<!--
+  Generated template for the Entries page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <h5 padding *ngIf="subscriptionActive == true && tickets.length == 0">You haven't scanned any tickets yet.</h5>
+  <h5 padding *ngIf="subscriptionActive == false">Fetching ticket information...</h5>
+  <network-connection [isOnline]="connectivityService.online"></network-connection>
+    <ion-card *ngFor="let ticket of tickets">
+      <ion-card-content>
+        <ion-card-title>
+          {{ticket.type}}
+        </ion-card-title>
+        <p>
+          {{ticket.order_number}}<br>
+          {{ticket.first_name}} {{ticket.last_name}}
+        </p>
+        <hr>
+      </ion-card-content>
+
+    </ion-card>
+
+  <form padding [formGroup]="form" (ngSubmit)="submit()">
+    <ion-item>
+      <ion-label>Last name</ion-label>
+      <ion-input type="text" formControlName="last_name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button type="button" (click)="openCamera($event)" color="light" item-right><ion-icon name="camera"></ion-icon></button>
+      <ion-label>Ticket code</ion-label>
+      <ion-input type="text" formControlName="code"></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block [disabled]="!form.valid">Add ticket</button>
+  </form>
+</ion-content>

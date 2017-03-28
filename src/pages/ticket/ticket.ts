@@ -67,12 +67,7 @@ export class TicketPage extends MasterPage {
     submit() {
         this.ticketProvider.ticketRequest(this.form.value)
             .subscribe(result => {
-                    console.log(result);
-                    // this.navCtrl.setRoot(ContentPage, {
-                    //     title: "Visitors",
-                    //     url: "https://local.revision-party.net/visitors.json",
-                    //     force: true
-                    // });
+                    result.then(tickets => this.tickets = tickets);
                 },
                 err => {
                     let alert = this.alertCtrl.create({

@@ -15,7 +15,9 @@ export class ConnectivityService {
         public platform: Platform,
         private network: Network) {
         this.onDevice = this.platform.is('cordova');
-        this.online = this.isOnline();
+        this.platform.ready().then(() => {
+            this.online = this.isOnline();
+        });
     }
 
     isOnline(): boolean {

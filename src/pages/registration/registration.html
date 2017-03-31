@@ -28,7 +28,7 @@
         <ion-item>
             <ion-label>Country</ion-label>
             <ion-select formControlName="country">
-                <ion-option *ngFor="let c of countries" [value]="c.cca2">{{c.name.common}}</ion-option>
+                <ion-option *ngFor="let c of countries" [value]="c.code">{{c.value}}</ion-option>
             </ion-select>
         </ion-item>
         <ion-item>

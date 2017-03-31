@@ -29,7 +29,6 @@
     "@ionic-native/splash-screen": "^3.2.4",
     "@ionic-native/status-bar": "^3.2.4",
     "@ionic/storage": "2.0.1",
-    "angular2-countrypicker": "^1.0.0",
     "flag-icon-css": "^2.8.0",
     "font-awesome": "^4.7.0",
     "gl-ionic2-env-configuration": "0.0.18",
@@ -46,22 +45,23 @@
     "zone.js": "0.7.2"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "1.1.4",
+    "@ionic/app-scripts": "1.2.5",
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
+    "ionic-plugin-keyboard",
     "cordova-plugin-whitelist",
     "cordova-plugin-statusbar",
-    "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "ionic-plugin-keyboard",
     "cordova-plugin-file",
+    "cordova-plugin-compat",
     "cordova-plugin-file-transfer",
+    "cordova-plugin-console",
     "phonegap-plugin-barcodescanner",
-    "cordova-plugin-network-information",
     "cordova-plugin-app-version",
-    "onesignal-cordova-plugin"
+    "onesignal-cordova-plugin",
+    "cordova-plugin-network-information"
   ],
   "description": "partymeister-companion-app: An Ionic project",
   "config": {
@@ -70,5 +70,12 @@
     "ionic_copy": "./config/copy.config.js",
     "ionic_sass": "./config/sass.config.js",
     "ionic_webpack": "./config/webpack.config.js"
-  }
+  },
+  "cordovaPlatforms": [
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
+    }
+  ]
 }

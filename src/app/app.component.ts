@@ -1,5 +1,5 @@
 import {Component, ViewChild, Input} from '@angular/core';
-import {Platform, MenuController, Nav} from 'ionic-angular';
+import {Platform, MenuController, Nav, AlertController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Network} from '@ionic-native/network';
@@ -70,7 +70,9 @@ export class PartyMeisterCompanionApp {
                 private splashScreen: SplashScreen,
                 private statusBar: StatusBar,
                 private oneSignal: OneSignal,
-                private network: Network) {
+                private network: Network,
+                private alertCtrl: AlertController,
+    ) {
 
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
@@ -104,7 +106,6 @@ export class PartyMeisterCompanionApp {
         linkService.linkClicked$.subscribe(
             data => {
                 let targetPage = linkService.searchPage(this.pages, data.link);
-                console.log(targetPage);
                 if (targetPage != null) {
                     if (data.root) {
                         this.openPage(targetPage);
@@ -159,6 +160,38 @@ export class PartyMeisterCompanionApp {
                 () => {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
+        });
+
+        this.platform.registerBackButtonAction(() => {
+            console.log("Back button Action registered");
+            if (this.menuCtrl.isOpen()) {
+                this.menuCtrl.close();
+                return;
+            }
+            if(!this.nav.canGoBack()) {
+                let alert = this.alertCtrl.create({
+                    title: 'Exit?',
+                    message: 'Do you want to exit the app?',
+                    buttons: [
+                        {
+                            text: 'Cancel',
+                            role: 'cancel',
+                            handler: () => {
+                                alert = null;
+                            }
+                        },
+                        {
+                            text: 'Exit',
+                            handler: () => {
+                                this.platform.exitApp();
+                            }
+                        }
+                    ]
+                });
+                alert.present();
+                return;
+            }
+            this.nav.pop();
         });
     }
 

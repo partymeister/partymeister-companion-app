@@ -1,4 +1,4 @@
-import {NgModule, ErrorHandler} from '@angular/core';
+import {NgModule, ErrorHandler, OpaqueToken} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {ConnectivityService} from '../providers/connectivity-service';
@@ -15,6 +15,7 @@ import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
 import {VisitorProvider} from '../providers/visitor';
 import {SettingsProvider} from '../providers/settings';
+import {CountryProvider} from '../providers/country';
 import {TextComponent} from '../components/text/text';
 import {GalleryComponent} from '../components/gallery/gallery';
 import {VisitorComponent} from '../components/visitor/visitor';
@@ -27,8 +28,6 @@ import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
 import {LazyImgComponent} from '../components/lazyimg/lazyimg';
 import {LinkService} from '../services/link';
-import {CountryPickerModule} from 'angular2-countrypicker';
-import {CountryProvider} from '../providers/country';
 import {VoteProvider} from '../providers/vote';
 import {AuthProvider} from '../providers/auth';
 import {EntryProvider} from '../providers/entry';
@@ -42,9 +41,12 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Network} from '@ionic-native/network';
 import {OneSignal} from '@ionic-native/onesignal';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import {Camera, CameraOptions} from '@ionic-native/camera';
 import {AppVersion} from '@ionic-native/app-version';
+import {enableProdMode} from '@angular/core';
 
+// this is the magic wand
+enableProdMode();
 
 @NgModule({
     declarations: [
@@ -71,9 +73,6 @@ import {AppVersion} from '@ionic-native/app-version';
         IonicModule.forRoot(PartyMeisterCompanionApp),
         FormsModule,
         ReactiveFormsModule,
-        CountryPickerModule.forRoot({
-            baseUrl: 'assets/'
-        }),
         IonicStorageModule.forRoot(),
         Ionic2RatingModule // Put ionic2-rating module here
     ],
@@ -99,9 +98,9 @@ import {AppVersion} from '@ionic-native/app-version';
         CacheService,
         Md5,
         VisitorProvider,
-        CountryProvider,
         SettingsProvider,
         LinkService,
+        CountryProvider,
         AuthProvider,
         VoteProvider,
         EntryProvider,

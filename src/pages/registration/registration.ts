@@ -1,8 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, OpaqueToken} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
-import {CountryPickerService} from 'angular2-countrypicker';
 import {CountryProvider} from '../../providers/country';
 import {AlertController} from 'ionic-angular';
 import {ContentPage} from '../content/content';
@@ -15,16 +14,15 @@ import {MasterPage} from '../master/master';
 
 export class RegistrationPage extends MasterPage {
     private form: FormGroup;
-    public countries: any[];
+    public countries: any[] = [];
 
     constructor(
         private alertCtrl: AlertController,
-        private countryProvider: CountryProvider,
-        private countryPickerService: CountryPickerService,
         public navCtrl: NavController,
         public navParams: NavParams,
         private formBuilder: FormBuilder,
-        private barcodeScanner: BarcodeScanner
+        private barcodeScanner: BarcodeScanner,
+        private countryProvider: CountryProvider
     ) {
         super(navCtrl, navParams);
 
@@ -37,9 +35,7 @@ export class RegistrationPage extends MasterPage {
             password_repeat: ['', Validators.compose([Validators.required, Validators.minLength(3)])]
         }, {validator: RegistrationPage.matchPasswords});
 
-        this.countryPickerService.getCountries().subscribe(countries =>
-            this.countries = countryProvider.sortCountries(countries)
-        );
+        this.countries = countryProvider.getCountries();
 
         this.form.valueChanges.subscribe(data => {
             this.form.patchValue({access_key: data.access_key.toUpperCase()}, {onlySelf: true, emitEvent: false});

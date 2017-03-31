@@ -14,8 +14,8 @@
     <h4>{{originalVisitors.length}} people have signed up!</h4>
     <div [ngClass]="{'showDiv': !hideContent, 'hideDiv': hideContent}">
 
-        <button *ngIf="operationType == 'remote'" (click)="presentSignupModal()" ion-button block>Sign up</button>
-        <button *ngIf="operationType == 'local' && !authProvider.isAuthenticated()" (click)="goToRegistrationPage()" ion-button block>Register with your Access Key</button>
+        <button *ngIf="operationType == 'remote' || forcedOperationType == 'remote'" (click)="presentSignupModal()" ion-button block>Sign up</button>
+        <button *ngIf="(operationType == 'local' || forcedOperationType == 'local')  && !authProvider.isAuthenticated()" (click)="goToRegistrationPage()" ion-button block>Register with your Access Key</button>
 
     </div>
     <ul>

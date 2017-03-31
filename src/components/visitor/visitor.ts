@@ -31,6 +31,7 @@ export class VisitorComponent {
     public hideContent: boolean = true;
 
     public operationType: string = 'remote';
+    public forcedOperationType: string = 'remote';
 
     constructor(public visitorService: VisitorProvider, public modalCtrl: ModalController, private storage: Storage, public authProvider: AuthProvider, private navCtrl: Nav) {
         this.searchControl = new FormControl();
@@ -49,8 +50,11 @@ export class VisitorComponent {
         });
 
         this.storage.get('operationType').then(res => {
+            this.storage.get('forcedOperationType').then(res => {
+                this.forcedOperationType = res;
+                this.hideContent = false;
+            });
             this.operationType = res;
-            this.hideContent = false;
         });
     }
 

@@ -12,7 +12,9 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-@import "../assets/css/flag-icon.css";
+$flag-icon-css-path: '../assets/flags' !default;
+@import "flag-icon";
+
 @import "../theme/fonts.scss";
 
 ion-content {

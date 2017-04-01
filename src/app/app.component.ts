@@ -1,11 +1,13 @@
-import {Component, ViewChild, Input} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {Platform, MenuController, Nav, AlertController} from 'ionic-angular';
+
+// Plugins
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Network} from '@ionic-native/network';
 import {OneSignal} from '@ionic-native/onesignal';
-import {CacheService} from "ionic-cache/ionic-cache";
 
+// Pages
 import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
 import {IntroPage} from '../pages/intro/intro';
@@ -15,11 +17,16 @@ import {TicketPage} from '../pages/ticket/ticket';
 import {LiveVotePage} from '../pages/livevote/livevote';
 import {VotePage} from '../pages/vote/vote';
 import {RegistrationPage} from '../pages/registration/registration';
-import {NavigationProvider} from '../providers/navigation';
+
+// Modules
 import ImgCache           from 'imgcache.js';
+
+// Providers and services
+import {NavigationProvider} from '../providers/navigation';
+import {CacheService} from "ionic-cache/ionic-cache";
 import {SettingsProvider} from '../providers/settings';
+import {StorageProvider} from '../providers/storage';
 import {LinkService} from '../services/link';
-import {Storage} from '@ionic/storage';
 import {AuthProvider} from '../providers/auth';
 import {ConnectivityService} from '../providers/connectivity-service';
 
@@ -63,7 +70,7 @@ export class PartyMeisterCompanionApp {
                 private navigationProvider: NavigationProvider,
                 private cache: CacheService,
                 public menuCtrl: MenuController,
-                private storage: Storage,
+                private storageProvider: StorageProvider,
                 private linkService: LinkService,
                 public authProvider: AuthProvider,
                 private connectivityService: ConnectivityService,
@@ -72,18 +79,18 @@ export class PartyMeisterCompanionApp {
                 private oneSignal: OneSignal,
                 private network: Network,
                 private alertCtrl: AlertController,
-    ) {
+                private cacheService: CacheService) {
 
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
         this.navigationProvider.operationType().subscribe(operationType => {
-            this.storage.get('forcedOperationType').then(forcedOperationType => {
+            this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
                 let actualOperationType = operationType;
                 if (forcedOperationType != false && forcedOperationType != null) {
-                    this.storage.set('operationType', forcedOperationType);
+                    this.storageProvider.set('operationType', forcedOperationType);
                     actualOperationType = forcedOperationType;
                 } else {
-                    this.storage.set('operationType', operationType);
+                    this.storageProvider.set('operationType', operationType);
                 }
                 this.loadNavigation(actualOperationType);
 
@@ -91,7 +98,7 @@ export class PartyMeisterCompanionApp {
         }, err => {
             // Load local menu as a fallback
             navigationProvider.loadOffline('remote').subscribe(navigationItems => {
-                this.storage.set('operationType', 'remote');
+                this.storageProvider.set('operationType', 'remote');
                 let result = navigationProvider.parseItems(navigationItems, components);
                 this.showSubmenu = result.submenu;
                 this.pages = result.pages;
@@ -135,7 +142,7 @@ export class PartyMeisterCompanionApp {
 
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            this.statusBar.styleDefault();
+            this.statusBar.styleBlackOpaque();
             this.splashScreen.hide();
 
             this.addConnectivityListeners();
@@ -147,7 +154,7 @@ export class PartyMeisterCompanionApp {
             ImgCache.options.debug = true;
             // page is set until img cache has started
             ImgCache.init(() => {
-                    this.storage.get('operationType').then(operationType => {
+                    this.storageProvider.get('operationType').then(operationType => {
                         if (operationType == 'local') {
                             this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
                         } else {
@@ -160,6 +167,11 @@ export class PartyMeisterCompanionApp {
                 () => {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
+
+            if (SettingsProvider.variables.environment == 'dev') {
+                this.cacheService.clearAll();
+                console.log('Developer mode - clearing all observable caches');
+            }
         });
 
         this.platform.registerBackButtonAction(() => {
@@ -168,7 +180,7 @@ export class PartyMeisterCompanionApp {
                 this.menuCtrl.close();
                 return;
             }
-            if(!this.nav.canGoBack()) {
+            if (!this.nav.canGoBack()) {
                 let alert = this.alertCtrl.create({
                     title: 'Exit?',
                     message: 'Do you want to exit the app?',

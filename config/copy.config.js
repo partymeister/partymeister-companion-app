@@ -33,5 +33,9 @@ module.exports = {
     copyFlagIcons: {
         src: '{{ROOT}}/node_modules/flag-icon-css/flags/**/*',
         dest: '{{WWW}}/assets/flags'
+    },
+    copyNotificationIcons: {
+        src: ['{{ROOT}}/resources/android/notification/**/*'],
+        dest: '{{ROOT}}/platforms/android/res'
     }
-}
+};

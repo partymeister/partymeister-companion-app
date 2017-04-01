@@ -6,12 +6,8 @@ import 'rxjs/add/operator/map';
 import {Page} from '../models/page';
 import {CacheService} from "ionic-cache/ionic-cache";
 import {Md5} from 'ts-md5/dist/md5';
-/*
- Generated class for the Pages provider.
+import {SettingsProvider} from "./settings";
 
- See https://angular.io/docs/ts/latest/guide/dependency-injection.html
- for more info on providers and Angular 2 DI.
- */
 @Injectable()
 export class PagesProvider {
 
@@ -23,9 +19,9 @@ export class PagesProvider {
         let request = this.http.get(`${data}`);
         if (force) {
             this.cache.clearGroup('page_' + Md5.hashStr(data));
-            return this.cache.loadFromDelayedObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 1).map(res => <Page>res.json());
+            return this.cache.loadFromDelayedObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), SettingsProvider.variables.CACHE_TIMEOUT_PAGES).map(res => <Page>res.json());
         }
-        return this.cache.loadFromDelayedObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), 60*60).map(res => <Page>res.json());
+        return this.cache.loadFromDelayedObservable('page_' + Md5.hashStr(data), request, 'page_' + Md5.hashStr(data), SettingsProvider.variables.CACHE_TIMEOUT_PAGES).map(res => <Page>res.json());
     }
 
 }

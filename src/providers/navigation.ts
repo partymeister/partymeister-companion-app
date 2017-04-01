@@ -1,18 +1,12 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
-import {NavigationItem, NavigationParameter} from '../models/navigation_item';
+import {NavigationItem} from '../models/navigation_item';
 import {Observable} from 'rxjs/Rx';
 import {Subject}    from 'rxjs/Subject';
 import {CacheService} from "ionic-cache/ionic-cache";
-
+import {SettingsProvider} from "./settings";
 import 'rxjs/add/operator/map';
 
-/*
- Generated class for the Navigation provider.
-
- See https://angular.io/docs/ts/latest/guide/dependency-injection.html
- for more info on providers and Angular 2 DI.
- */
 @Injectable()
 export class NavigationProvider {
 
@@ -38,7 +32,7 @@ export class NavigationProvider {
     // Load the navigation tree
     load(type): Observable<NavigationItem[]> {
         let request = this.http.get(`https://dl.dropboxusercontent.com/u/166337/pm-companion-app-menu-new.json`);
-        return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', 5).map(res => {
+        return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', SettingsProvider.variables.CACHE_TIMEOUT_NAVIGATION).map(res => {
                 let result = res.json();
                 return <NavigationItem[]>result[type];
             }
@@ -48,7 +42,7 @@ export class NavigationProvider {
     // Load the navigation tree from disk
     loadOffline(type): Observable<NavigationItem[]> {
         let request = this.http.get('./assets/data/offline-menu.json');
-        return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', 5).map(res => {
+        return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', SettingsProvider.variables.CACHE_TIMEOUT_NAVIGATION).map(res => {
                 let result = res.json();
                 return <NavigationItem[]>result[type];
             }

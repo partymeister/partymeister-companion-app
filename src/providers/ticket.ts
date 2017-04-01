@@ -1,21 +1,20 @@
 import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Http, Headers, RequestOptions} from '@angular/http';
 import {SettingsProvider} from './settings';
 import 'rxjs/add/operator/map';
-import {Storage} from '@ionic/storage';
+import {StorageProvider} from './storage';
 import {Ticket} from '../models/ticket';
-
 
 @Injectable()
 export class TicketProvider {
 
     public ticket: Ticket;
 
-    constructor(public http: Http, private storage: Storage) {
+    constructor(public http: Http, private storageProvider: StorageProvider) {
     }
 
     loadTickets() {
-        return this.storage.get('tickets').then(res => {
+        return this.storageProvider.get('tickets').then(res => {
             if (res == null) {
                 return [];
             }
@@ -24,7 +23,7 @@ export class TicketProvider {
     }
 
     updateTickets(tickets) {
-        this.storage.set('tickets', tickets);
+        this.storageProvider.set('tickets', tickets);
     }
 
     ticketRequest(data) {
@@ -35,7 +34,7 @@ export class TicketProvider {
         return this.http.post(SettingsProvider.variables.TICKET_API, bodyString, options).map(res => {
             let result = res.json();
             let ticket = <Ticket>result.data;
-            return this.storage.get('tickets').then(res => {
+            return this.storageProvider.get('tickets').then(res => {
                 if (res == null) {
                     res = [];
                 }
@@ -49,7 +48,7 @@ export class TicketProvider {
                 if (duplicate == false) {
                     res.push(ticket);
                 }
-                this.storage.set('tickets', res);
+                this.storageProvider.set('tickets', res);
                 return res;
             });
         });

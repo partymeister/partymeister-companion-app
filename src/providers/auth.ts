@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {SettingsProvider} from './settings';
 import 'rxjs/add/operator/map';
-import {Storage} from '@ionic/storage';
+import {StorageProvider} from '../providers/storage';
 import {User} from '../models/user';
 
 @Injectable()
@@ -11,9 +11,8 @@ export class AuthProvider {
     private authenticated: boolean = false;
     public user: User;
 
-    constructor(public http: Http, private storage: Storage) {
-        storage.get('user').then(res => {
-            console.log(res);
+    constructor(public http: Http, private storageProvider: StorageProvider) {
+        this.storageProvider.get('user').then(res => {
             if (res != null) {
                 this.user = <User>res;
                 this.authenticated = true;
@@ -27,7 +26,7 @@ export class AuthProvider {
 
     doLogin(user) {
         this.user = <User>user;
-        this.storage.set('user', user);
+        this.storageProvider.set('user', user);
         this.authenticated = true;
 
         return new Promise((resolve, reject) => {
@@ -37,7 +36,7 @@ export class AuthProvider {
 
     doLogout() {
         this.user = <User>{};
-        this.storage.remove('user');
+        this.storageProvider.remove('user');
         this.authenticated = false;
     }
 

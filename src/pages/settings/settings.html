@@ -41,6 +41,10 @@
             <ion-label>On-location info</ion-label>
             <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Location"></ion-toggle>
         </ion-item>
+        <ion-item *ngIf="developerMode == true">
+            <ion-label>Developer</ion-label>
+            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Developer"></ion-toggle>
+        </ion-item>
     </ion-list>
 
     <ion-list *ngIf="developerMode == true" class="developer-mode">

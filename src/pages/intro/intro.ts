@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
-import {NavController, NavParams, Slides} from 'ionic-angular';
+import {NavController, NavParams, Slides, Platform} from 'ionic-angular';
 import {LinkService} from '../../services/link';
-import {Storage} from '@ionic/storage';
+import {StorageProvider} from '../../providers/storage';
 import {SettingsProvider} from '../../providers/settings';
 
 @Component({
@@ -10,18 +10,30 @@ import {SettingsProvider} from '../../providers/settings';
 })
 export class IntroPage {
     @ViewChild(Slides) slides: Slides;
+    public deviceHeight: string = 'large';
 
-    constructor(private storage: Storage, public navCtrl: NavController, public navParams: NavParams, private linkService: LinkService) {
+    constructor(private storageProvider: StorageProvider,
+                public navCtrl: NavController,
+                public navParams: NavParams,
+                private linkService: LinkService,
+                private platform: Platform) {
+        this.platform.ready().then(() => {
+            if (platform.height() < 600) {
+                this.deviceHeight = 'small';
+            } else {
+                this.deviceHeight = 'large';
+            }
+        });
     }
 
     navigateHome() {
-        this.storage.get('operationType').then(res => {
+        this.storageProvider.get('operationType').then(res => {
             if (res == null || res == 'remote') {
                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
             } else {
                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
             }
-            this.storage.set('introShown', true);
+            this.storageProvider.set('introShown', true);
         });
     }
 

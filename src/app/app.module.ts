@@ -1,8 +1,50 @@
-import {NgModule, ErrorHandler, OpaqueToken} from '@angular/core';
+// Basics
+import {NgModule, ErrorHandler, Injector} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ConnectivityService} from '../providers/connectivity-service';
 import {PartyMeisterCompanionApp} from './app.component';
+
+// Services and providers
+import {ConnectivityService} from '../providers/connectivity-service';
+import {PagesProvider} from '../providers/pages';
+import {NavigationProvider} from '../providers/navigation';
+import {VisitorProvider} from '../providers/visitor';
+import {SettingsProvider} from '../providers/settings';
+import {CountryProvider} from '../providers/country';
+import {StorageProvider} from '../providers/storage';
+import {CacheService} from "ionic-cache/ionic-cache";
+import {LinkService} from '../services/link';
+import {VoteProvider} from '../providers/vote';
+import {AuthProvider} from '../providers/auth';
+import {EntryProvider} from '../providers/entry';
+import {TicketProvider} from '../providers/ticket';
+
+// Modules
+import {IonicStorageModule} from '@ionic/storage';
+import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
+import {Md5} from 'ts-md5/dist/md5';
+import {ServiceLocator} from '../services/service-locator';
+import {QRCodeModule} from 'angular2-qrcode';
+
+// Components
+import {NetworkConnectionComponent} from '../components/network-connection/network-connection';
+import {TextComponent} from '../components/text/text';
+import {GalleryComponent} from '../components/gallery/gallery';
+import {VisitorComponent} from '../components/visitor/visitor';
+import {TimetableComponent} from '../components/timetable/timetable';
+import {LazyImgComponent} from '../components/lazyimg/lazyimg';
+
+// Plugins
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {Network} from '@ionic-native/network';
+import {OneSignal} from '@ionic-native/onesignal';
+import {BarcodeScanner} from '@ionic-native/barcode-scanner';
+import {Camera} from '@ionic-native/camera';
+import {AppVersion} from '@ionic-native/app-version';
+import {PhotoViewer} from '@ionic-native/photo-viewer';
+
+// Pages
 import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
 import {IntroPage} from '../pages/intro/intro';
@@ -11,44 +53,13 @@ import {RegistrationPage} from '../pages/registration/registration';
 import {EntryPage} from '../pages/entry/entry';
 import {TicketPage} from '../pages/ticket/ticket';
 import {TicketModalPage} from '../pages/ticket-modal/ticket-modal';
-import {NetworkConnectionComponent} from '../components/network-connection/network-connection';
-import {PagesProvider} from '../providers/pages';
-import {NavigationProvider} from '../providers/navigation';
-import {VisitorProvider} from '../providers/visitor';
-import {SettingsProvider} from '../providers/settings';
-import {CountryProvider} from '../providers/country';
-import {TextComponent} from '../components/text/text';
-import {GalleryComponent} from '../components/gallery/gallery';
-import {VisitorComponent} from '../components/visitor/visitor';
-import {TimetableComponent} from '../components/timetable/timetable';
 import {SignupModalPage} from '../pages/signup-modal/signup-modal';
 import {EntryModalPage} from '../pages/entry-modal/entry-modal';
 import {LiveVotePage} from '../pages/livevote/livevote';
 import {VotePage} from '../pages/vote/vote';
-import {CacheService} from "ionic-cache/ionic-cache";
-import {Md5} from 'ts-md5/dist/md5';
-import {LazyImgComponent} from '../components/lazyimg/lazyimg';
-import {LinkService} from '../services/link';
-import {VoteProvider} from '../providers/vote';
-import {AuthProvider} from '../providers/auth';
-import {EntryProvider} from '../providers/entry';
-import {TicketProvider} from '../providers/ticket';
-import {IonicStorageModule} from '@ionic/storage';
-import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
-import {Injector} from "@angular/core";
-import {ServiceLocator} from '../services/service-locator';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
-import {Network} from '@ionic-native/network';
-import {OneSignal} from '@ionic-native/onesignal';
-import {BarcodeScanner} from '@ionic-native/barcode-scanner';
-import {Camera, CameraOptions} from '@ionic-native/camera';
-import {AppVersion} from '@ionic-native/app-version';
-import {PhotoViewer} from '@ionic-native/photo-viewer';
-import {QRCodeModule} from 'angular2-qrcode';
-import {enableProdMode} from '@angular/core';
 
-// this is the magic wand
+// Prod mode enabler
+import {enableProdMode} from '@angular/core';
 enableProdMode();
 
 @NgModule({
@@ -77,7 +88,10 @@ enableProdMode();
         IonicModule.forRoot(PartyMeisterCompanionApp),
         FormsModule,
         ReactiveFormsModule,
-        IonicStorageModule.forRoot(),
+        IonicStorageModule.forRoot({
+            name: '__pmcompanion',
+            driverOrder: ['indexeddb', 'websql']
+        }),
         Ionic2RatingModule,
         QRCodeModule,
     ],
@@ -120,6 +134,7 @@ enableProdMode();
         Camera,
         AppVersion,
         PhotoViewer,
+        StorageProvider,
     ]
 })
 export class AppModule {

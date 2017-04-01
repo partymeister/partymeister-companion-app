@@ -21,9 +21,13 @@
         </ion-slide>
         <ion-slide class="street">
             <img src="assets/images/revision-logo.png" class="slide-image">
-            <p>
+            <p *ngIf="deviceHeight == 'large'">
                 Register with your access key<br>
                 at the event
+            </p>
+            <p *ngIf="deviceHeight == 'small'">
+                Register with your access<br>
+                key at the event
             </p>
             <p>
                 Vote and live-vote
@@ -31,16 +35,27 @@
             <p>
                 Get on-location information
             </p>
+            <p>
+                Store your pre-sale tickets
+            </p>
         </ion-slide>
         <ion-slide class="tunnel">
-            <img src="assets/images/revision-logo.png" class="slide-image">
+            <img src="assets/images/revision-logo.png" class="slide-image {{deviceHeight}}">
             <p>
                 April 14th to 17th 2017<br>
                 E Werk Saarbrücken, Germany
             </p>
             <p>
-                Pure demoscene party<br>
-                PC, Amiga and Oldskool compos
+                Pure demoscene party
+            </p>
+            <p>
+                PC, Amiga, Oldskool,<br>
+                Graphics, Music and more
+            </p>
+            <p>
+                Special events<br>
+                Concerts, Seminars,<br>
+                Food & Drinks
             </p>
         </ion-slide>
         <ion-slide class="city">

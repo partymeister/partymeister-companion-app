@@ -3,7 +3,7 @@
     <button ion-button clear (click)="closeMe()">
       Close
     </button>
-    <ion-title>My entry</ion-title>
+    <ion-title>Entry Information</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -14,25 +14,64 @@
       <h2>{{entry.title}} by {{entry.author}}</h2>
     </ion-list-header>
     <ion-item>
-      {{entry.competition}} Competition <span class="item-note"># {{entry.id}}</span>
+      Competition
+      <span item-right>{{entry.competition}}</span>
     </ion-item>
+    <ion-item>
+      ID
+      <span item-right>{{entry.id}}</span>
+    </ion-item>
+    <ion-item>
+      Title
+      <span item-right>{{entry.title}}</span>
+    </ion-item>
+    <ion-item>
+      Author
+      <span item-right>{{entry.author}}</span>
+    </ion-item>
+
+    <ion-item *ngIf="entry.running_time">
+      Running time
+      <span item-right>{{entry.running_time}}</span>
+    </ion-item>
+
+    <ion-item *ngIf="entry.platform">
+      Platform
+      <span item-right>{{entry.platform}}</span>
+    </ion-item>
+
+    <ion-list-header *ngIf="entry.description" class="item item-divider">
+      Description
+    </ion-list-header>
     <ion-item *ngIf="entry.description" class="item item-text-wrap">
       <p>{{entry.description}}</p>
     </ion-item>
+
+    <ion-list-header *ngIf="entry.orga_description" class="item item-divider">
+      Message to the organizers
+    </ion-list-header>
+    <ion-item *ngIf="entry.orga_description" class="item item-text-wrap">
+      <p>{{entry.orga_description}}</p>
+    </ion-item>
+
     <ion-list-header *ngIf="entry.options.length > 0" class="item item-divider">
-      Entry options
+      Competition options
     </ion-list-header>
     <ion-item *ngIf="entry.options.length > 0" class="item item-text-wrap">
       <ul *ngFor="let option of entry.options">
         <li>{{option}}</li>
       </ul>
     </ion-item>
+
+
+
+
     <ion-list-header *ngIf="entry.preview.url" class="item item-divider">
       Beamslide preview
     </ion-list-header>
 
     <ion-item *ngIf="entry.preview.url" class="item item-image">
-      <lazy-img [src]="entry.preview.url"></lazy-img>
+      <lazy-img [src]="entry.preview.url" (click)="showPreview()"></lazy-img>
     </ion-item>
     <ion-list-header>
       Uploader information

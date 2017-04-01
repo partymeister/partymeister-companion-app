@@ -44,7 +44,8 @@ import {OneSignal} from '@ionic-native/onesignal';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {AppVersion} from '@ionic-native/app-version';
-import { QRCodeModule } from 'angular2-qrcode';
+import {PhotoViewer} from '@ionic-native/photo-viewer';
+import {QRCodeModule} from 'angular2-qrcode';
 import {enableProdMode} from '@angular/core';
 
 // this is the magic wand
@@ -117,7 +118,8 @@ enableProdMode();
         OneSignal,
         BarcodeScanner,
         Camera,
-        AppVersion
+        AppVersion,
+        PhotoViewer,
     ]
 })
 export class AppModule {

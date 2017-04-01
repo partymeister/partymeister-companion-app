@@ -23,6 +23,10 @@ export class TicketProvider {
         });
     }
 
+    updateTickets(tickets) {
+        this.storage.set('tickets', tickets);
+    }
+
     ticketRequest(data) {
         let bodyString = JSON.stringify(data); // Stringify payload
         let headers = new Headers({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN}); // ... Set content type to JSON
@@ -35,7 +39,16 @@ export class TicketProvider {
                 if (res == null) {
                     res = [];
                 }
-                res.push(ticket);
+                let duplicate: boolean = false;
+                res.forEach((r, index) => {
+                    if (r.code == ticket.code) {
+                        duplicate = true;
+                    }
+                });
+
+                if (duplicate == false) {
+                    res.push(ticket);
+                }
                 this.storage.set('tickets', res);
                 return res;
             });

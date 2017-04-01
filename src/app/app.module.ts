@@ -10,6 +10,7 @@ import {LoginPage} from '../pages/login/login';
 import {RegistrationPage} from '../pages/registration/registration';
 import {EntryPage} from '../pages/entry/entry';
 import {TicketPage} from '../pages/ticket/ticket';
+import {TicketModalPage} from '../pages/ticket-modal/ticket-modal';
 import {NetworkConnectionComponent} from '../components/network-connection/network-connection';
 import {PagesProvider} from '../providers/pages';
 import {NavigationProvider} from '../providers/navigation';
@@ -43,6 +44,7 @@ import {OneSignal} from '@ionic-native/onesignal';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {AppVersion} from '@ionic-native/app-version';
+import { QRCodeModule } from 'angular2-qrcode';
 import {enableProdMode} from '@angular/core';
 
 // this is the magic wand
@@ -67,6 +69,7 @@ enableProdMode();
         LiveVotePage,
         VotePage,
         TicketPage,
+        TicketModalPage,
         LazyImgComponent,
     ],
     imports: [
@@ -74,7 +77,8 @@ enableProdMode();
         FormsModule,
         ReactiveFormsModule,
         IonicStorageModule.forRoot(),
-        Ionic2RatingModule // Put ionic2-rating module here
+        Ionic2RatingModule,
+        QRCodeModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -90,6 +94,7 @@ enableProdMode();
         LiveVotePage,
         VotePage,
         TicketPage,
+        TicketModalPage,
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},

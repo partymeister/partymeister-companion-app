@@ -21,19 +21,27 @@
   <h5 padding *ngIf="subscriptionActive == true && tickets.length == 0">You haven't scanned any tickets yet.</h5>
   <h5 padding *ngIf="subscriptionActive == false">Fetching ticket information...</h5>
   <network-connection [isOnline]="connectivityService.online"></network-connection>
-    <ion-card *ngFor="let ticket of tickets">
-      <ion-card-content>
-        <ion-card-title>
-          {{ticket.type}}
-        </ion-card-title>
+
+  <ion-list inset>
+    <ion-item-sliding *ngFor="let ticket of tickets">
+      <button ion-item (click)="showTicket(ticket)">
+        <ion-thumbnail item-left>
+          <qr-code [value]="ticket.code" [size]="100" style="padding: 8px;"></qr-code>
+        </ion-thumbnail>
+        <h2>{{ticket.type}}</h2>
         <p>
           {{ticket.order_number}}<br>
           {{ticket.first_name}} {{ticket.last_name}}
         </p>
-        <hr>
-      </ion-card-content>
-
-    </ion-card>
+      </button>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="removeTicket(ticket)">
+          <ion-icon name="ion-trash-a"></ion-icon>
+          delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
 
   <form padding [formGroup]="form" (ngSubmit)="submit()">
     <ion-item>

@@ -1,0 +1,38 @@
+page-ticket-modal {
+  ion-card-header {
+    text-align: center;
+    font-size: 2.6rem !important;
+    color: color($colors, 'light') !important;
+  }
+  .list-header-md {
+    margin-top: 20px;
+    border-top: none !important;
+  }
+
+  .list-ios > .item-block:first-child {
+    border-top: none !important;
+  }
+
+  .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
+    border-bottom: none !important;
+  }
+
+  ion-card-content p {
+    color: color($colors, 'light') !important;
+  }
+
+  ion-card img {
+    background-color: #fff;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .button-clear-md {
+    float: right;
+  }
+  .toolbar-title-md {
+    line-height: 3.6rem;
+  }
+
+}

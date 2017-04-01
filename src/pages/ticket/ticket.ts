@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {NavController, NavParams, ModalController} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {AlertController} from 'ionic-angular';
 import {TicketProvider} from '../../providers/ticket';
 import {Ticket} from '../../models/ticket';
-import {ContentPage} from '../content/content';
+import {TicketModalPage} from '../ticket-modal/ticket-modal';
 import {MasterPage} from '../master/master';
 
 @Component({
@@ -23,7 +23,9 @@ export class TicketPage extends MasterPage {
                 public navParams: NavParams,
                 private formBuilder: FormBuilder,
                 private barcodeScanner: BarcodeScanner,
-                private ticketProvider: TicketProvider,) {
+                private ticketProvider: TicketProvider,
+                private modalCtrl: ModalController,
+    ) {
         super(navCtrl, navParams);
 
         this.form = this.formBuilder.group({
@@ -32,6 +34,20 @@ export class TicketPage extends MasterPage {
         });
 
         this.ticketSubscription();
+    }
+
+    removeTicket(t) {
+        this.tickets.forEach((ticket, index) => {
+            if (t.code == ticket.code) {
+                this.tickets.splice(index, 1);
+            }
+        });
+        this.ticketProvider.updateTickets(this.tickets);
+    }
+
+    showTicket(t) {
+        let modal = this.modalCtrl.create(TicketModalPage, {ticket: t});
+        modal.present();
     }
 
     openCamera(event) {
@@ -68,6 +84,7 @@ export class TicketPage extends MasterPage {
         this.ticketProvider.ticketRequest(this.form.value)
             .subscribe(result => {
                     result.then(tickets => this.tickets = tickets);
+                    this.form.reset();
                 },
                 err => {
                     let alert = this.alertCtrl.create({

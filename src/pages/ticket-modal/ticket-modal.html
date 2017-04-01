@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button clear (click)="closeMe()">
+            Close
+        </button>
+        <ion-title>My Ticket</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            {{ticket.type}}
+        </ion-card-header>
+        <ion-list>
+            <ion-item>
+                Order number
+                <span item-right>
+          {{ticket.order_number}}
+          </span>
+            </ion-item>
+            <ion-item>
+                Ticket holder
+                <span item-right>
+          {{ticket.first_name}} {{ticket.last_name}}
+          </span>
+            </ion-item>
+        </ion-list>
+        <ion-card-content>
+            <qr-code [value]="ticket.code" [size]="500"></qr-code>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

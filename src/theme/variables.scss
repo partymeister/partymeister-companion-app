@@ -97,6 +97,9 @@ $toggle-md-border-color-off: grayscale(lighten($list-border-color, 11%)) !defaul
 $toggle-ios-background-color-on: color($colors, primary) !default;
 $toggle-md-background-color-on: color($colors, primary) !default;
 
+$item-ios-detail-push-color: color($colors, light) !default;
+$item-md-detail-push-color: color($colors, light) !default;
+
 $label-md-text-color: color($colors, 'light') !default;
 
 // Ionicons

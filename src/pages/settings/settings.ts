@@ -92,6 +92,8 @@ export class SettingsPage {
             this.developerModeTaps = 0;
             this.storageProvider.set('developerMode', this.developerMode);
             if (this.developerMode == false) {
+                this.notifications['Developer'] = false;
+                this.setTags();
                 this.storageProvider.set('forcedOperationMode', false);
                 this.operationTypes.local = false;
                 this.operationTypes.remote = false;

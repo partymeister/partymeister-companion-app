@@ -43,7 +43,7 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
-  <p *ngIf="tickets.length > 0" padding>Swipe left on a ticket if you want to remove it from the app</p>
+  <p class="notice" *ngIf="tickets.length > 0" padding>Swipe left on a ticket to remove it.</p>
 
   <form padding [formGroup]="form" (ngSubmit)="submit()">
     <ion-item>

@@ -12,4 +12,9 @@ page-ticket {
     color: color($colors, light) !important;
     padding: 10px 0;
   }
+  p.notice {
+    color: #8e9093;
+    padding-top: 0 !important;
+    text-align: center;
+  }
 }

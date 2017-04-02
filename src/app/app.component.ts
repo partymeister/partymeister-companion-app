@@ -216,7 +216,7 @@ export class PartyMeisterCompanionApp {
     }
 
     addOneSignalConfiguration() {
-        this.oneSignal.startInit('3fdb8164-8438-4afb-b4f4-95ec317ebd88', '794542674802');
+        this.oneSignal.startInit(SettingsProvider.variables.ONESIGNAL_IOS, SettingsProvider.variables.ONESIGNAL_ANDROID);
 
         this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 

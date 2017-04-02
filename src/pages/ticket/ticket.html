@@ -18,11 +18,12 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <h5 padding *ngIf="subscriptionActive == true && tickets.length == 0">You haven't scanned any tickets yet.</h5>
-  <h5 padding *ngIf="subscriptionActive == false">Fetching ticket information...</h5>
   <network-connection [isOnline]="connectivityService.online"></network-connection>
-
   <ion-list inset>
+    <ion-list-header *ngIf="(subscriptionActive == true && tickets.length == 0) || subscriptionActive == false">
+      <span *ngIf="subscriptionActive == true && tickets.length == 0">You haven't scanned any tickets yet.</span>
+      <span *ngIf="subscriptionActive == false">Fetching ticket information...</span>
+    </ion-list-header>
     <ion-item-sliding *ngFor="let ticket of tickets">
       <button ion-item (click)="showTicket(ticket)">
         <ion-thumbnail item-left>
@@ -42,6 +43,7 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+  <p *ngIf="tickets.length > 0" padding>Swipe left on a ticket if you want to remove it from the app</p>
 
   <form padding [formGroup]="form" (ngSubmit)="submit()">
     <ion-item>

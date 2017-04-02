@@ -1,9 +1,3 @@
-<!--
-  Generated template for the Visitor component.
-
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
--->
 <ion-searchbar [(ngModel)]="searchTerm" [formControl]="searchControl" (ionInput)="onSearchInput()"></ion-searchbar>
 <div *ngIf="searching" class="spinner-container">
     <ion-spinner></ion-spinner>

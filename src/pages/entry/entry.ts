@@ -5,6 +5,7 @@ import {ModalController} from 'ionic-angular';
 import {EntryModalPage} from '../entry-modal/entry-modal';
 import {EntryProvider} from '../../providers/entry';
 import {MasterPage} from '../master/master';
+import {PhotoViewer} from '@ionic-native/photo-viewer';
 
 @Component({
     selector: 'page-entry',
@@ -14,13 +15,16 @@ export class EntryPage extends MasterPage {
     public entries: Entry[];
     public subscriptionActive: boolean = false;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, private modalCtrl: ModalController, private entryProvider: EntryProvider) {
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                private modalCtrl: ModalController,
+                private entryProvider: EntryProvider,
+                private photoViewer: PhotoViewer) {
         super(navCtrl, navParams);
 
         this.title = navParams.data.title;
 
         this.entrySubscription();
-
     }
 
     entrySubscription(refresher?) {
@@ -43,11 +47,15 @@ export class EntryPage extends MasterPage {
         this.entrySubscription(refresher);
     }
 
-    presentEntryModal(entry: Entry)  {
+    presentEntryModal(entry: Entry) {
         let entryModal = this.modalCtrl.create(EntryModalPage, {entry: entry});
         entryModal.onDidDismiss(data => {
             console.log("Modal closed");
         });
         entryModal.present(EntryModalPage);
+    }
+
+    showPreview(entry) {
+        this.photoViewer.show(entry.screenshot.url, 'Screenshot preview', {share: false});
     }
 }

@@ -7,13 +7,6 @@ import {StorageProvider} from '../../providers/storage';
 import {AuthProvider} from '../../providers/auth';
 import {RegistrationPage} from '../../pages/registration/registration';
 
-
-/*
- Generated class for the Visitor component.
-
- See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
- for more info on Angular 2 Components.
- */
 @Component({
     selector: 'visitor-component',
     templateUrl: 'visitor.html'

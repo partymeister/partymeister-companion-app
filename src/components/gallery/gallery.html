@@ -1,9 +1,3 @@
-<!--
-  Generated template for the Gallery component.
-
-  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
-  for more info on Angular 2 Components.
--->
 <ion-slides>
     <ion-slide *ngFor="let image of block?.content?.attachments?.gallery">
         <lazy-img [src]="image.modified_file.replace('http', 'https')"></lazy-img>

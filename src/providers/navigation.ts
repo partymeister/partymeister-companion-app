@@ -26,12 +26,12 @@ export class NavigationProvider {
 
     // Get App operation type
     operationType(): Observable<string> {
-        return Observable.timer(0, 10000).mergeMap(() => this.http.get(`https://local.revision-party.net/revision2017.txt`).map(res => res.text().trim()));
+        return Observable.timer(0, 10000).mergeMap(() => this.http.get(SettingsProvider.variables.OPERATION_TYPE_URL).map(res => res.text().trim()));
     }
 
     // Load the navigation tree
     load(type): Observable<NavigationItem[]> {
-        let request = this.http.get(`https://dl.dropboxusercontent.com/u/166337/pm-companion-app-menu-new.json`);
+        let request = this.http.get(SettingsProvider.variables.MENU_URL);
         return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', SettingsProvider.variables.CACHE_TIMEOUT_NAVIGATION).map(res => {
                 let result = res.json();
                 return <NavigationItem[]>result[type];

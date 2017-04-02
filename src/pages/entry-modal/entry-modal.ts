@@ -4,7 +4,6 @@ import {ViewController} from 'ionic-angular';
 import {Entry, Image} from '../../models/entry';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
 
-
 @Component({
     selector: 'page-entry-modal',
     templateUrl: 'entry-modal.html'

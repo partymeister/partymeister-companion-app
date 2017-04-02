@@ -5,4 +5,11 @@ page-ticket {
   .item-inner {
     border-bottom: none !important;
   }
+  .list-md ion-item-options {
+    border-bottom: none !important;
+  }
+  ion-list-header {
+    color: color($colors, light) !important;
+    padding: 10px 0;
+  }
 }

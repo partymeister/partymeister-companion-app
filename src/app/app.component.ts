@@ -48,7 +48,6 @@ let components = {
 export class PartyMeisterCompanionApp {
     @ViewChild(Nav) nav: Nav;
 
-    rootPage: any = ContentPage;
     pages: Array<{ title: string, component: any, params?: any, children: any[] }>;
     showSubmenu: {};
     public operationType: string = 'remote';
@@ -154,14 +153,23 @@ export class PartyMeisterCompanionApp {
             ImgCache.options.debug = true;
             // page is set until img cache has started
             ImgCache.init(() => {
-                    this.storageProvider.get('operationType').then(operationType => {
-                        if (operationType == 'local') {
-                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+                    this.storageProvider.get('introShown').then(res => {
+                        console.log('Introshown: '+ res);
+                        if (res !== true) {
+                            console.log("Showing intro page");
+                            this.nav.setRoot(IntroPage);
+                            this.splashScreen.hide();
                         } else {
-                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+                            this.storageProvider.get('operationType').then(operationType => {
+                                if (operationType == 'local') {
+                                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+                                } else {
+                                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+                                }
+                                this.menuCtrl.open();
+                                this.splashScreen.hide();
+                            });
                         }
-                        this.menuCtrl.open();
-                        this.splashScreen.hide();
                     });
                 },
                 () => {
@@ -277,7 +285,6 @@ export class PartyMeisterCompanionApp {
             return;
         }
         if (page.children && page.children.length > 0) {
-
             return;
         }
         // close the menu when clicking a link from the menu

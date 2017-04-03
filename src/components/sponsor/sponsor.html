@@ -1,0 +1,8 @@
+<div class="padding">
+    <br><br>
+    <div *ngFor="let sponsor of block?.content?.sponsors" class="sponsor">
+        <div class="image">
+            <img *ngIf="sponsor.attachments.image[0]" [src]="sponsor.attachments.image[0].modified_file">
+        </div>
+    </div>
+</div>

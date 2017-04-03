@@ -1,0 +1,15 @@
+<div padding>
+    <div *ngFor="let itemTypeKey of itemTypeKeys">
+        <h4 [class.first]="itemTypeKey == 0">{{block.content.item_types[itemTypeKey].name}}</h4>
+
+        <table class="infodesk">
+            <tr *ngFor="let item of block.content.item_types[itemTypeKey].items">
+                <td>
+                    {{item.name}}<br/>
+                    <small>{{item.description}}</small>
+                </td>
+                <td width="20%" class="right"[innerHTML]="item.price_incl_vat"></td>
+            </tr>
+        </table>
+    </div>
+</div>

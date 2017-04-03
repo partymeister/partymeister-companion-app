@@ -93,3 +93,13 @@ ion-menu {
     background-position: center center !important;
   }
 }
+
+.swiper-pagination-bullet {
+  background: #fff;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: #007aff;
+}

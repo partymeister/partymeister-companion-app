@@ -32,6 +32,8 @@ import {TextComponent} from '../components/text/text';
 import {GalleryComponent} from '../components/gallery/gallery';
 import {VisitorComponent} from '../components/visitor/visitor';
 import {TimetableComponent} from '../components/timetable/timetable';
+import {SponsorComponent} from '../components/sponsor/sponsor';
+import {ItemComponent} from '../components/item/item';
 import {LazyImgComponent} from '../components/lazyimg/lazyimg';
 
 // Plugins
@@ -75,6 +77,8 @@ enableProdMode();
         GalleryComponent,
         VisitorComponent,
         TimetableComponent,
+        SponsorComponent,
+        ItemComponent,
         NetworkConnectionComponent,
         SignupModalPage,
         EntryModalPage,

@@ -1,4 +1,4 @@
-<ion-slides>
+<ion-slides pager>
     <ion-slide *ngFor="let image of block?.content?.attachments?.gallery">
         <lazy-img [src]="image.modified_file.replace('http', 'https')"></lazy-img>
     </ion-slide>

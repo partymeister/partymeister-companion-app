@@ -1,0 +1,16 @@
+sponsor-component {
+  div.sponsor {
+    text-align: center;
+    padding-bottom: 50px;
+  }
+  div.image {
+    border-radius: 25px;
+    margin: auto;
+    width: 70%;
+    background-color: color($colors, 'light');
+  }
+  div.sponsor img {
+    padding: 10% 0;
+    width: 60%;
+  }
+}

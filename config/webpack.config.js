@@ -9,6 +9,7 @@ var config = require(path.join(appScriptsDir, 'config', 'webpack.config.js'));
 
 var env = process.env.IONIC_ENV || 'dev';
 var envVars;
+
 try {
     envVars = require(path.join(projectRootDir, 'src/app/environment-variables', env + '.json'));
 } catch(e) {

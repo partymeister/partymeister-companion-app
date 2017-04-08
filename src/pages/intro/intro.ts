@@ -28,7 +28,7 @@ export class IntroPage {
 
     navigateHome() {
         this.storageProvider.get('operationType').then(res => {
-            if (res == null || res == 'remote') {
+            if (<any>res == null || res.toString() == 'remote') {
                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
             } else {
                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);

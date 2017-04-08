@@ -14,7 +14,7 @@ export class AuthProvider {
     constructor(public http: Http, private storageProvider: StorageProvider) {
         this.storageProvider.get('user').then(res => {
             if (res != null) {
-                this.user = <User>res;
+                this.user = <User><any>res;
                 this.authenticated = true;
             }
         });

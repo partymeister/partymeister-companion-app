@@ -28,6 +28,7 @@ import {SettingsProvider} from '../providers/settings';
 import {StorageProvider} from '../providers/storage';
 import {LinkService} from '../services/link';
 import {AuthProvider} from '../providers/auth';
+import {TicketProvider} from '../providers/ticket';
 import {ConnectivityService} from '../providers/connectivity-service';
 
 let components = {
@@ -53,6 +54,8 @@ export class PartyMeisterCompanionApp {
     public operationType: string = 'remote';
     private initialized: boolean = false;
 
+    public atHome: boolean = false;
+
     menuItemHandler(page): void {
         this.showSubmenu[page.title] = !this.showSubmenu[page.title];
 
@@ -71,6 +74,7 @@ export class PartyMeisterCompanionApp {
                 public menuCtrl: MenuController,
                 private storageProvider: StorageProvider,
                 private linkService: LinkService,
+                private ticketProvider: TicketProvider,
                 public authProvider: AuthProvider,
                 private connectivityService: ConnectivityService,
                 private splashScreen: SplashScreen,
@@ -80,14 +84,19 @@ export class PartyMeisterCompanionApp {
                 private alertCtrl: AlertController,
                 private cacheService: CacheService) {
 
+        if (SettingsProvider.variables.environment == 'dev') {
+            this.cacheService.clearAll();
+            console.log('Developer mode - clearing all observable caches');
+        }
+
         this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
         this.navigationProvider.operationType().subscribe(operationType => {
             this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
                 let actualOperationType = operationType;
-                if (forcedOperationType != false && forcedOperationType != null) {
+                if (<any>forcedOperationType != false && <any>forcedOperationType != null) {
                     this.storageProvider.set('operationType', forcedOperationType);
-                    actualOperationType = forcedOperationType;
+                    actualOperationType = forcedOperationType.toString();
                 } else {
                     this.storageProvider.set('operationType', operationType);
                 }
@@ -120,6 +129,17 @@ export class PartyMeisterCompanionApp {
                         this.nav.push(targetPage.component, targetPage.params);
                     }
                 }
+            });
+
+        // get info if we have an atHome ticket
+        this.storageProvider.get('atHome').then(res => {
+            this.atHome = <any>res;
+        });
+
+        // Subscribe to the atHome ticket
+        ticketProvider.atHome$.subscribe(
+            data => {
+                this.atHome = data.atHome;
             });
     }
 
@@ -154,14 +174,14 @@ export class PartyMeisterCompanionApp {
             // page is set until img cache has started
             ImgCache.init(() => {
                     this.storageProvider.get('introShown').then(res => {
-                        console.log('Introshown: '+ res);
-                        if (res !== true) {
+                        console.log('Introshown: ' + res);
+                        if (<any>res !== true) {
                             console.log("Showing intro page");
                             this.nav.setRoot(IntroPage);
                             this.splashScreen.hide();
                         } else {
                             this.storageProvider.get('operationType').then(operationType => {
-                                if (operationType == 'local') {
+                                if (<any>operationType == 'local') {
                                     this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
                                 } else {
                                     this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
@@ -176,10 +196,6 @@ export class PartyMeisterCompanionApp {
                     console.error('ImgCache init: error! Check the log for errors');
                 });
 
-            if (SettingsProvider.variables.environment == 'dev') {
-                this.cacheService.clearAll();
-                console.log('Developer mode - clearing all observable caches');
-            }
         });
 
         this.platform.registerBackButtonAction(() => {
@@ -269,6 +285,15 @@ export class PartyMeisterCompanionApp {
         if (!p.params) {
             return true;
         }
+
+        if (!this.atHome && p.params.atHome) {
+            return false;
+        }
+
+        if (!p.params.isProtected && this.isAuthenticated() && p.params.hideWhenLoggedIn) {
+            return false;
+        }
+
         if (!p.params.isProtected && this.isAuthenticated() && p.params.hideWhenLoggedIn) {
             return false;
         }

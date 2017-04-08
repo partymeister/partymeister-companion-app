@@ -83,7 +83,7 @@ export class TicketPage extends MasterPage {
     submit() {
         this.ticketProvider.ticketRequest(this.form.value)
             .subscribe(result => {
-                    result.then(tickets => this.tickets = tickets);
+                    result.then(tickets => this.tickets = <any>tickets);
                     this.form.reset();
                 },
                 err => {

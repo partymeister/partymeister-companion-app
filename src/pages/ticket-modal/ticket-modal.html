@@ -9,8 +9,7 @@
 
 <ion-content>
     <ion-card>
-        <ion-card-header>
-            {{ticket.type}}
+        <ion-card-header text-wrap [innerHTML]="ticket.type">
         </ion-card-header>
         <ion-list>
             <ion-item>

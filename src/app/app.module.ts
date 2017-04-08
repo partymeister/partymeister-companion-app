@@ -2,7 +2,9 @@
 import {NgModule, ErrorHandler, Injector} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
 import {PartyMeisterCompanionApp} from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
 
 // Services and providers
 import {ConnectivityService} from '../providers/connectivity-service';
@@ -89,8 +91,10 @@ enableProdMode();
         LazyImgComponent,
     ],
     imports: [
+        BrowserModule,
         IonicModule.forRoot(PartyMeisterCompanionApp),
         FormsModule,
+        HttpModule,
         ReactiveFormsModule,
         IonicStorageModule.forRoot({
             name: '__pmcompanion',

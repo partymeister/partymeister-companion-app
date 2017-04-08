@@ -41,10 +41,10 @@ export class SettingsPage {
         });
 
         this.storageProvider.get('developerMode').then(res => {
-            if (res == true) {
+            if (<any>res == true) {
                 this.developerMode = true;
                 this.storageProvider.get('forcedOperationType').then(operationType => {
-                    this.operationTypes[operationType] = true;
+                    this.operationTypes[operationType.toString()] = true;
                 });
             }
         });

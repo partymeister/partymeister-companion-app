@@ -3,14 +3,22 @@ import {Http, Headers, RequestOptions} from '@angular/http';
 import {SettingsProvider} from './settings';
 import 'rxjs/add/operator/map';
 import {StorageProvider} from './storage';
+import {AuthProvider} from './auth';
 import {Ticket} from '../models/ticket';
+import {Subject}    from 'rxjs/Subject';
 
 @Injectable()
 export class TicketProvider {
 
     public ticket: Ticket;
 
-    constructor(public http: Http, private storageProvider: StorageProvider) {
+    // Observable string sources
+    private atHomeUpdated = new Subject<any>();
+
+    // Observable string streams
+    atHome$ = this.atHomeUpdated.asObservable();
+
+    constructor(public http: Http, private storageProvider: StorageProvider, private authProvider: AuthProvider) {
     }
 
     loadTickets() {
@@ -18,12 +26,19 @@ export class TicketProvider {
             if (res == null) {
                 return [];
             }
-            return <Ticket[]>res;
+
+            let tickets = <Ticket[]><any>res;
+
+            // check if there are any @home tickets in the database
+            this.checkAtHomeTicket(tickets);
+
+            return tickets;
         });
     }
 
     updateTickets(tickets) {
         this.storageProvider.set('tickets', tickets);
+        this.checkAtHomeTicket(tickets);
     }
 
     ticketRequest(data) {
@@ -36,22 +51,44 @@ export class TicketProvider {
             let ticket = <Ticket>result.data;
             return this.storageProvider.get('tickets').then(res => {
                 if (res == null) {
-                    res = [];
+                    res = <any>[];
                 }
+                let tickets = <any> res;
                 let duplicate: boolean = false;
-                res.forEach((r, index) => {
+                for (let r of tickets) {
                     if (r.code == ticket.code) {
                         duplicate = true;
                     }
-                });
+                }
 
                 if (duplicate == false) {
-                    res.push(ticket);
+                    tickets.push(ticket);
                 }
-                this.storageProvider.set('tickets', res);
-                return res;
+
+                // check if there are any @home tickets in the database
+                this.checkAtHomeTicket(tickets);
+
+                this.storageProvider.set('tickets', tickets);
+                return tickets;
             });
         });
+    }
+
+    checkAtHomeTicket(tickets) {
+        let found = false;
+        for (let t of tickets) {
+            if (t.type == 'I Love Revision but I can&#39;t be there Ticket') {
+                found = true;
+            }
+        }
+        this.storageProvider.set('atHome', found);
+
+        // Log out user in case we're dealing with an atHome ticket holder
+        if (found) {
+            this.authProvider.doLogout();
+        }
+
+        this.atHomeUpdated.next({atHome: found});
     }
 
 }

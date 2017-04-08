@@ -24,12 +24,12 @@
       <span *ngIf="subscriptionActive == true && tickets.length == 0">You haven't scanned any tickets yet.</span>
       <span *ngIf="subscriptionActive == false">Fetching ticket information...</span>
     </ion-list-header>
-    <ion-item-sliding *ngFor="let ticket of tickets">
+    <ion-item-sliding *ngFor="let ticket of tickets" text-wrap>
       <button ion-item (click)="showTicket(ticket)">
         <ion-thumbnail item-left>
           <qr-code [value]="ticket.code" [size]="100" style="padding: 8px;"></qr-code>
         </ion-thumbnail>
-        <h2>{{ticket.type}}</h2>
+        <h2 [innerHTML]="ticket.type"></h2>
         <p>
           {{ticket.order_number}}<br>
           {{ticket.first_name}} {{ticket.last_name}}

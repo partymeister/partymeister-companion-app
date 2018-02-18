@@ -19,7 +19,7 @@
     </ion-refresher>
     <network-connection [isOnline]="connectivityService.online"></network-connection>
     <div *ngFor="let block of page?.content.blocks">
-        <lazy-img *ngIf="block.component == 'Component_Text' && block.content.attachments.image[0]" [src]="block.content.attachments.image[0].modified_file.replace('http', 'https')"></lazy-img>
+        <img-loader *ngIf="block.component == 'Component_Text' && block.content.attachments.image[0]" [src]="block.content.attachments.image[0].modified_file.replace('http', 'https')" useImg></img-loader>
         <item-component *ngIf="block.component == 'Component_Item_List'" [block]="block"></item-component>
         <sponsor-component *ngIf="block.component == 'Component_Sponsor_List'" [block]="block"></sponsor-component>
         <gallery-component *ngIf="block.component == 'Component_Gallery'" [block]="block"></gallery-component>

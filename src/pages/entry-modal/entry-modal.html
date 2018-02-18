@@ -71,7 +71,7 @@
     </ion-list-header>
 
     <ion-item *ngIf="entry.preview.url" class="item item-image">
-      <lazy-img [src]="entry.preview.url" (click)="showPreview()"></lazy-img>
+      <img-loader [src]="entry.preview.url" (click)="showPreview()" useImg></img-loader>
     </ion-item>
     <ion-list-header>
       Uploader information

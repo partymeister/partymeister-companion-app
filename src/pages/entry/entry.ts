@@ -52,7 +52,7 @@ export class EntryPage extends MasterPage {
         entryModal.onDidDismiss(data => {
             console.log("Modal closed");
         });
-        entryModal.present(EntryModalPage);
+        entryModal.present();
     }
 
     showPreview(entry) {

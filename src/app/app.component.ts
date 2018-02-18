@@ -18,18 +18,16 @@ import {LiveVotePage} from '../pages/livevote/livevote';
 import {VotePage} from '../pages/vote/vote';
 import {RegistrationPage} from '../pages/registration/registration';
 
-// Modules
-import ImgCache           from 'imgcache.js';
-
 // Providers and services
 import {NavigationProvider} from '../providers/navigation';
-import {CacheService} from "ionic-cache/ionic-cache";
 import {SettingsProvider} from '../providers/settings';
 import {StorageProvider} from '../providers/storage';
 import {LinkService} from '../services/link';
 import {AuthProvider} from '../providers/auth';
 import {TicketProvider} from '../providers/ticket';
 import {ConnectivityService} from '../providers/connectivity-service';
+import {CacheService} from "ionic-cache";
+import {ImageLoaderConfig} from "ionic-image-loader";
 
 let components = {
     'ContentPage': ContentPage,
@@ -70,7 +68,6 @@ export class PartyMeisterCompanionApp {
     constructor(public platform: Platform,
                 public menu: MenuController,
                 private navigationProvider: NavigationProvider,
-                private cache: CacheService,
                 public menuCtrl: MenuController,
                 private storageProvider: StorageProvider,
                 private linkService: LinkService,
@@ -82,14 +79,15 @@ export class PartyMeisterCompanionApp {
                 private oneSignal: OneSignal,
                 private network: Network,
                 private alertCtrl: AlertController,
-                private cacheService: CacheService) {
+                private cacheService: CacheService,
+                private imageLoaderConfig: ImageLoaderConfig) {
 
         if (SettingsProvider.variables.environment == 'dev') {
             this.cacheService.clearAll();
             console.log('Developer mode - clearing all observable caches');
         }
 
-        this.cache.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
+        this.cacheService.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
 
         this.navigationProvider.operationType().subscribe(operationType => {
             this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
@@ -169,32 +167,31 @@ export class PartyMeisterCompanionApp {
                 this.addOneSignalConfiguration();
             }
 
-            // activated debug mode
-            ImgCache.options.debug = true;
-            // page is set until img cache has started
-            ImgCache.init(() => {
-                    this.storageProvider.get('introShown').then(res => {
-                        console.log('Introshown: ' + res);
-                        if (<any>res !== true) {
-                            console.log("Showing intro page");
-                            this.nav.setRoot(IntroPage);
-                            this.splashScreen.hide();
+            this.imageLoaderConfig.enableSpinner(false);
+
+            // set the maximum concurrent connections to 10
+            this.imageLoaderConfig.setConcurrency(10);
+
+            this.imageLoaderConfig.enableDebugMode();
+
+            this.storageProvider.get('introShown').then(res => {
+                console.log('Introshown: ' + res);
+                if (<any>res !== true) {
+                    console.log("Showing intro page");
+                    this.nav.setRoot(IntroPage);
+                    this.splashScreen.hide();
+                } else {
+                    this.storageProvider.get('operationType').then(operationType => {
+                        if (<any>operationType == 'local') {
+                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
                         } else {
-                            this.storageProvider.get('operationType').then(operationType => {
-                                if (<any>operationType == 'local') {
-                                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
-                                } else {
-                                    this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
-                                }
-                                this.menuCtrl.open();
-                                this.splashScreen.hide();
-                            });
+                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
                         }
+                        this.menuCtrl.open();
+                        this.splashScreen.hide();
                     });
-                },
-                () => {
-                    console.error('ImgCache init: error! Check the log for errors');
-                });
+                }
+            });
 
         });
 

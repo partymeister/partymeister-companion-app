@@ -1,11 +1,15 @@
 import {Injectable} from '@angular/core';
-import {Http, Headers, RequestOptions} from '@angular/http';
 import {SettingsProvider} from './settings';
 import 'rxjs/add/operator/map';
 import {StorageProvider} from './storage';
 import {AuthProvider} from './auth';
 import {Ticket} from '../models/ticket';
 import {Subject}    from 'rxjs/Subject';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+
+const httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN})
+};
 
 @Injectable()
 export class TicketProvider {
@@ -18,7 +22,7 @@ export class TicketProvider {
     // Observable string streams
     atHome$ = this.atHomeUpdated.asObservable();
 
-    constructor(public http: Http, private storageProvider: StorageProvider, private authProvider: AuthProvider) {
+    constructor(public http: HttpClient, private storageProvider: StorageProvider, private authProvider: AuthProvider) {
     }
 
     loadTickets() {
@@ -43,12 +47,8 @@ export class TicketProvider {
 
     ticketRequest(data) {
         let bodyString = JSON.stringify(data); // Stringify payload
-        let headers = new Headers({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN}); // ... Set content type to JSON
-        let options = new RequestOptions({headers: headers}); // Create a request option
-
-        return this.http.post(SettingsProvider.variables.TICKET_API, bodyString, options).map(res => {
-            let result = res.json();
-            let ticket = <Ticket>result.data;
+        return this.http.post(SettingsProvider.variables.TICKET_API, bodyString, httpOptions).map(res => {
+            let ticket = <Ticket>res['data'];
             return this.storageProvider.get('tickets').then(res => {
                 if (res == null) {
                     res = <any>[];

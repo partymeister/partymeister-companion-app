@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {HttpClient} from "@angular/common/http";
 import {NavigationItem} from '../models/navigation_item';
 import {Observable} from 'rxjs/Rx';
-import {Subject}    from 'rxjs/Subject';
-import {CacheService} from "ionic-cache/ionic-cache";
+import {Subject} from 'rxjs/Subject';
 import {SettingsProvider} from "./settings";
 import 'rxjs/add/operator/map';
+import {CacheService} from "ionic-cache";
 
 @Injectable()
 export class NavigationProvider {
@@ -21,20 +21,19 @@ export class NavigationProvider {
         this.forceNavigationUpdate.next(operationType);
     }
 
-    constructor(public http: Http, public cache: CacheService) {
+    constructor(public http: HttpClient, public cache: CacheService) {
     }
 
     // Get App operation type
     operationType(): Observable<string> {
-        return Observable.timer(0, 10000).mergeMap(() => this.http.get(SettingsProvider.variables.OPERATION_TYPE_URL).map(res => res.text().trim()));
+        return Observable.timer(0, 10000).mergeMap(() => this.http.get(SettingsProvider.variables.OPERATION_TYPE_URL, {responseType: 'text'}).map(res => res.trim()));
     }
 
     // Load the navigation tree
     load(type): Observable<NavigationItem[]> {
         let request = this.http.get(SettingsProvider.variables.MENU_URL);
         return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', SettingsProvider.variables.CACHE_TIMEOUT_NAVIGATION).map(res => {
-                let result = res.json();
-                return <NavigationItem[]>result[type];
+                return <NavigationItem[]>res[type];
             }
         );
     }
@@ -43,8 +42,7 @@ export class NavigationProvider {
     loadOffline(type): Observable<NavigationItem[]> {
         let request = this.http.get('./assets/data/offline-menu.json');
         return this.cache.loadFromDelayedObservable('navigation', request, 'navigation', SettingsProvider.variables.CACHE_TIMEOUT_NAVIGATION).map(res => {
-                let result = res.json();
-                return <NavigationItem[]>result[type];
+                return <NavigationItem[]>res[type];
             }
         );
     }

@@ -42,7 +42,7 @@ export class LoginPage extends MasterPage {
     submit() {
         this.authProvider.loginRequest(this.form.value)
             .subscribe(result => {
-                    this.authProvider.doLogin(result.json().data).then(res => {
+                    this.authProvider.doLogin(result['data']).then(res => {
                         this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
                         this.menuCtrl.open();
                     });

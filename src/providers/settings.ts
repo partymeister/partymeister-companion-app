@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-declare const ENV;
+import { ENV } from '@app/env'
 
 @Injectable()
 export class SettingsProvider {

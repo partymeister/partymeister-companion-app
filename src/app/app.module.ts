@@ -2,7 +2,7 @@
 import {NgModule, ErrorHandler, Injector} from '@angular/core';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {PartyMeisterCompanionApp} from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -14,7 +14,6 @@ import {VisitorProvider} from '../providers/visitor';
 import {SettingsProvider} from '../providers/settings';
 import {CountryProvider} from '../providers/country';
 import {StorageProvider} from '../providers/storage';
-import {CacheService} from "ionic-cache/ionic-cache";
 import {LinkService} from '../services/link';
 import {VoteProvider} from '../providers/vote';
 import {AuthProvider} from '../providers/auth';
@@ -27,6 +26,8 @@ import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
 import {Md5} from 'ts-md5/dist/md5';
 import {ServiceLocator} from '../services/service-locator';
 import {QRCodeModule} from 'angular2-qrcode';
+import { CacheModule } from "ionic-cache";
+import {IonicImageLoader} from 'ionic-image-loader';
 
 // Components
 import {NetworkConnectionComponent} from '../components/network-connection/network-connection';
@@ -36,7 +37,6 @@ import {VisitorComponent} from '../components/visitor/visitor';
 import {TimetableComponent} from '../components/timetable/timetable';
 import {SponsorComponent} from '../components/sponsor/sponsor';
 import {ItemComponent} from '../components/item/item';
-import {LazyImgComponent} from '../components/lazyimg/lazyimg';
 
 // Plugins
 import {StatusBar} from '@ionic-native/status-bar';
@@ -88,13 +88,12 @@ enableProdMode();
         VotePage,
         TicketPage,
         TicketModalPage,
-        LazyImgComponent,
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(PartyMeisterCompanionApp),
         FormsModule,
-        HttpModule,
+        HttpClientModule,
         ReactiveFormsModule,
         IonicStorageModule.forRoot({
             name: '__pmcompanion',
@@ -102,6 +101,8 @@ enableProdMode();
         }),
         Ionic2RatingModule,
         QRCodeModule,
+        CacheModule.forRoot(),
+        IonicImageLoader.forRoot(),
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -123,7 +124,6 @@ enableProdMode();
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         PagesProvider,
         NavigationProvider,
-        CacheService,
         Md5,
         VisitorProvider,
         SettingsProvider,

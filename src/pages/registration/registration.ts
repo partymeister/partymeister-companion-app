@@ -1,4 +1,4 @@
-import {Component, OpaqueToken} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
@@ -67,7 +67,7 @@ export class RegistrationPage extends MasterPage {
     submit() {
         this.authProvider.registrationRequest(this.form.value)
             .subscribe(result => {
-                    this.authProvider.doLogin(result.json().data).then(res => {
+                    this.authProvider.doLogin(result['data']).then(res => {
                         this.navCtrl.setRoot(ContentPage, {
                             title: "Visitors",
                             url: "https://local.revision-party.net/visitors.json",

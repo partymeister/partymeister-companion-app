@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Entry, Image} from '../../models/entry';
 import {ModalController} from 'ionic-angular';
 import {EntryModalPage} from '../entry-modal/entry-modal';
@@ -7,6 +7,7 @@ import {EntryProvider} from '../../providers/entry';
 import {MasterPage} from '../master/master';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
 
+@IonicPage()
 @Component({
     selector: 'page-entry',
     templateUrl: 'entry.html'
@@ -22,7 +23,7 @@ export class EntryPage extends MasterPage {
                 private photoViewer: PhotoViewer) {
         super(navCtrl, navParams);
 
-        this.title = navParams.data.title;
+        this.name = navParams.data.title;
 
         this.entrySubscription();
     }

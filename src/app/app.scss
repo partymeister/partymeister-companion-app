@@ -17,13 +17,15 @@ $flag-icon-css-path: '../assets/flags' !default;
 
 @import "../theme/fonts.scss";
 
-ion-content {
-  background-image: url(../assets/images/page-bg.png);
+button .svg-inline--fa {
+  //font-size: 2rem !important;
+  text-align: center;
+  min-width: 30px;
+  color: color($colors, 'primary');
 }
 
 .menu-header-fixed {
   text-align: center;
-  background-color: #010103;
 
   img {
     margin-top: 30px;
@@ -44,22 +46,22 @@ ion-content {
   }
 }
 
-#sidenav {
-  ion-item-group[submenu] {
-    ion-label {
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    overflow: hidden;
-    display: block;
-    max-height: 0;
-    transition: max-height .3s linear;
-    &.visible {
-      max-height: 325px;
-      // this is just sample value, calculate how much space you need for your menu items
-    }
-  }
-}
+//#sidenav {
+//  ion-item-group[submenu] {
+//    ion-label {
+//      margin-top: 0;
+//      margin-bottom: 0;
+//    }
+//    overflow: hidden;
+//    display: block;
+//    max-height: 0;
+//    transition: max-height .3s linear;
+//    &.visible {
+//      max-height: 325px;
+//      // this is just sample value, calculate how much space you need for your menu items
+//    }
+//  }
+//}
 
 ion-item {
   min-height: 40px !important;
@@ -68,8 +70,14 @@ ion-item {
 .item-inner {
   min-height: 40px !important;
 }
+.menu-content-reveal {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1) !important;
 
+}
 ion-menu {
+  .content {
+    background-size: cover;
+  }
   ion-header {
     ion-navbar {
       .toolbar-background {
@@ -84,11 +92,11 @@ ion-menu {
     color: color($colors, light)
   }
   .item {
-    padding-left: 45px;
+    //padding-left: 45px;
     background-color: transparent !important;
   }
   .scroll-content {
-    background-image: url(../assets/images/menu-background-2017.jpg) !important;
+    background: transparent;
     background-size: cover !important;
     background-position: center center !important;
   }
@@ -97,9 +105,4 @@ ion-menu {
 .swiper-pagination-bullet {
   background: #fff;
   opacity: 0.5;
-}
-
-.swiper-pagination-bullet-active {
-  opacity: 1;
-  background: #007aff;
 }

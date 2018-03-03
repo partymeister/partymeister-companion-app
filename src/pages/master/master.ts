@@ -6,13 +6,13 @@ import {AuthProvider} from '../../providers/auth';
 
 @Injectable()
 export class MasterPage {
-    public title: string;
+    public name: string;
     public force: boolean = false;
     public connectivityService: ConnectivityService;
     protected authProvider: AuthProvider;
 
     constructor(public navCtrl: NavController, public navParams: NavParams) {
-        this.title = navParams.data.title;
+        this.name = navParams.data.name;
         this.force = navParams.data.force;
 
         this.connectivityService = ServiceLocator.injector.get(ConnectivityService);

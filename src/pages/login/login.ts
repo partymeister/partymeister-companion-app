@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, MenuController} from 'ionic-angular';
+import {NavController, NavParams, MenuController, IonicPage} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {AlertController} from 'ionic-angular';
 import {MasterPage} from '../master/master';
@@ -10,6 +10,7 @@ import {SettingsProvider} from '../../providers/settings';
 import {RegistrationPage} from '../registration/registration';
 import {ContentPage} from '../content/content';
 
+@IonicPage()
 @Component({
     selector: 'page-login',
     templateUrl: 'login.html'

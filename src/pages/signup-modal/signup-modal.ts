@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ViewController} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {CountryProvider} from '../../providers/country';
 import {VisitorProvider} from '../../providers/visitor';
 
+@IonicPage()
 @Component({
     selector: 'page-signup-modal',
     templateUrl: 'signup-modal.html'

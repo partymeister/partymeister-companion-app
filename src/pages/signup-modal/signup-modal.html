@@ -7,7 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
   <form [formGroup]="form" (ngSubmit)="submit()">
     <ion-item>
       <ion-label>Handle</ion-label>

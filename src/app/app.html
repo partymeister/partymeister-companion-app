@@ -1,27 +1,7 @@
 <ion-menu [content]="content">
 
-    <ion-content>
-        <div ion-fixed class="menu-header-fixed">
-            <img src="assets/images/menu-header-2017.png">
-        </div>
-
-        <ion-list id="sidenav" style="margin-top: 100px;">
-            <ion-list-header *ngIf="this.authProvider.user?.handle"><h5>Hello {{this.authProvider.user.handle}}</h5></ion-list-header>
-            <ng-template ngFor let-p [ngForOf]="pages" let-i="index">{{p.parameters}}
-                <ion-item *ngIf="showPage(p)" (click)="menuItemHandler(p)" (click)="openPage(p)">
-                    <i class="{{p.icon}}"></i>
-                    {{p.title}}
-                </ion-item>
-                <ion-item-group ng-if="p.children.length > 0" submenu [class.visible]="showSubmenu[p.title]">
-                    <ng-template ngFor let-s [ngForOf]="p.children">
-                        <ion-item *ngIf="showPage(s)" submenu-item (click)="openPage(s)">
-                            <i class="{{s.icon}}"></i>
-                            {{s.title}}
-                        </ion-item>
-                    </ng-template>
-                </ion-item-group>
-            </ng-template>
-        </ion-list>
+    <ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.menu_bg?.cached_image_path + ')'}">
+        <navigation-items></navigation-items>
     </ion-content>
 
 </ion-menu>

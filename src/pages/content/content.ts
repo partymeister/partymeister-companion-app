@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 
 import {Page} from '../../models/page';
 import {PagesProvider} from '../../providers/pages';
 import {MasterPage} from '../master/master';
 
+@IonicPage()
 @Component({
     selector: 'page-content',
     templateUrl: 'content.html'

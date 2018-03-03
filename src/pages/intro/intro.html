@@ -4,63 +4,23 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-content>
+<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
     <ion-slides (ionSlideDrag)="checkSwipeLock()" pager>
-        <ion-slide class="city">
-            <img src="assets/images/revision-logo.png" class="slide-image">
-            <p>
-                Stay up to date
-            </p>
-            <p>
-                Sign up for the event
-            </p>
-            <p>
-                Get notified when<br>
-                interesting things happen
-            </p>
+        <ion-slide class="slide-1" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_1?.cached_image_path + ')'}">
+            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <div [innerHtml]="(app$ | async)?.intro_text_1"></div>
         </ion-slide>
-        <ion-slide class="street">
-            <img src="assets/images/revision-logo.png" class="slide-image">
-            <p *ngIf="deviceHeight == 'large'">
-                Register with your access key<br>
-                at the event
-            </p>
-            <p *ngIf="deviceHeight == 'small'">
-                Register with your access<br>
-                key at the event
-            </p>
-            <p>
-                Vote and live-vote
-            </p>
-            <p>
-                Get on-location information
-            </p>
-            <p>
-                Store your pre-sale tickets
-            </p>
+        <ion-slide class="slide-2" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_2?.cached_image_path + ')'}">
+            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <div [innerHtml]="(app$ | async)?.intro_text_2"></div>
         </ion-slide>
-        <ion-slide class="tunnel">
-            <img src="assets/images/revision-logo.png" class="slide-image {{deviceHeight}}">
-            <p>
-                April 14th to 17th 2017<br>
-                E Werk Saarbrücken, Germany
-            </p>
-            <p>
-                Pure demoscene party
-            </p>
-            <p>
-                PC, Amiga, Oldskool,<br>
-                Graphics, Music and more
-            </p>
-            <p>
-                Special events<br>
-                Concerts, Seminars,<br>
-                Food & Drinks
-            </p>
+        <ion-slide class="slide-3" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_3?.cached_image_path + ')'}">
+            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <div [innerHtml]="(app$ | async)?.intro_text_3"></div>
         </ion-slide>
-        <ion-slide class="city">
-            <img src="assets/images/revision-logo.png" class="slide-image">
-            <h2 class="slide-title">Ready to Party?</h2>
+        <ion-slide class="slide-4" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_4?.cached_image_path + ')'}">
+            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <div [innerHtml]="(app$ | async)?.intro_text_4"></div>
             <button (click)="navigateHome()" ion-button large clear icon-right color="primary">
                 Continue
                 <ion-icon name="arrow-forward"></ion-icon>

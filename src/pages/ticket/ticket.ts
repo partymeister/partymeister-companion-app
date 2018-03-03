@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams, ModalController} from 'ionic-angular';
+import {NavController, NavParams, ModalController, IonicPage} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {AlertController} from 'ionic-angular';
@@ -8,6 +8,7 @@ import {Ticket} from '../../models/ticket';
 import {TicketModalPage} from '../ticket-modal/ticket-modal';
 import {MasterPage} from '../master/master';
 
+@IonicPage()
 @Component({
     selector: 'page-ticket',
     templateUrl: 'ticket.html',

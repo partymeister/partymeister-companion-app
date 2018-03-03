@@ -14,7 +14,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
     <network-connection [isOnline]="connectivityService.online"></network-connection>
     <form padding [formGroup]="form" (ngSubmit)="submit()">
         <ion-item>

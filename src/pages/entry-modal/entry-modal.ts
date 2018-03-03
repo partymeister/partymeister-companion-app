@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ViewController} from 'ionic-angular';
 import {Entry, Image} from '../../models/entry';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
 
+@IonicPage()
 @Component({
     selector: 'page-entry-modal',
     templateUrl: 'entry-modal.html'

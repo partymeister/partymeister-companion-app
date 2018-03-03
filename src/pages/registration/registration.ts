@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {CountryProvider} from '../../providers/country';
@@ -7,6 +7,7 @@ import {AlertController} from 'ionic-angular';
 import {ContentPage} from '../content/content';
 import {MasterPage} from '../master/master';
 
+@IonicPage()
 @Component({
     selector: 'page-registration',
     templateUrl: 'registration.html',

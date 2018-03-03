@@ -1,0 +1,21 @@
+<div ion-fixed class="menu-header-fixed">
+    <img-loader *ngIf="(app$ | async)" [src]="(app$ | async)?.menu_header?.cached_image_path" useImg></img-loader>
+</div>
+
+<div class="navigation" *ngIf="navigationReady">
+    <ion-list-header *ngIf="this.authProvider.user?.handle"><h5>Hello {{this.authProvider.user.handle}}</h5></ion-list-header>
+
+    <ng-template ngFor let-p [ngForOf]="remoteNavigation$ | async">
+        <button ion-item *ngIf="showPage(p)" (click)="openPage(p); toggleChildren(p)">
+            <i *ngIf="p.icon != ''" class="{{p.icon}}"></i> {{p.name}}
+        </button>
+        <ion-item-group *ngIf="p.items && p.items.length > 0" submenu [ngClass]="childrenOpenState[p.name] ? 'visible' : ''">
+        <ng-template ngFor let-s [ngForOf]="p.items">
+
+            <button menuClose ion-item *ngIf="showPage(s)" (click)="openPage(s)">
+                <i *ngIf="s.icon != ''" class="{{s.icon}}"></i> {{s.name}}
+            </button>
+        </ng-template>
+        </ion-item-group>
+    </ng-template>
+</div>

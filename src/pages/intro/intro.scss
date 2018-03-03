@@ -1,21 +1,13 @@
 page-intro {
   button {
-    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.8),
-    0px 8px 13px rgba(0, 0, 0, 0.4),
-    0px 18px 23px rgba(0, 0, 0, 0.1);
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
+  }
+  ion-slide {
+      background-size: cover;
   }
 
-  ion-slide.city {
-    background: url(../assets/images/slider-bg-city.jpg);
-    background-size: cover;
-  }
-  ion-slide.street {
-    background: url(../assets/images/slider-bg-street.jpg);
-    background-size: cover;
-  }
-  ion-slide.tunnel {
-    background: url(../assets/images/slider-bg-tunnel.jpg);
-    background-size: cover;
+  .swiper-pagination-bullet-active {
+    background: color($colors, 'primary') !important;
   }
 
   .toolbar-background {
@@ -31,12 +23,10 @@ page-intro {
     margin-top: 2.8rem;
   }
 
-  .slide-image {
+  img-loader.slide-image img {
     max-width: 70%;
-    margin: 20% 15%;
-    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.8),
-    0px 8px 13px rgba(0, 0, 0, 0.4),
-    0px 18px 23px rgba(0, 0, 0, 0.1);
+    margin: 20% 15% 10%;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
   }
 
   .slide-image.small, .slide-image.large {
@@ -49,9 +39,7 @@ page-intro {
 
   p, h2 {
     color: #fff;
-    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.8),
-    0px 8px 13px rgba(0, 0, 0, 0.4),
-    0px 18px 23px rgba(0, 0, 0, 0.1);
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
 
     b {
       color: #000000;
@@ -64,6 +52,6 @@ page-intro {
   }
 
   h2, button {
-    text-shadow: 0px 4px 3px black, 0px 4px 7px black, 0px 8px 13px rgba(0, 0, 0, 1)
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
   }
 }

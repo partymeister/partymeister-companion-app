@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {Platform, MenuController, Nav, AlertController} from 'ionic-angular';
+import {Platform, MenuController, Nav, AlertController, Events} from 'ionic-angular';
 
 // Plugins
 import {StatusBar} from '@ionic-native/status-bar';
@@ -10,7 +10,7 @@ import {OneSignal} from '@ionic-native/onesignal';
 // Pages
 import {ContentPage} from '../pages/content/content';
 import {SettingsPage} from '../pages/settings/settings';
-import {IntroPage} from '../pages/intro/intro';
+// import {IntroPage} from '../pages/intro/intro';
 import {LoginPage} from '../pages/login/login';
 import {EntryPage} from '../pages/entry/entry';
 import {TicketPage} from '../pages/ticket/ticket';
@@ -19,7 +19,7 @@ import {VotePage} from '../pages/vote/vote';
 import {RegistrationPage} from '../pages/registration/registration';
 
 // Providers and services
-import {NavigationProvider} from '../providers/navigation';
+// import {NavigationProvider} from '../providers/navigation';
 import {SettingsProvider} from '../providers/settings';
 import {StorageProvider} from '../providers/storage';
 import {LinkService} from '../services/link';
@@ -28,24 +28,30 @@ import {TicketProvider} from '../providers/ticket';
 import {ConnectivityService} from '../providers/connectivity-service';
 import {CacheService} from "ionic-cache";
 import {ImageLoaderConfig} from "ionic-image-loader";
+import {AppProvider} from "../providers/app/app";
+import {App} from "../models/app";
+import {Observable} from "rxjs/Observable";
+import {NavigationProvider} from "../providers/navigation";
 
-let components = {
-    'ContentPage': ContentPage,
-    'SettingsPage': SettingsPage,
-    'RegistrationPage': RegistrationPage,
-    'IntroPage': IntroPage,
-    'LoginPage': LoginPage,
-    'EntryPage': EntryPage,
-    'LiveVotePage': LiveVotePage,
-    'VotePage': VotePage,
-    'TicketPage': TicketPage,
-};
+// let components = {
+//     'ContentPage': ContentPage,
+//     'SettingsPage': SettingsPage,
+//     'RegistrationPage': RegistrationPage,
+//     'IntroPage': IntroPage,
+//     'LoginPage': LoginPage,
+//     'EntryPage': EntryPage,
+//     'LiveVotePage': LiveVotePage,
+//     'VotePage': VotePage,
+//     'TicketPage': TicketPage,
+// };
 
 @Component({
     templateUrl: 'app.html'
 })
 export class PartyMeisterCompanionApp {
     @ViewChild(Nav) nav: Nav;
+
+    rootPage: any;
 
     pages: Array<{ title: string, component: any, params?: any, children: any[] }>;
     showSubmenu: {};
@@ -54,16 +60,7 @@ export class PartyMeisterCompanionApp {
 
     public atHome: boolean = false;
 
-    menuItemHandler(page): void {
-        this.showSubmenu[page.title] = !this.showSubmenu[page.title];
-
-        // close all other submenus
-        for (var i in this.showSubmenu) {
-            if (this.showSubmenu.hasOwnProperty(i) && i != page.title) {
-                this.showSubmenu[i] = false;
-            }
-        }
-    }
+    app$: Observable<App>;
 
     constructor(public platform: Platform,
                 public menu: MenuController,
@@ -80,7 +77,9 @@ export class PartyMeisterCompanionApp {
                 private network: Network,
                 private alertCtrl: AlertController,
                 private cacheService: CacheService,
-                private imageLoaderConfig: ImageLoaderConfig) {
+                private imageLoaderConfig: ImageLoaderConfig,
+                private appProvider: AppProvider,
+                private events: Events) {
 
         if (SettingsProvider.variables.environment == 'dev') {
             this.cacheService.clearAll();
@@ -88,29 +87,6 @@ export class PartyMeisterCompanionApp {
         }
 
         this.cacheService.setDefaultTTL(60 * 60); //set default cache TTL for 1 hour
-
-        this.navigationProvider.operationType().subscribe(operationType => {
-            this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
-                let actualOperationType = operationType;
-                if (<any>forcedOperationType != false && <any>forcedOperationType != null) {
-                    this.storageProvider.set('operationType', forcedOperationType);
-                    actualOperationType = forcedOperationType.toString();
-                } else {
-                    this.storageProvider.set('operationType', operationType);
-                }
-                this.loadNavigation(actualOperationType);
-
-            });
-        }, err => {
-            // Load local menu as a fallback
-            navigationProvider.loadOffline('remote').subscribe(navigationItems => {
-                this.storageProvider.set('operationType', 'remote');
-                let result = navigationProvider.parseItems(navigationItems, components);
-                this.showSubmenu = result.submenu;
-                this.pages = result.pages;
-                this.initializeApp();
-            });
-        });
 
         this.navigationProvider.updated$.subscribe(operationType => {
             this.loadNavigation(operationType);
@@ -139,15 +115,17 @@ export class PartyMeisterCompanionApp {
             data => {
                 this.atHome = data.atHome;
             });
+
+        this.initializeApp();
     }
 
     loadNavigation(operationType) {
-        this.navigationProvider.load(operationType).subscribe(navigationItems => {
-            let result = this.navigationProvider.parseItems(navigationItems, components, this.showSubmenu);
-            this.showSubmenu = result.submenu;
-            this.pages = result.pages;
-            this.initializeApp();
-        });
+        // this.navigationProvider.load(operationType).subscribe(navigationItems => {
+        //     let result = this.navigationProvider.parseItems(navigationItems, components, this.showSubmenu);
+        //     this.showSubmenu = result.submenu;
+        //     this.pages = result.pages;
+        //     this.initializeApp();
+        // });
     }
 
     initializeApp() {
@@ -160,7 +138,7 @@ export class PartyMeisterCompanionApp {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             this.statusBar.styleBlackOpaque();
-            this.splashScreen.hide();
+            // this.splashScreen.hide();
 
             this.addConnectivityListeners();
             if (this.platform.is('cordova')) {
@@ -174,24 +152,70 @@ export class PartyMeisterCompanionApp {
 
             this.imageLoaderConfig.enableDebugMode();
 
-            this.storageProvider.get('introShown').then(res => {
-                console.log('Introshown: ' + res);
-                if (<any>res !== true) {
-                    console.log("Showing intro page");
-                    this.nav.setRoot(IntroPage);
-                    this.splashScreen.hide();
-                } else {
-                    this.storageProvider.get('operationType').then(operationType => {
-                        if (<any>operationType == 'local') {
-                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+            this.app$ = this.appProvider.subscribeToDataService();
+
+            this.appProvider.subscribeToDataService().subscribe(appSettings => {
+
+                this.navigationProvider.operationType(appSettings).subscribe(operationType => {
+                    this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
+                        let actualOperationType = operationType;
+                        if (<any>forcedOperationType != false && <any>forcedOperationType != null) {
+                            this.storageProvider.set('operationType', forcedOperationType);
+                            actualOperationType = forcedOperationType.toString();
                         } else {
-                            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+                            this.storageProvider.set('operationType', operationType);
                         }
-                        this.menuCtrl.open();
-                        this.splashScreen.hide();
+
+                        // this.loadNavigation(actualOperationType);
+
                     });
-                }
+                }, err => {
+                    // Load local menu as a fallback
+                    // navigationProvider.loadOffline('remote').subscribe(navigationItems => {
+                    //     this.storageProvider.set('operationType', 'remote');
+                    //     let result = navigationProvider.parseItems(navigationItems, components);
+                    //     this.showSubmenu = result.submenu;
+                    //     this.pages = result.pages;
+                    //     this.initializeApp();
+                    // });
+                });
+
+                // if (appSettings.homepage == '') {
+                //     this.rootPage = SettingsProvider.variables.homePage;
+                // } else {
+                //     this.rootPage = appSettings.homepage;
+                // }
+                // if (appSettings.open_menu) {
+                //     this.menuController.open();
+                // }
+                this.menuCtrl.open();
             });
+
+            this.events.subscribe('images:preloaded', res => {
+                console.log('PartymeisterCompanionApp: Event images:preloaded received - hiding splashscreen');
+                this.splashScreen.hide();
+                this.rootPage = 'IntroPage';
+            }, error => {
+            });
+
+            // this.storageProvider.get('introShown').then(res => {
+            //     console.log('Introshown: ' + res);
+            //     if (<any>res !== true) {
+            //         console.log("Showing intro page");
+            //         this.nav.setRoot(IntroPage);
+            //         this.splashScreen.hide();
+            //     } else {
+            //         this.storageProvider.get('operationType').then(operationType => {
+            //             if (<any>operationType == 'local') {
+            //                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+            //             } else {
+            //                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
+            //             }
+            //             this.menuCtrl.open();
+            //             this.splashScreen.hide();
+            //         });
+            //     }
+            // });
 
         });
 
@@ -279,39 +303,35 @@ export class PartyMeisterCompanionApp {
     }
 
     showPage(p) {
-        if (!p.params) {
-            return true;
-        }
-
-        if (!this.atHome && p.params.atHome) {
+        if (!this.atHome && p.is_visible_for_at_home) {
             return false;
         }
 
-        if (!p.params.isProtected && this.isAuthenticated() && p.params.hideWhenLoggedIn) {
+        if (!p.is_protected && this.isAuthenticated() && p.is_hidden_when_logged_in) {
             return false;
         }
 
-        if (!p.params.isProtected && this.isAuthenticated() && p.params.hideWhenLoggedIn) {
+        if (!p.is_protected && this.isAuthenticated() && p.is_hidden_when_logged_in) {
             return false;
         }
-        if (p.params.isProtected && !this.isAuthenticated()) {
+        if (p.is_protected && !this.isAuthenticated()) {
             return false;
         }
         return true;
     }
 
     openPage(page) {
-        if (page.callFunction == 'doLogout') {
+        if (page.call_function == 'doLogout') {
             this.authProvider.doLogout();
             this.linkService.clickLink(SettingsProvider.variables.DEFAULT_LOGOUT_PAGE, true);
             return;
         }
-        if (page.children && page.children.length > 0) {
+        if (page.page == '' && page.url == '') {
             return;
         }
         // close the menu when clicking a link from the menu
         this.menu.close();
         // navigate to the new page if it is not the current page
-        this.nav.setRoot(page.component, page.params);
+        this.nav.setRoot(page.page, {url: page.url, name: page.name});
     }
 }

@@ -48,7 +48,11 @@ export class VisitorComponent {
 
         this.storageProvider.get('operationType').then(res => {
             this.storageProvider.get('forcedOperationType').then(res => {
-                this.forcedOperationType = res.toString();
+                if (res != null) {
+                    this.forcedOperationType = res.toString();
+                } else {
+                    this.forcedOperationType = this.operationType;
+                }
                 this.hideContent = false;
             });
             this.operationType = res.toString();

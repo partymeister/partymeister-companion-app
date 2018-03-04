@@ -7,19 +7,7 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {Network} from '@ionic-native/network';
 import {OneSignal} from '@ionic-native/onesignal';
 
-// Pages
-import {ContentPage} from '../pages/content/content';
-import {SettingsPage} from '../pages/settings/settings';
-// import {IntroPage} from '../pages/intro/intro';
-import {LoginPage} from '../pages/login/login';
-import {EntryPage} from '../pages/entry/entry';
-import {TicketPage} from '../pages/ticket/ticket';
-import {LiveVotePage} from '../pages/livevote/livevote';
-import {VotePage} from '../pages/vote/vote';
-import {RegistrationPage} from '../pages/registration/registration';
-
 // Providers and services
-// import {NavigationProvider} from '../providers/navigation';
 import {SettingsProvider} from '../providers/settings';
 import {StorageProvider} from '../providers/storage';
 import {LinkService} from '../services/link';
@@ -32,18 +20,6 @@ import {AppProvider} from "../providers/app/app";
 import {App} from "../models/app";
 import {Observable} from "rxjs/Observable";
 import {NavigationProvider} from "../providers/navigation";
-
-// let components = {
-//     'ContentPage': ContentPage,
-//     'SettingsPage': SettingsPage,
-//     'RegistrationPage': RegistrationPage,
-//     'IntroPage': IntroPage,
-//     'LoginPage': LoginPage,
-//     'EntryPage': EntryPage,
-//     'LiveVotePage': LiveVotePage,
-//     'VotePage': VotePage,
-//     'TicketPage': TicketPage,
-// };
 
 @Component({
     templateUrl: 'app.html'
@@ -94,14 +70,10 @@ export class PartyMeisterCompanionApp {
 
         linkService.linkClicked$.subscribe(
             data => {
-                let targetPage = linkService.searchPage(this.pages, data.link);
-                if (targetPage != null) {
-                    if (data.root) {
-                        this.openPage(targetPage);
-                        this.menuCtrl.open();
-                    } else {
-                        this.nav.push(targetPage.component, targetPage.params);
-                    }
+                if (data.root) {
+                    this.openPage(data.page);
+                } else {
+                    this.nav.push(data.page, data.url);
                 }
             });
 
@@ -332,6 +304,6 @@ export class PartyMeisterCompanionApp {
         // close the menu when clicking a link from the menu
         this.menu.close();
         // navigate to the new page if it is not the current page
-        this.nav.setRoot(page.page, {url: page.url, name: page.name});
+        this.nav.setRoot(page.page, {url: page.url, name: page.name}, {animate: true, direction: 'forward'});
     }
 }

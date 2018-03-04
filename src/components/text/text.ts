@@ -15,7 +15,7 @@ export class TextComponent {
   }
 
   openPage(url) {
-    this.linkService.clickLink(url);
+    this.linkService.searchPageAndRedirect(url);
   }
 
   ngOnInit() {

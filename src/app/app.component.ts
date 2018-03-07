@@ -20,6 +20,7 @@ import {AppProvider} from "../providers/app/app";
 import {App} from "../models/app";
 import {Observable} from "rxjs/Observable";
 import {NavigationProvider} from "../providers/navigation";
+import {PushProvider} from "../providers/push/push";
 
 @Component({
     templateUrl: 'app.html'
@@ -55,6 +56,7 @@ export class PartyMeisterCompanionApp {
                 private cacheService: CacheService,
                 private imageLoaderConfig: ImageLoaderConfig,
                 private appProvider: AppProvider,
+                private pushProvider: PushProvider,
                 private events: Events) {
 
         if (SettingsProvider.variables.environment == 'dev') {
@@ -113,9 +115,9 @@ export class PartyMeisterCompanionApp {
             // this.splashScreen.hide();
 
             this.addConnectivityListeners();
-            if (this.platform.is('cordova')) {
-                this.addOneSignalConfiguration();
-            }
+            // if (this.platform.is('cordova')) {
+            //     this.addOneSignalConfiguration();
+            // }
 
             this.imageLoaderConfig.enableSpinner(false);
 
@@ -128,29 +130,35 @@ export class PartyMeisterCompanionApp {
 
             this.appProvider.subscribeToDataService().subscribe(appSettings => {
 
-                this.navigationProvider.operationType(appSettings).subscribe(operationType => {
-                    this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
-                        let actualOperationType = operationType;
-                        if (<any>forcedOperationType != false && <any>forcedOperationType != null) {
-                            this.storageProvider.set('operationType', forcedOperationType);
-                            actualOperationType = forcedOperationType.toString();
-                        } else {
-                            this.storageProvider.set('operationType', operationType);
-                        }
+                if (appSettings.onesignal_ios != undefined) {
+                    this.pushProvider.initialize();
+                }
 
-                        // this.loadNavigation(actualOperationType);
+                if (appSettings.local_api_base_url != undefined) {
+                    this.navigationProvider.operationType(appSettings).subscribe(operationType => {
+                        this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
+                            let actualOperationType = operationType;
+                            if (<any>forcedOperationType != false && <any>forcedOperationType != null) {
+                                this.storageProvider.set('operationType', forcedOperationType);
+                                actualOperationType = forcedOperationType.toString();
+                            } else {
+                                this.storageProvider.set('operationType', operationType);
+                            }
 
+                            // this.loadNavigation(actualOperationType);
+
+                        });
+                    }, err => {
+                        // Load local menu as a fallback
+                        // navigationProvider.loadOffline('remote').subscribe(navigationItems => {
+                        //     this.storageProvider.set('operationType', 'remote');
+                        //     let result = navigationProvider.parseItems(navigationItems, components);
+                        //     this.showSubmenu = result.submenu;
+                        //     this.pages = result.pages;
+                        //     this.initializeApp();
+                        // });
                     });
-                }, err => {
-                    // Load local menu as a fallback
-                    // navigationProvider.loadOffline('remote').subscribe(navigationItems => {
-                    //     this.storageProvider.set('operationType', 'remote');
-                    //     let result = navigationProvider.parseItems(navigationItems, components);
-                    //     this.showSubmenu = result.submenu;
-                    //     this.pages = result.pages;
-                    //     this.initializeApp();
-                    // });
-                });
+                }
 
                 // if (appSettings.homepage == '') {
                 //     this.rootPage = SettingsProvider.variables.homePage;

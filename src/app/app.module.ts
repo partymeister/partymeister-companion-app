@@ -48,6 +48,9 @@ import solid from '@fortawesome/fontawesome-free-solid';
 import brands from '@fortawesome/fontawesome-free-brands';
 import regular from '@fortawesome/fontawesome-free-regular';
 import {NavigationProvider} from "../providers/navigation";
+import {PushProvider} from "../providers/push/push";
+import {Diagnostic} from "@ionic-native/diagnostic";
+import {OpenNativeSettings} from "@ionic-native/open-native-settings";
 
 fontawesome.library.add(solid, brands, regular);
 
@@ -91,6 +94,8 @@ fontawesome.library.add(solid, brands, regular);
         EntryProvider,
         TicketProvider,
         ConnectivityService,
+        Diagnostic,
+        OpenNativeSettings,
         StatusBar,
         SplashScreen,
         Network,
@@ -102,6 +107,7 @@ fontawesome.library.add(solid, brands, regular);
         StorageProvider,
         AppProvider,
         NavigationProvider,
+        PushProvider,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
     ]
 })

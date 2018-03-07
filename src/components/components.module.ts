@@ -1,5 +1,4 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA, NgModule} from '@angular/core';
-// import {NotAuthenticatedComponent} from './not-authenticated/not-authenticated';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {NetworkConnectionComponent} from "./network-connection/network-connection";
 import {CommonModule} from "@angular/common";
 import {IonicModule} from "ionic-angular";
@@ -9,8 +8,7 @@ import {SponsorComponent} from "./sponsor/sponsor";
 import {TextComponent} from "./text/text";
 import {TimetableComponent} from "./timetable/timetable";
 import {VisitorComponent} from "./visitor/visitor";
-// import {TranslateModule} from "@ngx-translate/core";
-// import {FormErrorComponent} from './form-error/form-error';
+import {IonicImageLoader} from "ionic-image-loader";
 
 @NgModule({
     declarations: [
@@ -21,17 +19,15 @@ import {VisitorComponent} from "./visitor/visitor";
         TextComponent,
         TimetableComponent,
         VisitorComponent,
-        // FormErrorComponent,
     ],
     imports: [
         CommonModule,
+        IonicImageLoader,
         IonicModule
     ],
     entryComponents: [
-        // NotAuthenticatedComponent
     ],
     exports: [
-        // NotAuthenticatedComponent,
         NetworkConnectionComponent,
         GalleryComponent,
         ItemComponent,
@@ -39,7 +35,6 @@ import {VisitorComponent} from "./visitor/visitor";
         TextComponent,
         TimetableComponent,
         VisitorComponent
-        // FormErrorComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

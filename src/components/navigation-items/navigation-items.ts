@@ -16,6 +16,7 @@ import {MenuLink} from "../../models/menu-link";
 import {NavigationItem} from "../../models/navigation_item";
 import {App} from "../../models/app";
 import {AppProvider} from "../../providers/app/app";
+import {NavigationProvider} from "../../providers/navigation";
 
 /**
  * Generated class for the NavigationItemsComponent component.
@@ -31,8 +32,7 @@ import {AppProvider} from "../../providers/app/app";
 export class NavigationItemsComponent {
 
     settings;
-    localNavigation$: Observable<NavigationItem[]>;
-    remoteNavigation$: Observable<NavigationItem[]>;
+    navigation$: Observable<NavigationItem[]>;
     app$: Observable<App>;
     public childrenOpenState: any = {};
     public navigationReady = false;
@@ -45,11 +45,9 @@ export class NavigationItemsComponent {
     }
 
     ngOnInit() {
-        this.localNavigation$ = this.appProvider.subscribeToLocalNavigation();
-        this.remoteNavigation$ = this.appProvider.subscribeToRemoteNavigation();
-        this.app$ = this.appProvider.subscribeToDataService();
+        this.navigation$ = this.appProvider.subscribeToCurrentNavigation();
 
-        this.remoteNavigation$.subscribe(pages => {
+        this.navigation$.subscribe(pages => {
             for (let p of pages) {
                 if (p.items && p.items.length > 0) {
                     if (!this.childrenOpenState.hasOwnProperty(p.name)) {
@@ -59,6 +57,8 @@ export class NavigationItemsComponent {
             }
             this.navigationReady = true;
         });
+
+        this.app$ = this.appProvider.subscribeToDataService();
     }
 
     public toggleChildren(page) {

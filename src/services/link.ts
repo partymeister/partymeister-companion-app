@@ -15,23 +15,53 @@ export class LinkService {
     // Observable string streams
     linkClicked$ = this.linkClickedSource.asObservable();
 
-    constructor(private appProvider: AppProvider) {
+    constructor(private appProvider: AppProvider,
+                private storageProvider: StorageProvider) {
     }
 
     // Service message commands
-    clickLink(link: string, root: boolean = false) {
-        console.log("Called linkservice with url " + link);
-        this.linkClickedSource.next({link: link, root: root});
+    clickLink(page: string, root: boolean = false) {
+        console.log("Called linkservice with url " + JSON.stringify(page));
+        this.linkClickedSource.next({page: page, root: root});
     }
 
-    searchPageAndRedirect(url) {
-        this.appProvider.subscribeToRemoteNavigation().subscribe( navigation => {
-            let targetPage = this.searchPage(navigation, url);
-            if (targetPage != null) {
-                this.linkClickedSource.next({page: targetPage, root: true});
+    searchDefaultPageAndRedirect() {
+        this.storageProvider.get('current-navigation').then( navigationItems => {
+            if (navigationItems != undefined && navigationItems != null) {
+                let targetPage = this.searchDefaultPage(navigationItems);
+                if (targetPage != null) {
+                    this.linkClickedSource.next({page: targetPage, root: true});
+                }
             }
         });
     }
+    searchPageAndRedirect(url) {
+        this.storageProvider.get('current-navigation').then( navigationItems => {
+            if (navigationItems != undefined && navigationItems != null) {
+                let targetPage = this.searchPage(navigationItems, url);
+                if (targetPage != null) {
+                    this.linkClickedSource.next({page: targetPage, root: true});
+                }
+            }
+        });
+    }
+
+    searchDefaultPage(pages: any[]) {
+        for (let page of pages) {
+            if (page.is_default) {
+                return page;
+            }
+            if (page.items && page.items.length > 0) {
+                for (let child of page.items) {
+                    if (child.is_default) {
+                        return child;
+                    }
+                }
+            }
+        }
+
+        return null;
+    };
 
     searchPage(pages: any[], url: string) {
         let targetPage: any = null;

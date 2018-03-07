@@ -5,7 +5,7 @@
 <div class="navigation" *ngIf="navigationReady">
     <ion-list-header *ngIf="this.authProvider.user?.handle"><h5>Hello {{this.authProvider.user.handle}}</h5></ion-list-header>
 
-    <ng-template ngFor let-p [ngForOf]="remoteNavigation$ | async">
+    <ng-template ngFor let-p [ngForOf]="navigation$ | async">
         <button ion-item *ngIf="showPage(p)" (click)="openPage(p); toggleChildren(p)">
             <i *ngIf="p.icon != ''" class="{{p.icon}}"></i> {{p.name}}
         </button>

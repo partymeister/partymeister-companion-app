@@ -8,6 +8,8 @@ import {sprintf} from "sprintf-js";
 import {App} from "../../models/app";
 import {NavigationItem} from "../../models/navigation_item";
 import {Observable} from "rxjs/Observable";
+import {NavigationProvider} from "../navigation";
+import {StorageProvider} from "../storage";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -27,10 +29,13 @@ export class AppProvider {
     private app$: BehaviorSubject<App>;
     private remoteNavigation$: BehaviorSubject<NavigationItem[]>;
     private localNavigation$: BehaviorSubject<NavigationItem[]>;
+    private navigation$: BehaviorSubject<NavigationItem[]>;
 
     constructor(public http: HttpClient,
                 private imageLoader: ImageLoader,
-                private events: Events) {
+                private events: Events,
+                private navigationProvider: NavigationProvider,
+                private storageProvider: StorageProvider) {
         this.initializeDataService();
     }
 
@@ -39,6 +44,7 @@ export class AppProvider {
             this.app$ = <BehaviorSubject<App>> new BehaviorSubject({});
             this.remoteNavigation$ = <BehaviorSubject<NavigationItem[]>> new BehaviorSubject([]);
             this.localNavigation$ = <BehaviorSubject<NavigationItem[]>> new BehaviorSubject([]);
+            this.navigation$ = <BehaviorSubject<NavigationItem[]>> new BehaviorSubject([]);
 
             let request = this.http.get(SettingsProvider.variables.SETTINGS_API + '?api_token=' + SettingsProvider.variables.API_TOKEN, httpOptions);
             // this.cache.loadFromDelayedObservable('settings', request, 'settings', SettingsProvider.variables.timeouts.appSettings).map(res => {
@@ -107,6 +113,16 @@ export class AppProvider {
                     this.remoteNavigation$.next(remoteNavigation);
                     this.localNavigation$.next(localNavigation);
 
+                    this.navigationProvider.updated$.subscribe(operationType => {
+                        if (operationType == 'remote') {
+                            this.navigation$.next(remoteNavigation);
+                            this.storageProvider.set('current-navigation', remoteNavigation);
+                        } else {
+                            this.navigation$.next(localNavigation);
+                            this.storageProvider.set('current-navigation', localNavigation);
+                        }
+                    });
+
                     this.events.publish('app:loaded', true);
                 },
                 error => console.log("AppProvider: subscribing to DataService: " + JSON.stringify(error))
@@ -124,6 +140,10 @@ export class AppProvider {
 
     subscribeToRemoteNavigation(): Observable<NavigationItem[]> {
         return this.remoteNavigation$.asObservable();
+    }
+
+    subscribeToCurrentNavigation(): Observable<NavigationItem[]> {
+        return this.navigation$.asObservable();
     }
 
 }

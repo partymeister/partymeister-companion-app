@@ -1,14 +1,14 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'gallery-component',
-  templateUrl: 'gallery.html'
+    selector: 'gallery-component',
+    templateUrl: 'gallery.html'
 })
 export class GalleryComponent {
 
-  @Input() block: {};
+    @Input() block: {};
 
-  constructor() {
-  }
+    constructor() {
+    }
 
 }

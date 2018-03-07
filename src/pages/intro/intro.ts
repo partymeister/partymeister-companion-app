@@ -6,24 +6,26 @@ import {SettingsProvider} from '../../providers/settings';
 import {App} from "../../models/app";
 import {Observable} from "rxjs/Observable";
 import {AppProvider} from "../../providers/app/app";
+import {NavigationItem} from "../../models/navigation_item";
+import {MasterPage} from "../master/master";
 
 @IonicPage()
 @Component({
     selector: 'page-intro',
     templateUrl: 'intro.html'
 })
-export class IntroPage {
+export class IntroPage extends MasterPage {
     @ViewChild(Slides) slides: Slides;
     public deviceHeight: string = 'large';
 
-    app$: Observable<App>;
 
     constructor(private storageProvider: StorageProvider,
                 public navCtrl: NavController,
                 public navParams: NavParams,
                 private linkService: LinkService,
-                private platform: Platform,
-                private appProvider: AppProvider) {
+                private platform: Platform) {
+
+        super(navCtrl, navParams);
 
         this.platform.ready().then(() => {
             if (platform.height() < 600) {
@@ -34,19 +36,11 @@ export class IntroPage {
         });
     }
 
-    ngOnInit() {
-        this.app$ = this.appProvider.subscribeToDataService();
-    }
 
     navigateHome() {
-        this.storageProvider.get('operationType').then(res => {
-            if (<any>res == null || res.toString() == 'remote') {
-                this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
-            } else {
-                this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
-            }
-            this.storageProvider.set('introShown', true);
-        });
+        this.linkService.searchDefaultPageAndRedirect();
+
+        this.storageProvider.set('introShown', true);
     }
 
     checkSwipeLock() {

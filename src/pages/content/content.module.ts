@@ -20,7 +20,6 @@ import {ContentPage} from "./content";
         ComponentsModule,
         IonicPageModule.forChild(ContentPage),
         IonicImageLoader,
-
     ],
 })
 export class ContentPageModule {

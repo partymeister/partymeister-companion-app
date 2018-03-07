@@ -3,7 +3,8 @@ import {IonicPage, NavController, NavParams, Platform} from 'ionic-angular';
 import {AppVersion} from '@ionic-native/app-version';
 import {OneSignal} from '@ionic-native/onesignal';
 import {StorageProvider} from '../../providers/storage';
-// import {NavigationProvider} from '../../providers/navigation';
+import {PushProvider} from "../../providers/push/push";
+import {NavigationProvider} from "../../providers/navigation";
 
 @IonicPage()
 @Component({
@@ -30,9 +31,10 @@ export class SettingsPage {
                 public navParams: NavParams,
                 private platform: Platform,
                 private storageProvider: StorageProvider,
-                // private navigationProvider: NavigationProvider,
                 private appVersion: AppVersion,
-                private oneSignal: OneSignal) {
+                private pushProvider: PushProvider,
+                private oneSignal: OneSignal,
+                private navigationProvider: NavigationProvider) {
 
     }
 
@@ -99,14 +101,15 @@ export class SettingsPage {
                 this.operationTypes.local = false;
                 this.operationTypes.remote = false;
                 this.storageProvider.get('operationType').then(operationType => {
-                    // this.navigationProvider.updateNavigation(operationType);
+                    this.navigationProvider.updateNavigation(operationType);
                 });
             }
         }
     }
 
     getTags() {
-        if (this.platform.is('cordova')) {
+        console.log('Settings: Get tags');
+        if (this.platform.is('cordova') && this.pushProvider.isEnabled()) {
             this.oneSignal.getTags().then(res => {
                     for (let key in res) {
                         if (res.hasOwnProperty(key)) {
@@ -120,9 +123,17 @@ export class SettingsPage {
     }
 
     setTags() {
-        if (this.platform.is('cordova') && this.initialized == true) {
+        console.log('Settings: Set tags');
+        if (this.platform.is('cordova') && this.pushProvider.isEnabled()) {
             this.oneSignal.sendTags(this.notifications);
             this.storageProvider.set('pushNotificationTags', this.notifications);
         }
     }
+
+    openSystemSettings() {
+        if (!this.pushProvider.isEnabled()) {
+            this.pushProvider.openSystemSettings();
+        }
+    }
+
 }

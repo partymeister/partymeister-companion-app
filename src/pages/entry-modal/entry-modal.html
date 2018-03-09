@@ -14,30 +14,42 @@
       <h2>{{entry.title}} by {{entry.author}}</h2>
     </ion-list-header>
     <ion-item>
+      <span item-start>
       Competition
-      <span item-right>{{entry.competition}}</span>
+      </span>
+      <span item-right text-right>{{entry.competition}}</span>
     </ion-item>
     <ion-item>
+      <span item-start>
       ID
-      <span item-right>{{entry.id}}</span>
+      </span>
+      <span item-right text-right>{{entry.id}}</span>
     </ion-item>
     <ion-item>
+      <span item-start>
       Title
-      <span item-right>{{entry.title}}</span>
+      </span>
+      <span item-right text-right>{{entry.title}}</span>
     </ion-item>
     <ion-item>
+      <span item-start>
       Author
-      <span item-right>{{entry.author}}</span>
+      </span>
+      <span item-right text-right>{{entry.author}}</span>
     </ion-item>
 
     <ion-item *ngIf="entry.running_time">
+      <span item-start>
       Running time
-      <span item-right>{{entry.running_time}}</span>
+      </span>
+      <span item-right text-right>{{entry.running_time}}</span>
     </ion-item>
 
     <ion-item *ngIf="entry.platform">
+      <span item-start>
       Platform
-      <span item-right>{{entry.platform}}</span>
+      </span>
+      <span item-right text-right>{{entry.platform}}</span>
     </ion-item>
 
     <ion-list-header *ngIf="entry.description" class="item item-divider">

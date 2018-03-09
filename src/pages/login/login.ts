@@ -44,7 +44,7 @@ export class LoginPage extends MasterPage {
         this.authProvider.loginRequest(this.form.value)
             .subscribe(result => {
                     this.authProvider.doLogin(result['data']).then(res => {
-                        this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
+                        this.linkService.searchDefaultPageAndRedirect();
                         this.menuCtrl.open();
                     });
                 },

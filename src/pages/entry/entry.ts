@@ -23,8 +23,6 @@ export class EntryPage extends MasterPage {
                 private photoViewer: PhotoViewer) {
         super(navCtrl, navParams);
 
-        this.name = navParams.data.title;
-
         this.entrySubscription();
     }
 

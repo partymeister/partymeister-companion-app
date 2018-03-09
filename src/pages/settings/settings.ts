@@ -74,15 +74,15 @@ export class SettingsPage {
         if (type == 'local' && this.operationTypes.local == true) {
             this.operationTypes.remote = false;
             this.storageProvider.set('forcedOperationType', 'local');
-            // this.navigationProvider.updateNavigation('local');
+            this.navigationProvider.updateNavigation('local');
         } else if (type == 'remote' && this.operationTypes.remote == true) {
             this.operationTypes.local = false;
             this.storageProvider.set('forcedOperationType', 'remote');
-            // this.navigationProvider.updateNavigation('remote');
+            this.navigationProvider.updateNavigation('remote');
         } else if (this.operationTypes.remote == false && this.operationTypes.local == false) {
             this.storageProvider.set('forcedOperationType', false);
             this.storageProvider.get('operationType').then(operationType => {
-                // this.navigationProvider.updateNavigation(operationType);
+                this.navigationProvider.updateNavigation(operationType);
             })
         }
     }

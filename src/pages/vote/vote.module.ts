@@ -16,6 +16,7 @@ import {SignupModalPage} from "./signup-modal";
 import {TicketPage} from "./ticket";
 import {TicketModalPage} from "./ticket-modal";
 import {VotePage} from "./vote";
+import {Ionic2RatingModule} from "ionic2-rating";
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {VotePage} from "./vote";
         ComponentsModule,
         IonicPageModule.forChild(VotePage),
         IonicImageLoader,
+        Ionic2RatingModule,
 
     ],
 })

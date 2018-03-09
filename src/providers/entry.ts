@@ -6,6 +6,8 @@ import {sprintf} from "sprintf-js";
 import {AuthProvider} from './auth';
 import {Entry} from '../models/entry';
 import {CacheService} from "ionic-cache";
+import {Observable} from "rxjs/Observable";
+import {StorageProvider} from "./storage";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN})
@@ -14,15 +16,24 @@ const httpOptions = {
 @Injectable()
 export class EntryProvider {
 
-    constructor(public http: HttpClient, private authProvider: AuthProvider, private cache: CacheService) {
+    constructor(public http: HttpClient, private authProvider: AuthProvider, private cache: CacheService, private storageProvider: StorageProvider) {
     }
 
     loadEntries() {
-        let request = this.http.get(sprintf(SettingsProvider.variables.ENTRY_API, this.authProvider.uniqid()) + '?' + Math.floor((Math.random() * 1000000) + 1), httpOptions);
-        return this.cache.loadFromDelayedObservable('entries', request, 'entries', SettingsProvider.variables.CACHE_TIMEOUT_ENTRIES).map(res => {
-                return <Entry[]>res['data'];
-            }
-        );
+
+        return Observable.fromPromise(this.storageProvider.get('local-api-base-url').then(res => {
+            return res;
+        })).flatMap(res => {
+            return Observable.fromPromise(this.storageProvider.get('user').then(user => {
+                return user;
+            })).flatMap(user => {
+                let request = this.http.get(res + sprintf(SettingsProvider.variables.ENTRY_API, user.uniqid) + '?' + Math.floor((Math.random() * 1000000) + 1), httpOptions);
+                return this.cache.loadFromDelayedObservable('entries', request, 'entries', SettingsProvider.variables.CACHE_TIMEOUT_ENTRIES).map(res => {
+                        return <Entry[]>res['data'];
+                    }
+                );
+            });
+        });
     }
 
 }

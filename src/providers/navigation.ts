@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Rx';
 import {Subject} from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import {CacheService} from "ionic-cache";
+import {StorageProvider} from "./storage";
 
 @Injectable()
 export class NavigationProvider {
@@ -16,11 +17,19 @@ export class NavigationProvider {
 
     // Service message commands
     updateNavigation(operationType) {
-        this.forceNavigationUpdate.next(operationType);
+        // Check if a forced operationtype is set
+        this.storageProvider.get('forcedOperationType').then( forcedOperationType => {
+            if (forcedOperationType == undefined || forcedOperationType == false) {
+                this.forceNavigationUpdate.next(operationType);
+            } else {
+                this.forceNavigationUpdate.next(forcedOperationType);
+            }
+        });
     }
 
     constructor(public http: HttpClient,
-                public cache: CacheService) {
+                public cache: CacheService,
+                private storageProvider: StorageProvider) {
     }
 
     // Get App operation type

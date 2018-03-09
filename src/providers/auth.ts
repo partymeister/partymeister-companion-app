@@ -4,6 +4,7 @@ import 'rxjs/add/operator/map';
 import {StorageProvider} from '../providers/storage';
 import {User} from '../models/user';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Observable} from "rxjs/Observable";
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json', 'token': SettingsProvider.variables.API_TOKEN})
@@ -51,17 +52,26 @@ export class AuthProvider {
     loginRequest(data) {
         let bodyString = JSON.stringify(data); // Stringify payload
 
-        return this.http.post(SettingsProvider.variables.LOGIN_API, bodyString, httpOptions)
-            .map(res => {
-                return res;
-            });
+        return Observable.fromPromise(this.storageProvider.get('local-api-base-url').then(res => {
+            return res;
+        })).flatMap(res => {
+            return this.http.post(res + SettingsProvider.variables.LOGIN_API, bodyString, httpOptions)
+                .map(res => {
+                    return res;
+                });
+        });
+
     }
 
     registrationRequest(data) {
         let bodyString = JSON.stringify(data); // Stringify payload
 
-        return this.http.post(SettingsProvider.variables.REGISTRATION_API, bodyString, httpOptions).map(res => {
+        return Observable.fromPromise(this.storageProvider.get('local-api-base-url').then(res => {
             return res;
+        })).flatMap(res => {
+            return this.http.post(res + SettingsProvider.variables.REGISTRATION_API, bodyString, httpOptions).map(res => {
+                return res;
+            });
         });
     }
 

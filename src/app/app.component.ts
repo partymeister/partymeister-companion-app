@@ -303,7 +303,7 @@ export class PartyMeisterCompanionApp {
     openPage(page) {
         if (page.call_function == 'doLogout') {
             this.authProvider.doLogout();
-            this.linkService.clickLink(SettingsProvider.variables.DEFAULT_LOGOUT_PAGE, true);
+            this.linkService.searchPageByPageNameAndRedirect('LoginPage');
             return;
         }
         if (page.page == '' && page.url == '') {

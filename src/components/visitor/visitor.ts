@@ -70,11 +70,9 @@ export class VisitorComponent {
     presentSignupModal() {
         let signupModal = this.modalCtrl.create(SignupModalPage);
         signupModal.onDidDismiss(data => {
-            console.log("Modal closed");
             if (data.refresh == true) {
                 this.sendRefreshToParent();
             }
-            console.log(data);
         });
         signupModal.present();
     }

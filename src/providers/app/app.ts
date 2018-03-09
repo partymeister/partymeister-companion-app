@@ -107,11 +107,14 @@ export class AppProvider {
                     }
 
                     if (res['data']['local_navigation'] != undefined) {
-                        remoteNavigation = <NavigationItem[]>res['data']['local_navigation']['data'];
+                        localNavigation = <NavigationItem[]>res['data']['local_navigation']['data'];
                     }
 
                     this.remoteNavigation$.next(remoteNavigation);
                     this.localNavigation$.next(localNavigation);
+
+                    this.storageProvider.set('local-api-base-url', this.app.local_api_base_url);
+                    this.storageProvider.set('website-api-base-url', this.app.website_api_base_url);
 
                     this.navigationProvider.updated$.subscribe(operationType => {
                         if (operationType == 'remote') {

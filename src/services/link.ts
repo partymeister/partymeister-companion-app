@@ -25,6 +25,17 @@ export class LinkService {
         this.linkClickedSource.next({page: page, root: root});
     }
 
+    searchPageByPageNameAndRedirect(pageName) {
+        this.storageProvider.get('current-navigation').then( navigationItems => {
+            if (navigationItems != undefined && navigationItems != null) {
+                let targetPage = this.searchPageByPageName(navigationItems, pageName);
+                if (targetPage != null) {
+                    this.linkClickedSource.next({page: targetPage, root: true});
+                }
+            }
+        });
+    }
+
     searchDefaultPageAndRedirect() {
         this.storageProvider.get('current-navigation').then( navigationItems => {
             if (navigationItems != undefined && navigationItems != null) {
@@ -38,7 +49,7 @@ export class LinkService {
     searchPageAndRedirect(url) {
         this.storageProvider.get('current-navigation').then( navigationItems => {
             if (navigationItems != undefined && navigationItems != null) {
-                let targetPage = this.searchPage(navigationItems, url);
+                let targetPage = this.searchPageByUrl(navigationItems, url);
                 if (targetPage != null) {
                     this.linkClickedSource.next({page: targetPage, root: true});
                 }
@@ -63,7 +74,24 @@ export class LinkService {
         return null;
     };
 
-    searchPage(pages: any[], url: string) {
+    searchPageByPageName(pages: any[], searchPage) {
+        for (let page of pages) {
+            if (page.page == searchPage) {
+                return page;
+            }
+            if (page.items && page.items.length > 0) {
+                for (let child of page.items) {
+                    if (child.page == searchPage) {
+                        return child;
+                    }
+                }
+            }
+        }
+
+        return null;
+    };
+
+    searchPageByUrl(pages: any[], url: string) {
         let targetPage: any = null;
         // find link
         for (let page of pages) {

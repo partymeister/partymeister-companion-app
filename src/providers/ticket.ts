@@ -47,7 +47,7 @@ export class TicketProvider {
 
     ticketRequest(data) {
         let bodyString = JSON.stringify(data); // Stringify payload
-        return this.http.post(SettingsProvider.variables.TICKET_API, bodyString, httpOptions).map(res => {
+        return this.http.post(SettingsProvider.variables.TICKET_API + '?api_token=' + SettingsProvider.variables.API_TOKEN, bodyString, httpOptions).map(res => {
             let ticket = <Ticket>res['data'];
             return this.storageProvider.get('tickets').then(res => {
                 if (res == null) {

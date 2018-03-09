@@ -9,6 +9,7 @@ import {IonicImageLoader} from "ionic-image-loader";
 import {ComponentsModule} from "../../components/components.module";
 import {IntroPage} from "./intro";
 import {LiveVotePage} from "./livevote";
+import {Ionic2RatingModule} from "ionic2-rating";
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import {LiveVotePage} from "./livevote";
         ComponentsModule,
         IonicPageModule.forChild(LiveVotePage),
         IonicImageLoader,
+        Ionic2RatingModule,
 
     ],
 })

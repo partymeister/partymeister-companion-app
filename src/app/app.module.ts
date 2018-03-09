@@ -51,6 +51,11 @@ import {NavigationProvider} from "../providers/navigation";
 import {PushProvider} from "../providers/push/push";
 import {Diagnostic} from "@ionic-native/diagnostic";
 import {OpenNativeSettings} from "@ionic-native/open-native-settings";
+import {RegistrationPageModule} from "../pages/registration/registration.module";
+import {EntryModalPageModule} from "../pages/entry-modal/entry-modal.module";
+import {SignupModalPage} from "../pages/signup-modal/signup-modal";
+import {SignupModalPageModule} from "../pages/signup-modal/signup-modal.module";
+import {TicketModalPageModule} from "../pages/ticket-modal/ticket-modal.module";
 
 fontawesome.library.add(solid, brands, regular);
 
@@ -62,6 +67,10 @@ fontawesome.library.add(solid, brands, regular);
     imports: [
         IntroPageModule,
         ContentPageModule,
+        EntryModalPageModule,
+        SignupModalPageModule,
+        RegistrationPageModule,
+        TicketModalPageModule,
         BrowserModule,
         IonicModule.forRoot(PartyMeisterCompanionApp),
         FormsModule,
@@ -71,7 +80,6 @@ fontawesome.library.add(solid, brands, regular);
             name: '__pmcompanion',
             driverOrder: ['indexeddb', 'websql']
         }),
-        Ionic2RatingModule,
         QRCodeModule,
         CacheModule.forRoot(),
         IonicImageLoader.forRoot(),

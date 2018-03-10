@@ -2,11 +2,6 @@ import {Component, ViewChild} from '@angular/core';
 import {NavController, NavParams, Slides, Platform, IonicPage} from 'ionic-angular';
 import {LinkService} from '../../services/link';
 import {StorageProvider} from '../../providers/storage';
-import {SettingsProvider} from '../../providers/settings';
-import {App} from "../../models/app";
-import {Observable} from "rxjs/Observable";
-import {AppProvider} from "../../providers/app/app";
-import {NavigationItem} from "../../models/navigation_item";
 import {MasterPage} from "../master/master";
 
 @IonicPage()

@@ -6,6 +6,10 @@ page-intro {
       background-size: cover;
   }
 
+  .swiper-pagination {
+    bottom: 30px !important;
+  }
+
   .swiper-pagination-bullet-active {
     background: color($colors, 'primary') !important;
   }

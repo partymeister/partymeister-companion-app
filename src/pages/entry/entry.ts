@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
-import {Entry, Image} from '../../models/entry';
+import {Entry} from '../../models/entry';
 import {ModalController} from 'ionic-angular';
 import {EntryModalPage} from '../entry-modal/entry-modal';
 import {EntryProvider} from '../../providers/entry';

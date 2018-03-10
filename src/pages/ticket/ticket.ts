@@ -75,6 +75,7 @@ export class TicketPage extends MasterPage {
         this.ticketProvider.loadTickets().then(result => {
             this.subscriptionActive = true;
             this.tickets = result;
+
             if (refresher) {
                 refresher.complete();
             }

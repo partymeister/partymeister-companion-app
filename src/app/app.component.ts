@@ -5,7 +5,6 @@ import {Platform, MenuController, Nav, AlertController, Events} from 'ionic-angu
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Network} from '@ionic-native/network';
-import {OneSignal} from '@ionic-native/onesignal';
 
 // Providers and services
 import {SettingsProvider} from '../providers/settings';
@@ -50,7 +49,6 @@ export class PartyMeisterCompanionApp {
                 private connectivityService: ConnectivityService,
                 private splashScreen: SplashScreen,
                 private statusBar: StatusBar,
-                private oneSignal: OneSignal,
                 private network: Network,
                 private alertCtrl: AlertController,
                 private cacheService: CacheService,
@@ -111,13 +109,9 @@ export class PartyMeisterCompanionApp {
 
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            this.statusBar.styleBlackOpaque();
-            // this.splashScreen.hide();
+            this.statusBar.styleLightContent();
 
             this.addConnectivityListeners();
-            // if (this.platform.is('cordova')) {
-            //     this.addOneSignalConfiguration();
-            // }
 
             this.imageLoaderConfig.enableSpinner(false);
 
@@ -134,19 +128,28 @@ export class PartyMeisterCompanionApp {
                     this.pushProvider.initialize();
                 }
 
+                // Check if this is the first start - and if it is - delete all data from local storage
+                this.storageProvider.get('already-started-in-2018').then( res => {
+                    if (res == undefined || res == false) {
+                        console.log('First start in 2018 - deleting stored data');
+                        this.storageProvider.remove('user');
+                        this.storageProvider.remove('tickets');
+                        this.storageProvider.remove('atHome');
+                        this.storageProvider.set('already-started-in-2018', true);
+                    }
+                });
+
                 if (appSettings.local_api_base_url != undefined) {
                     this.navigationProvider.operationType(appSettings).subscribe(operationType => {
                         this.storageProvider.get('forcedOperationType').then(forcedOperationType => {
                             let actualOperationType = operationType;
                             if (<any>forcedOperationType != false && <any>forcedOperationType != null) {
                                 this.storageProvider.set('operationType', forcedOperationType);
-                                actualOperationType = forcedOperationType.toString();
+                                this.navigationProvider.updateNavigation(forcedOperationType);
                             } else {
                                 this.storageProvider.set('operationType', operationType);
+                                this.navigationProvider.updateNavigation(operationType);
                             }
-
-                            // this.loadNavigation(actualOperationType);
-
                         });
                     }, err => {
                         // Load local menu as a fallback
@@ -168,34 +171,24 @@ export class PartyMeisterCompanionApp {
                 // if (appSettings.open_menu) {
                 //     this.menuController.open();
                 // }
-                this.menuCtrl.open();
             });
 
             this.events.subscribe('images:preloaded', res => {
                 console.log('PartymeisterCompanionApp: Event images:preloaded received - hiding splashscreen');
-                this.splashScreen.hide();
-                this.rootPage = 'IntroPage';
+                this.storageProvider.get('introShown').then(res => {
+                    console.log('Introshown: ' + res);
+                    if (<any>res !== true) {
+                        console.log("Showing intro page");
+                        this.nav.setRoot('IntroPage');
+                        this.splashScreen.hide();
+                    } else {
+                        this.linkService.searchDefaultPageAndRedirect();
+                        this.menuCtrl.open();
+                        this.splashScreen.hide();
+                    }
+                });
             }, error => {
             });
-
-            // this.storageProvider.get('introShown').then(res => {
-            //     console.log('Introshown: ' + res);
-            //     if (<any>res !== true) {
-            //         console.log("Showing intro page");
-            //         this.nav.setRoot(IntroPage);
-            //         this.splashScreen.hide();
-            //     } else {
-            //         this.storageProvider.get('operationType').then(operationType => {
-            //             if (<any>operationType == 'local') {
-            //                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_LOCAL, true);
-            //             } else {
-            //                 this.linkService.clickLink(SettingsProvider.variables.DEFAULT_PAGE_REMOTE, true);
-            //             }
-            //             this.menuCtrl.open();
-            //             this.splashScreen.hide();
-            //         });
-            //     }
-            // });
 
         });
 
@@ -230,22 +223,6 @@ export class PartyMeisterCompanionApp {
             }
             this.nav.pop();
         });
-    }
-
-    addOneSignalConfiguration() {
-        this.oneSignal.startInit(SettingsProvider.variables.ONESIGNAL_IOS, SettingsProvider.variables.ONESIGNAL_ANDROID);
-
-        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-
-        this.oneSignal.handleNotificationReceived().subscribe(() => {
-            // do something when notification is received
-        });
-
-        this.oneSignal.handleNotificationOpened().subscribe(() => {
-            // do something when a notification is opened
-        });
-
-        this.oneSignal.endInit();
     }
 
     addConnectivityListeners() {

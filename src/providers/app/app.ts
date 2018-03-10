@@ -4,7 +4,6 @@ import {SettingsProvider} from "../settings";
 import {ImageLoader} from "ionic-image-loader";
 import {Events} from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {sprintf} from "sprintf-js";
 import {App} from "../../models/app";
 import {NavigationItem} from "../../models/navigation_item";
 import {Observable} from "rxjs/Observable";

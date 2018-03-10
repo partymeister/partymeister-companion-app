@@ -6,7 +6,6 @@ $font-family-base: 'Roboto Slab', 'Montserrat', '-apple-system', "Helvetica Neue
 $font-family-md-base: 'Roboto Slab', 'Montserrat', "Helvetica Neue", "Roboto", sans-serif !default;
 
 @import "ionic.globals";
-//@import "font-awesome";
 
 $spinner-ios-ios-color: #fff !default;
 $spinner-md-crescent-color: #fff !default;
@@ -28,13 +27,11 @@ $refresher-icon-color: #fff !default;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-
-        primary:    #ff4982,
-        secondary:  #77e15d,
-        danger:     #d91e18,
-        light:      #f4f4f4,
-        dark:       #222,
-
+        primary: #ff4982,
+        secondary: #77e15d,
+        danger: #d91e18,
+        light: #f4f4f4,
+        dark: #222,
 ) !default;
 
 //$link-color: lighten(color($colors, 'primary'), 15%);

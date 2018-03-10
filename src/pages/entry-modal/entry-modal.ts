@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {ViewController} from 'ionic-angular';
-import {Entry, Image} from '../../models/entry';
+import {Entry} from '../../models/entry';
 import {PhotoViewer} from '@ionic-native/photo-viewer';
 
 @IonicPage()

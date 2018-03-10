@@ -4,11 +4,8 @@ import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {AlertController} from 'ionic-angular';
 import {MasterPage} from '../master/master';
 import {LinkService} from '../../services/link';
-import {SettingsProvider} from '../../providers/settings';
 
-// FIXME: make this into a provider or service
 import {RegistrationPage} from '../registration/registration';
-import {ContentPage} from '../content/content';
 
 @IonicPage()
 @Component({

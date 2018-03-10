@@ -21,7 +21,6 @@ import {TicketProvider} from '../providers/ticket';
 
 // Modules
 import {IonicStorageModule} from '@ionic/storage';
-import {Ionic2RatingModule} from '../lib/ionic2-rating/ionic2-rating.module';
 import {Md5} from 'ts-md5/dist/md5';
 import {ServiceLocator} from '../services/service-locator';
 import {QRCodeModule} from 'angular2-qrcode';
@@ -53,7 +52,6 @@ import {Diagnostic} from "@ionic-native/diagnostic";
 import {OpenNativeSettings} from "@ionic-native/open-native-settings";
 import {RegistrationPageModule} from "../pages/registration/registration.module";
 import {EntryModalPageModule} from "../pages/entry-modal/entry-modal.module";
-import {SignupModalPage} from "../pages/signup-modal/signup-modal";
 import {SignupModalPageModule} from "../pages/signup-modal/signup-modal.module";
 import {TicketModalPageModule} from "../pages/ticket-modal/ticket-modal.module";
 
@@ -91,7 +89,6 @@ fontawesome.library.add(solid, brands, regular);
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         PagesProvider,
-        // NavigationProvider,
         Md5,
         VisitorProvider,
         SettingsProvider,

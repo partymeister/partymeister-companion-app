@@ -9,7 +9,6 @@ import {Observable} from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {CacheService} from "ionic-cache";
-import {Entry} from "../models/entry";
 import {StorageProvider} from "./storage";
 
 const httpOptions = {

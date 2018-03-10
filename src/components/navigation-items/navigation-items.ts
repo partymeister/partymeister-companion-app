@@ -1,29 +1,18 @@
-import {Component} from '@angular/core';
-
-import {SettingsProvider} from '../../providers/settings';
-import {PartyMeisterCompanionApp} from "../../app/app.component";
-import {LinkProvider} from "../../providers/link/link";
-import {SettingsLoaderProvider} from "../../providers/settings-loader/settings-loader";
-import {Observable} from 'rxjs/Observable';
-import {Navigation} from "../../models/navigation";
-import {AuthProvider} from "../../providers/auth";
-import {TranslateService} from "@ngx-translate/core";
-import {AppSettings} from "../../models/app-settings";
-import {Link} from "../../models/link";
-import {AboutPage} from "../../pages/about/about";
-import {CampaignProvider} from "../../providers/campaign/campaign";
-import {MenuLink} from "../../models/menu-link";
-import {NavigationItem} from "../../models/navigation_item";
-import {App} from "../../models/app";
-import {AppProvider} from "../../providers/app/app";
-import {NavigationProvider} from "../../providers/navigation";
-
 /**
  * Generated class for the NavigationItemsComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+import {Component} from "@angular/core";
+import {Observable} from "rxjs/Observable";
+import {NavigationItem} from "../../models/navigation_item";
+import {App} from "../../models/app";
+import {PartyMeisterCompanionApp} from "../../app/app.component";
+import {AuthProvider} from "../../providers/auth";
+import {AppProvider} from "../../providers/app/app";
+import {SettingsProvider} from "../../providers/settings";
+
 
 @Component({
     selector: 'navigation-items',

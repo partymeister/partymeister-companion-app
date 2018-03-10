@@ -4,7 +4,6 @@ import {Validators, FormBuilder, FormGroup} from '@angular/forms';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner';
 import {CountryProvider} from '../../providers/country';
 import {AlertController} from 'ionic-angular';
-import {ContentPage} from '../content/content';
 import {MasterPage} from '../master/master';
 import {LinkService} from "../../services/link";
 

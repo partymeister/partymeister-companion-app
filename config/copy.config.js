@@ -22,11 +22,6 @@ module.exports = {
         src: ['{{ROOT}}/node_modules/sw-toolbox/sw-toolbox.js'],
         dest: '{{BUILD}}'
     },
-
-    copyFontAwesome: {
-        src: '{{ROOT}}/node_modules/font-awesome/fonts/*',
-        dest: '{{WWW}}/fonts/'
-    },
     copyFlagIconsCss: {
         src: '{{ROOT}}/node_modules/flag-icon-css/css/flag-icon.css',
         dest: '{{WWW}}/assets/css/'

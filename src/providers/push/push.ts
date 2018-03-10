@@ -3,8 +3,6 @@ import {Injectable} from '@angular/core';
 import {OneSignal} from "@ionic-native/onesignal";
 import {SettingsLoaderProvider} from "../settings-loader/settings-loader";
 import {Events, Platform} from "ionic-angular";
-import {SettingsProvider} from "../settings";
-import {sprintf} from "sprintf-js";
 import {AuthProvider} from "../auth";
 import {StorageProvider} from "../storage";
 import {OpenNativeSettings} from "@ionic-native/open-native-settings";
@@ -41,6 +39,7 @@ export class PushProvider {
             if (this.platform.is('cordova') && this.platform.is('ios')) {
 
                 this.diagnostic.getRemoteNotificationsAuthorizationStatus().then(res => {
+                    console.log(res);
                     if (res == 'authorized') {
                         this.enabled = true;
                     } else {

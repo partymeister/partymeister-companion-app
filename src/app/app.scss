@@ -13,8 +13,7 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 $flag-icon-css-path: '../assets/flags' !default;
-@import "../assets/css/flag-icon.css";
-
+@import "flag-icon";
 @import "../theme/fonts.scss";
 
 button .svg-inline--fa {

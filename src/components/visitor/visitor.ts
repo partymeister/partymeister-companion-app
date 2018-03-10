@@ -1,7 +1,7 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {VisitorProvider} from '../../providers/visitor';
-import {ModalController, Nav, NavParams} from 'ionic-angular';
+import {ModalController, Nav} from 'ionic-angular';
 import {SignupModalPage} from '../../pages/signup-modal/signup-modal';
 import {StorageProvider} from '../../providers/storage';
 import {AuthProvider} from '../../providers/auth';

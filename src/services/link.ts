@@ -1,9 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject}    from 'rxjs/Subject';
-import {NavigationItem} from '../models/navigation_item';
-import {HttpClient} from "@angular/common/http";
 import {StorageProvider} from "../providers/storage";
-import {User} from "../models/user";
 import {AppProvider} from "../providers/app/app";
 
 @Injectable()

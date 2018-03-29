@@ -52,6 +52,7 @@ export class VotePage extends MasterPage {
                 element.rating = 0;
                 if (element.vote.data[0] != null) {
                     element.rating = element.vote.data[0].points;
+                    element.comment = element.vote.data[0].comment;
                 }
                 this.competitions[element.competition_id].entries.push(element);
 
@@ -76,7 +77,19 @@ export class VotePage extends MasterPage {
         this.getVotingEntries(true, refresher);
     }
 
+    onCommentSend(entry) {
+        this.voteProvider.vote(entry.rating, entry.comment, entry);
+    }
+
+    onFavouriteSend(entry, favourite) {
+        for (let e of this.competitions[this.competition_id].entries) {
+            e.favourite = false;
+        }
+        entry.favourite = favourite;
+        this.voteProvider.vote(entry.rating, entry.comment, entry);
+    }
+
     onModelChange(points, entry) {
-        this.voteProvider.vote(points, entry);
+        this.voteProvider.vote(points, entry.comment, entry);
     }
 }

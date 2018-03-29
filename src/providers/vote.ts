@@ -75,12 +75,14 @@ export class VoteProvider {
 
     }
 
-    vote(points, entry) {
+    vote(points, comment, entry) {
 
         this.storageProvider.get('local-api-base-url').then(apiUrl => {
             this.storageProvider.get('user').then(user => {
                 return this.http.post(apiUrl + sprintf(SettingsProvider.variables.VOTE_SAVE_API, user.uniqid, entry.id) + '?' + Math.floor((Math.random() * 1000000) + 1), {
                     points: points,
+                    comment: comment,
+                    favourite: entry.favourite,
                     vote_category_id: 1
                 }, httpOptions)
                     .catch(this.catchError)

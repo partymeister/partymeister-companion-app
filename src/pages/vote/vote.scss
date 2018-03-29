@@ -1,4 +1,11 @@
 page-vote {
+  ion-input {
+    .text-input {
+      background-color: color($colors, 'light');
+      color: color($colors, 'dark');
+      padding: 3px 20px;
+    }
+  }
   ion-badge {
     float: right;
   }
@@ -27,6 +34,19 @@ page-vote {
   }
   .deadline {
     background-color: color($colors, 'danger') !important;
+  }
+  ion-card {
+    .favourite {
+      background-color: color($colors, 'primary');
+
+      ion-item.item {
+        background-color: color($colors, 'primary');
+      }
+      button.button {
+        background-color: color($colors, 'secondary');
+        color: color($colors, 'dark');
+      }
+    }
   }
 }
 

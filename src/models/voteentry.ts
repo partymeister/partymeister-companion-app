@@ -15,5 +15,7 @@ export interface VoteEntry {
     status: number;
     title: string;
     rating: number;
+    comment: string;
+    favourite: boolean;
     vote: any;
 }

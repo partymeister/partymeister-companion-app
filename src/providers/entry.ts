@@ -28,7 +28,7 @@ export class EntryProvider {
                 return user;
             })).flatMap(user => {
                 let request = this.http.get(res + sprintf(SettingsProvider.variables.ENTRY_API, user.uniqid) + '?' + Math.floor((Math.random() * 1000000) + 1), httpOptions);
-                return this.cache.loadFromDelayedObservable('entries', request, 'entries', SettingsProvider.variables.CACHE_TIMEOUT_ENTRIES).map(res => {
+                return request.map(res => {
                         return <Entry[]>res['data'];
                     }
                 );

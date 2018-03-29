@@ -102,5 +102,6 @@
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.16" />
     <plugin name="cordova-open-native-settings" spec="^1.5.0" />
     <plugin name="cordova.plugins.diagnostic" spec="^4.0.3" />
-    <engine name="ios" spec="4.5.4" />
+    <engine name="ios" spec="~4.5.4" />
+    <engine name="android" spec="~7.0.0" />
 </widget>

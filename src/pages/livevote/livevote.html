@@ -13,9 +13,6 @@
     </ion-navbar>
 </ion-header>
 
-
-HIER FEHLT DAS COMMENT!
-
 <ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>

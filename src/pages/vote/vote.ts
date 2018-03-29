@@ -53,6 +53,7 @@ export class VotePage extends MasterPage {
                 if (element.vote.data[0] != null) {
                     element.rating = element.vote.data[0].points;
                     element.comment = element.vote.data[0].comment;
+                    element.favourite = element.vote.data[0].special_vote;
                 }
                 this.competitions[element.competition_id].entries.push(element);
 

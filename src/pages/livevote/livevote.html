@@ -14,6 +14,8 @@
 </ion-header>
 
 
+HIER FEHLT DAS COMMENT!
+
 <ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
@@ -25,7 +27,7 @@
     <h5 padding *ngIf="subscriptionActive == false">Fetching live voting information...</h5>
 
     <ion-card *ngFor="let entry of entries">
-        <ion-card-content>
+        <ion-card-content [ngClass]="{'favourite' : entry.favourite}">
             <ion-card-title>
                 <ion-badge item-right>#{{entry.entry_number}}</ion-badge>
                 {{entry.title}}
@@ -40,6 +42,13 @@
                     starIconName="star"
                     nullable="false"
                     (ngModelChange)="onModelChange($event, entry)"></rating>
+            <ion-item>
+                <p item-start></p>
+                <ion-input placeholder="Leave comment" type="text" [(ngModel)]="entry.comment"></ion-input>
+                <button item-end ion-button small (click)="onCommentSend(entry)">Send</button>
+            </ion-item>
+            <button *ngIf="!entry.favourite" (click)="onFavouriteSend(entry, true)" ion-button block>&hearts; My party favourite &hearts;</button>
+            <button *ngIf="entry.favourite" (click)="onFavouriteSend(entry, false)" ion-button block>&#x2639; Not my favourite anymore &#x2639;</button>
         </ion-card-content>
 
     </ion-card>

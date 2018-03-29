@@ -32,6 +32,8 @@ export class LiveVotePage extends MasterPage {
                 element.rating = 0;
                 if (element.vote.data[0] != null) {
                     element.rating = element.vote.data[0].points;
+                    element.comment = element.vote.data[0].comment;
+                    element.favourite = element.vote.data[0].special_vote;
                 }
             });
             if (refresher) {
@@ -55,7 +57,19 @@ export class LiveVotePage extends MasterPage {
         this.liveVotingSubscription.unsubscribe();
     }
 
+    onCommentSend(entry) {
+        this.voteProvider.vote(entry.rating, entry.comment, entry);
+    }
+
+    onFavouriteSend(entry, favourite) {
+        for (let e of this.entries) {
+            e.favourite = false;
+        }
+        entry.favourite = favourite;
+        this.voteProvider.vote(entry.rating, entry.comment, entry);
+    }
+
     onModelChange(points, entry) {
-        this.voteProvider.vote(points, entry);
+        this.voteProvider.vote(points, entry.comment, entry);
     }
 }

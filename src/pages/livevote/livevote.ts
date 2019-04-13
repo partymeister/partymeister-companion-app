@@ -27,12 +27,27 @@ export class LiveVotePage extends MasterPage {
             if (result.length > 0) {
                 this.competition_name = result[0].competition;
             }
+
+            // Save state of dirty comments
+            for (let e of this.entries) {
+                for (let r of result) {
+                    if (r.id == e.id) {
+                        if (e.is_dirty) {
+                            r.comment = e.comment;
+                            r.is_dirty = true;
+                        }
+                    }
+                }
+            }
+
             this.entries = result;
             this.entries.filter(element => {
                 element.rating = 0;
                 if (element.vote.data[0] != null) {
                     element.rating = element.vote.data[0].points;
-                    element.comment = element.vote.data[0].comment;
+                    if (!element.is_dirty) {
+                        element.comment = element.vote.data[0].comment;
+                    }
                     element.favourite = element.vote.data[0].special_vote;
                 }
             });
@@ -57,8 +72,14 @@ export class LiveVotePage extends MasterPage {
         this.liveVotingSubscription.unsubscribe();
     }
 
+    markDirty(text, entry) {
+        entry.is_dirty = true;
+    }
+
+
     onCommentSend(entry) {
         this.voteProvider.vote(entry.rating, entry.comment, entry);
+        entry.is_dirty = false;
     }
 
     onFavouriteSend(entry, favourite) {
@@ -71,5 +92,6 @@ export class LiveVotePage extends MasterPage {
 
     onModelChange(points, entry) {
         this.voteProvider.vote(points, entry.comment, entry);
+        entry.is_dirty = false;
     }
 }

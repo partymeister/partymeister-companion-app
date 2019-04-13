@@ -28,6 +28,7 @@ export class TicketProvider {
 
     loadTickets() {
         return this.storageProvider.get('tickets').then(res => {
+            console.log(res);
             if (res == null) {
                 return [];
             }

@@ -1,6 +1,7 @@
 page-intro {
   button {
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: none !important;
+    //text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
   }
   ion-slide {
       background-size: cover;
@@ -30,7 +31,7 @@ page-intro {
   img-loader.slide-image img {
     max-width: 70%;
     margin: 20% 15% 10%;
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
+    text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.8);
   }
 
   .slide-image.small, .slide-image.large {
@@ -42,8 +43,8 @@ page-intro {
   }
 
   p, h2 {
-    color: #fff;
-    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.8);
+    color: #555;
+    text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
 
     b {
       color: #000000;

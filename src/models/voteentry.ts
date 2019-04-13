@@ -16,6 +16,7 @@ export interface VoteEntry {
     title: string;
     rating: number;
     comment: string;
+    is_dirty: boolean;
     favourite: boolean;
     vote: any;
 }

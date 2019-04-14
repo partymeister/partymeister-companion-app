@@ -56,6 +56,11 @@ export class PushProvider {
 
 
         this.platform.ready().then(() => {
+            if (this.platform.is('cordova') && this.platform.is('android')) {
+                this.diagnostic.isRemoteNotificationsEnabled().then(result => {
+                    this.enabled = result;
+                });
+            }
             if (this.platform.is('cordova') && this.platform.is('ios')) {
                 let onResumeSubscription = platform.resume.subscribe(() => {
                     console.log('PushProvider: Application resumes - check push status');

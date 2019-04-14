@@ -125,6 +125,8 @@ export class SettingsPage {
     setTags() {
         console.log('Settings: Set tags');
         if (this.platform.is('cordova') && this.pushProvider.isEnabled()) {
+            console.log("---- SENDING PUSH TAGS ----");
+            console.log(JSON.stringify(this.notifications));
             this.oneSignal.sendTags(this.notifications);
             this.storageProvider.set('pushNotificationTags', this.notifications);
         }

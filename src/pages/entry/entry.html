@@ -22,7 +22,7 @@
   <h5 padding *ngIf="subscriptionActive == false">Fetching entry information...</h5>
   <network-connection [isOnline]="connectivityService.online"></network-connection>
     <ion-card *ngFor="let entry of entries">
-      <img-loader *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url" (click)="showPreview(entry)" useImg></img-loader>
+      <img *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url" (click)="showPreview(entry)">
       <ion-card-content>
         <ion-card-title>
           {{entry.title}}

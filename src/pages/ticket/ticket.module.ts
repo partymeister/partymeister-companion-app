@@ -3,7 +3,7 @@ import {TicketPage} from "./ticket";
 import {ComponentsModule} from "../../components/components.module";
 import {IonicPageModule} from "ionic-angular";
 import {QRCodeModule} from "angular2-qrcode";
-import {IonicImageLoader} from "ionic-image-loader";
+// import {IonicImageLoader} from "ionic-image-loader";
 
 @NgModule({
     declarations: [
@@ -15,7 +15,7 @@ import {IonicImageLoader} from "ionic-image-loader";
         ComponentsModule,
         IonicPageModule.forChild(TicketPage),
         QRCodeModule,
-        IonicImageLoader,
+        // IonicImageLoader,
 
     ],
 })

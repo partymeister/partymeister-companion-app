@@ -14,7 +14,7 @@ import {AuthProvider} from '../providers/auth';
 import {TicketProvider} from '../providers/ticket';
 import {ConnectivityService} from '../providers/connectivity-service';
 import {CacheService} from "ionic-cache";
-import {ImageLoaderConfig} from "ionic-image-loader";
+// import {ImageLoaderConfig} from "ionic-image-loader";
 import {AppProvider} from "../providers/app/app";
 import {App} from "../models/app";
 import {Observable} from "rxjs/Observable";
@@ -52,7 +52,7 @@ export class PartyMeisterCompanionApp {
                 private network: Network,
                 private alertCtrl: AlertController,
                 private cacheService: CacheService,
-                private imageLoaderConfig: ImageLoaderConfig,
+                // private imageLoaderConfig: ImageLoaderConfig,
                 private appProvider: AppProvider,
                 private pushProvider: PushProvider,
                 private events: Events) {
@@ -113,12 +113,12 @@ export class PartyMeisterCompanionApp {
 
             this.addConnectivityListeners();
 
-            this.imageLoaderConfig.enableSpinner(false);
+            // this.imageLoaderConfig.enableSpinner(false);
 
             // set the maximum concurrent connections to 10
-            this.imageLoaderConfig.setConcurrency(10);
+            // this.imageLoaderConfig.setConcurrency(10);
 
-            this.imageLoaderConfig.enableDebugMode();
+            // this.imageLoaderConfig.enableDebugMode();
 
             this.app$ = this.appProvider.subscribeToDataService();
 
@@ -239,20 +239,22 @@ export class PartyMeisterCompanionApp {
         window.addEventListener('online', onOnline, false);
         window.addEventListener('offline', onOffline, false);
 
-        let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+        // if (this.platform.is('cordova')) {
+            let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
             console.log('network DISconnected!');
             this.connectivityService.online = false;
-        });
+          });
 
-        let connectSubscription = this.network.onConnect().subscribe(() => {
+          let connectSubscription = this.network.onConnect().subscribe(() => {
             // We just got a connection but we need to wait briefly
             // before we determine the connection type.  Might need to wait 
             // prior to doing any api requests as well.
             setTimeout(() => {
-                console.log('network connected!');
-                this.connectivityService.online = true;
+              console.log('network connected!');
+              this.connectivityService.online = true;
             }, 3000);
-        });
+          });
+        // }
     }
 
     isAuthenticated() {

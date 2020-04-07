@@ -1,7 +1,7 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {SettingsProvider} from "../settings";
-import {ImageLoader} from "ionic-image-loader";
+// import {ImageLoader} from "ionic-image-loader";
 import {Events} from "ionic-angular";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {App} from "../../models/app";
@@ -31,7 +31,7 @@ export class AppProvider {
     private navigation$: BehaviorSubject<NavigationItem[]>;
 
     constructor(public http: HttpClient,
-                private imageLoader: ImageLoader,
+                // private imageLoader: ImageLoader,
                 private events: Events,
                 private navigationProvider: NavigationProvider,
                 private storageProvider: StorageProvider) {
@@ -56,47 +56,47 @@ export class AppProvider {
                     let images = [];
                     let imageIdentifiers = [];
 
-                    if (this.app.logo.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.logo.file_original));
-                        imageIdentifiers.push('logo');
-                    }
-                    if (this.app.menu_header.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.menu_header.file_original));
-                        imageIdentifiers.push('menu_header');
-                    }
-                    if (this.app.menu_bg.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.menu_bg.file_original));
-                        imageIdentifiers.push('menu_bg');
-                    }
-                    if (this.app.page_bg.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.page_bg.file_original));
-                        imageIdentifiers.push('page_bg');
-                    }
-                    if (this.app.intro_bg_1.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.intro_bg_1.file_original));
-                        imageIdentifiers.push('intro_bg_1');
-                    }
-                    if (this.app.intro_bg_2.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.intro_bg_2.file_original));
-                        imageIdentifiers.push('intro_bg_2');
-                    }
-                    if (this.app.intro_bg_3.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.intro_bg_3.file_original));
-                        imageIdentifiers.push('intro_bg_3');
-                    }
-                    if (this.app.intro_bg_4.file_original != undefined) {
-                        images.push(this.imageLoader.preload(this.app.intro_bg_4.file_original));
-                        imageIdentifiers.push('intro_bg_4');
-                    }
+                    // if (this.app.logo.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.logo.file_original));
+                    //     imageIdentifiers.push('logo');
+                    // }
+                    // if (this.app.menu_header.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.menu_header.file_original));
+                    //     imageIdentifiers.push('menu_header');
+                    // }
+                    // if (this.app.menu_bg.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.menu_bg.file_original));
+                    //     imageIdentifiers.push('menu_bg');
+                    // }
+                    // if (this.app.page_bg.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.page_bg.file_original));
+                    //     imageIdentifiers.push('page_bg');
+                    // }
+                    // if (this.app.intro_bg_1.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.intro_bg_1.file_original));
+                    //     imageIdentifiers.push('intro_bg_1');
+                    // }
+                    // if (this.app.intro_bg_2.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.intro_bg_2.file_original));
+                    //     imageIdentifiers.push('intro_bg_2');
+                    // }
+                    // if (this.app.intro_bg_3.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.intro_bg_3.file_original));
+                    //     imageIdentifiers.push('intro_bg_3');
+                    // }
+                    // if (this.app.intro_bg_4.file_original != undefined) {
+                    //     images.push(this.imageLoader.preload(this.app.intro_bg_4.file_original));
+                    //     imageIdentifiers.push('intro_bg_4');
+                    // }
 
-                    Promise.all(images).then(res => {
-                        imageIdentifiers.forEach( (item, index) => {
-                            this.app[item].cached_image_path = res[index];
-                        });
-                        this.app$.next(this.app);
-                        this.events.publish('images:preloaded', true);
-                        console.log("AppProvider: All images preloaded");
-                    });
+                    // Promise.all(images).then(res => {
+                    //     imageIdentifiers.forEach( (item, index) => {
+                    //         this.app[item].cached_image_path = res[index];
+                    //     });
+                    //     this.app$.next(this.app);
+                    //     this.events.publish('images:preloaded', true);
+                    //     console.log("AppProvider: All images preloaded");
+                    // });
 
                     let remoteNavigation = <NavigationItem[]>[];
                     let localNavigation = <NavigationItem[]>[];
@@ -125,6 +125,9 @@ export class AppProvider {
                         }
                     });
 
+                  this.app$.next(this.app);
+                  this.events.publish('images:preloaded', true);
+                  console.log("AppProvider: All images preloaded");
                     this.events.publish('app:loaded', true);
                 },
                 error => console.log("AppProvider: subscribing to DataService: " + JSON.stringify(error))

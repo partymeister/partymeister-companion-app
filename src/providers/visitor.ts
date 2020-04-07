@@ -25,7 +25,7 @@ export class VisitorProvider {
         return visitors.filter((visitor) => {
             let a = visitor.handle.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
             let b = visitor.groups.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
-            let c = visitor.country_code.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+            let c = visitor.country.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
             if (a || b || c) {
                 return visitor;
             }

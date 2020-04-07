@@ -14,7 +14,7 @@
     </div>
     <ul>
         <li *ngFor="let visitor of visitors">
-            <i class="flag-icon flag-icon-{{visitor.country_code | lowercase}}"></i> {{visitor.handle}} <span *ngIf="visitor.groups != ''"> / {{visitor.groups}}</span>
+            <i class="flag-icon flag-icon-{{visitor.country | lowercase}}"></i> {{visitor.handle}} <span *ngIf="visitor.groups != ''"> / {{visitor.groups}}</span>
         </li>
     </ul>
 </div>

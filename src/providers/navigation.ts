@@ -34,15 +34,18 @@ export class NavigationProvider {
 
     // Get App operation type
     operationType(appSettings): Observable<string> {
-        return Observable.timer(0, 10000)
-            .mergeMap(() => {
-                    return this.http.get(appSettings.local_api_base_url + appSettings.name_slug + '.txt', {responseType: 'text'})
-                        .map(res => {
-                            this.updateNavigation(res.trim());
-                            return res.trim()
-                        })
-                }
-            );
+      return Observable.timer(0, 10000).map(() => {
+        return 'local';
+      });
+        // return Observable.timer(0, 10000)
+        //     .mergeMap(() => {
+        //             return this.http.get(appSettings.local_api_base_url + appSettings.name_slug + '.txt', {responseType: 'text'})
+        //                 .map(res => {
+        //                     this.updateNavigation(res.trim());
+        //                     return res.trim()
+        //                 })
+        //         }
+        //     );
     }
 
 }

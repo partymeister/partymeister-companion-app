@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {ContentPage} from "./content";
 import {ComponentsModule} from "../../components/components.module";
 import {IonicPageModule} from "ionic-angular";
-import {IonicImageLoader} from "ionic-image-loader";
+// import {IonicImageLoader} from "ionic-image-loader";
 
 @NgModule({
     declarations: [
@@ -13,7 +13,7 @@ import {IonicImageLoader} from "ionic-image-loader";
     imports: [
         ComponentsModule,
         IonicPageModule.forChild(ContentPage),
-        IonicImageLoader,
+        // IonicImageLoader,
     ],
 })
 export class ContentPageModule {

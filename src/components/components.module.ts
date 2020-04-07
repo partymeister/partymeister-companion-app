@@ -8,7 +8,7 @@ import {SponsorComponent} from "./sponsor/sponsor";
 import {TextComponent} from "./text/text";
 import {TimetableComponent} from "./timetable/timetable";
 import {VisitorComponent} from "./visitor/visitor";
-import {IonicImageLoader} from "ionic-image-loader";
+// import {IonicImageLoader} from "ionic-image-loader";
 
 @NgModule({
     declarations: [
@@ -22,7 +22,7 @@ import {IonicImageLoader} from "ionic-image-loader";
     ],
     imports: [
         CommonModule,
-        IonicImageLoader,
+        // IonicImageLoader,
         IonicModule
     ],
     entryComponents: [

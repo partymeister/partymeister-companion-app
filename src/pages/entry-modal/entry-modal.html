@@ -83,7 +83,7 @@
     </ion-list-header>
 
     <ion-item *ngIf="entry.preview.url" class="item item-image">
-      <img-loader [src]="entry.preview.url" (click)="showPreview()" useImg></img-loader>
+      <img [src]="entry.preview.url" (click)="showPreview()">
     </ion-item>
     <ion-list-header>
       Uploader information

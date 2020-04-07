@@ -25,7 +25,7 @@ import {Md5} from 'ts-md5/dist/md5';
 import {ServiceLocator} from '../services/service-locator';
 import {QRCodeModule} from 'angular2-qrcode';
 import {CacheModule} from "ionic-cache";
-import {IonicImageLoader} from 'ionic-image-loader';
+// import {IonicImageLoader} from 'ionic-image-loader';
 
 // Plugins
 import {StatusBar} from '@ionic-native/status-bar';
@@ -80,7 +80,7 @@ fontawesome.library.add(solid, brands, regular);
         }),
         QRCodeModule,
         CacheModule.forRoot(),
-        IonicImageLoader.forRoot(),
+        // IonicImageLoader.forRoot(),
     ],
     bootstrap: [IonicApp],
     entryComponents: [

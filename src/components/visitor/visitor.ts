@@ -36,8 +36,9 @@ export class VisitorComponent {
 
     ngOnInit() {
         this.hideContent = true;
-        this.visitors = this.block.content.visitors;
-        this.originalVisitors = this.block.content.visitors;
+        this.visitors = this.block.content;
+        this.originalVisitors = this.block.content;
+        console.log(this.block);
 
         this.setFilteredItems();
 

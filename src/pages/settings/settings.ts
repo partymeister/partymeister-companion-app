@@ -22,7 +22,7 @@ export class SettingsPage {
         Developer: false,
     };
     public version: string;
-    public operationTypes = {local: false, remote: false};
+    public operationTypes = {local: true, remote: false};
     private developerModeTaps: number = 0;
     public developerMode: boolean = false;
     private initialized: boolean = false;
@@ -47,6 +47,7 @@ export class SettingsPage {
             if (<any>res == true) {
                 this.developerMode = true;
                 this.storageProvider.get('forcedOperationType').then(operationType => {
+                  operationType = 'local';
                     this.operationTypes[operationType.toString()] = true;
                 });
             }

@@ -49,16 +49,16 @@
 
     <ion-list *ngIf="developerMode == true" class="developer-mode">
         <ion-list-header>
-            Developer mode
+            Developer mode does nothing!
         </ion-list-header>
-        <ion-item>
-            <ion-label>Force local menu</ion-label>
-            <ion-toggle (ionChange)="setOperationType('local')" [(ngModel)]="operationTypes.local"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>Force remote menu</ion-label>
-            <ion-toggle (ionChange)="setOperationType('remote')" [(ngModel)]="operationTypes.remote"></ion-toggle>
-        </ion-item>
+<!--        <ion-item>-->
+<!--            <ion-label>Force local menu</ion-label>-->
+<!--            <ion-toggle (ionChange)="setOperationType('local')" [(ngModel)]="operationTypes.local"></ion-toggle>-->
+<!--        </ion-item>-->
+<!--        <ion-item>-->
+<!--            <ion-label>Force remote menu</ion-label>-->
+<!--            <ion-toggle (ionChange)="setOperationType('remote')" [(ngModel)]="operationTypes.remote"></ion-toggle>-->
+<!--        </ion-item>-->
     </ion-list>
 
     <div style="text-align: center; margin: 10px;">

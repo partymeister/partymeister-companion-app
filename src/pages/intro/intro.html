@@ -7,19 +7,19 @@
 <ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
     <ion-slides (ionSlideDrag)="checkSwipeLock()" pager>
         <ion-slide class="slide-1" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_1?.cached_image_path + ')'}">
-            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <img class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original">
             <div [innerHtml]="(app$ | async)?.intro_text_1"></div>
         </ion-slide>
         <ion-slide class="slide-2" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_2?.cached_image_path + ')'}">
-            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <img class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original">
             <div [innerHtml]="(app$ | async)?.intro_text_2"></div>
         </ion-slide>
         <ion-slide class="slide-3" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_3?.cached_image_path + ')'}">
-            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <img class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original">
             <div [innerHtml]="(app$ | async)?.intro_text_3"></div>
         </ion-slide>
         <ion-slide class="slide-4" [ngStyle]="{'background-image': 'url(' + (app$ | async)?.intro_bg_4?.cached_image_path + ')'}">
-            <img-loader class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original" useImg></img-loader>
+            <img class="slide-image" *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original">
             <div [innerHtml]="(app$ | async)?.intro_text_4"></div>
             <button (click)="navigateHome()" ion-button large clear icon-right color="primary">
                 Continue

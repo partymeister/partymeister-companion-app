@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {SignupModalPage} from "./signup-modal";
 import {ComponentsModule} from "../../components/components.module";
 import {IonicPageModule} from "ionic-angular";
-import {IonicImageLoader} from "ionic-image-loader";
+// import {IonicImageLoader} from "ionic-image-loader";
 
 
 @NgModule({
@@ -14,7 +14,7 @@ import {IonicImageLoader} from "ionic-image-loader";
     imports: [
         ComponentsModule,
         IonicPageModule.forChild(SignupModalPage),
-        IonicImageLoader,
+        // IonicImageLoader,
     ],
 })
 export class SignupModalPageModule {

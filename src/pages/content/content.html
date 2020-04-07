@@ -18,13 +18,15 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <network-connection [isOnline]="connectivityService.online"></network-connection>
-    <div *ngFor="let block of page?.content.blocks">
-        <img-loader *ngIf="block.component == 'Component_Text' && block.content.attachments.image[0]" [src]="block.content.attachments.image[0].modified_file.replace('http', 'https')" useImg></img-loader>
+    <div *ngFor="let block of page?.data">
+      <ng-template [ngIf]="block.container !== 'first-row-sidebar'">
+        <img *ngIf="block.component == 'text' && block.content.image" [src]="block.content.image.file_original">
         <item-component *ngIf="block.component == 'Component_Item_List'" [block]="block"></item-component>
         <sponsor-component *ngIf="block.component == 'Component_Sponsor_List'" [block]="block"></sponsor-component>
         <gallery-component *ngIf="block.component == 'Component_Gallery'" [block]="block"></gallery-component>
-        <text-component *ngIf="block.component == 'Component_Text'" [block]="block"></text-component>
-        <timetable-component *ngIf="block.component == 'Component_Event_Schedule'" [block]="block"></timetable-component>
-        <visitor-component *ngIf="block.component == 'Component_Visitor_List'" [block]="block" (notifyRefresher)="getRefresherNotification($event)"></visitor-component>
+        <text-component *ngIf="block.component == 'text'" [block]="block"></text-component>
+        <timetable-component *ngIf="block.component == 'schedule'" [block]="block"></timetable-component>
+        <visitor-component *ngIf="block.component == 'visitor-list'" [block]="block" (notifyRefresher)="getRefresherNotification($event)"></visitor-component>
+      </ng-template>
     </div>
 </ion-content>

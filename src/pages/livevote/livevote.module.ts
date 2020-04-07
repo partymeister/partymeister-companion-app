@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {LiveVotePage} from "./livevote";
 import {ComponentsModule} from "../../components/components.module";
 import {IonicPageModule} from "ionic-angular";
-import {IonicImageLoader} from "ionic-image-loader";
+// import {IonicImageLoader} from "ionic-image-loader";
 import {Ionic2RatingModule} from "ionic2-rating";
 
 @NgModule({
@@ -14,7 +14,7 @@ import {Ionic2RatingModule} from "ionic2-rating";
     imports: [
         ComponentsModule,
         IonicPageModule.forChild(LiveVotePage),
-        IonicImageLoader,
+        // IonicImageLoader,
         Ionic2RatingModule,
 
     ],

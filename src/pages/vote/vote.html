@@ -42,7 +42,7 @@
                 <source [src]="entry.mp3?.url" type="audio/mpeg">
                 Your browser does not support the audio element.
             </audio>
-            <img-loader *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url" useImg></img-loader>
+            <img *ngIf="entry.screenshot?.url" [src]="entry.screenshot.url">
             <ion-card-content [ngClass]="{'favourite' : entry.favourite}">
                 <ion-card-title>
                     <ion-badge item-right>#{{entry.entry_number}}</ion-badge>

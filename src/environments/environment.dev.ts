@@ -1,7 +1,7 @@
 export const ENV = {
-    API_TOKEN: "qxFEHEmOKXiPf2MMK22hHFqU6PO8L7L60EjTbLIiTBjjOXXdXXzNDdl1zVud",
+    API_TOKEN: "4TG2ayUHSxNJqIEQ6XaV7sj2B1W8VlX2Rvl49DIvb1o83vF1MpMxEYHrZAGF",
 
-    SETTINGS_API: "https://cloud.partymeister.org/api/apps/1",
+    SETTINGS_API: "https://cloud.partymeister.org/api/apps/3",
 
     VISITOR_SIGNUP_API: "api/profile/signup",
     LOGIN_API: "api/profile/login",

@@ -39,7 +39,11 @@ export class LinkService {
                 let targetPage = this.searchDefaultPage(navigationItems);
                 if (targetPage != null) {
                     this.linkClickedSource.next({page: targetPage, root: true});
+                } else {
+                  console.log("no home page found!");
                 }
+            } else {
+              console.log("no home page found!");
             }
         });
     }

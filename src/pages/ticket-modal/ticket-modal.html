@@ -7,7 +7,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
+<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.file_original + ')'}">
     <ion-card>
         <ion-card-header text-wrap [innerHTML]="ticket.type">
         </ion-card-header>

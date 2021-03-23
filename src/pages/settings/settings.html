@@ -7,7 +7,7 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
+<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.file_original + ')'}">
     <ion-list>
         <ion-list-header>
             Push notifications
@@ -32,18 +32,6 @@
         <ion-item>
             <ion-label>Event starts</ion-label>
             <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Events"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>Nightshuttle arrives</ion-label>
-            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Nightshuttle"></ion-toggle>
-        </ion-item>
-        <ion-item>
-            <ion-label>On-location info</ion-label>
-            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Location"></ion-toggle>
-        </ion-item>
-        <ion-item *ngIf="developerMode == true">
-            <ion-label>Developer</ion-label>
-            <ion-toggle (ionChange)="setTags()" [(ngModel)]="notifications.Developer"></ion-toggle>
         </ion-item>
     </ion-list>
 

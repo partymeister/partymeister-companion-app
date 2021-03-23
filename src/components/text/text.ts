@@ -26,11 +26,12 @@ export class TextComponent {
     div.innerHTML = this.block.content.body;
     [].forEach.call(div.getElementsByTagName("a"), (a) => {
       if (a.getAttribute('href') != null) {
-        if (a.getAttribute('href').search(/\.json/gi) != -1) {
+        // if (a.getAttribute('href').search(/\.json/gi) != -1) {
           let url = a.getAttribute('href');
           a.removeAttribute('href');
-          a.onclick = () => this.openPage(url);
-        }
+          a.onclick = () => window.open(url, '_system');
+
+        // }
       }
     });
 

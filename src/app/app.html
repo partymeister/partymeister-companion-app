@@ -1,6 +1,6 @@
 <ion-menu [content]="content">
 
-    <ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.menu_bg?.cached_image_path + ')'}">
+    <ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.menu_bg?.file_original + ')'}">
         <navigation-items></navigation-items>
     </ion-content>
 

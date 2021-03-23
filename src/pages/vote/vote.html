@@ -14,7 +14,7 @@
 </ion-header>
 
 
-<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.cached_image_path + ')'}">
+<ion-content [ngStyle]="{'background-image': 'url(' + (app$ | async)?.page_bg?.file_original + ')'}">
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
@@ -32,7 +32,7 @@
     <h5 padding *ngIf="subscriptionActive == false">Fetching voting information...</h5>
 
     <div *ngIf="competition_id != null">
-        <ion-card class="deadline" *ngIf="competitions[competition_id].entries[0].deadline_reached">
+        <ion-card class="deadline" *ngIf="competitions[competition_id].entries[0]?.deadline_reached">
             <ion-card-content>
                 <strong>The voting deadline is over!</strong>
             </ion-card-content>

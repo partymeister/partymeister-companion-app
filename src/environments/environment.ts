@@ -12,6 +12,6 @@ export const ENV = {
   VOTE_SAVE_API: "api/profile/%s/votes/%s/vote",
   TICKET_API: "https://cloud.partymeister.org/api/tickets/1",
 
-  DEFAULT_LOGOUT_PAGE: "LoginPage",
+  DEFAULT_LOGOUT_PAGE: "Loginpage",
   CACHE_TIMEOUT_VOTES: 30
 };

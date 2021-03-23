@@ -40,7 +40,7 @@ export class VotePage extends MasterPage {
             this.competitions = {};
             this.competition_keys = [];
             this.deadlineReached = false;
-            if (result[0].deadline_reached) {
+            if (result.length > 0 && result[0].deadline_reached) {
                 this.deadlineReached = true;
             }
 

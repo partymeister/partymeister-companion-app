@@ -1,5 +1,5 @@
 <div ion-fixed class="menu-header-fixed">
-    <img *ngIf="(app$ | async)" [src]="(app$ | async)?.menu_header?.cached_image_path">
+    <img *ngIf="(app$ | async)" [src]="(app$ | async)?.logo?.file_original">
 </div>
 
 <div class="navigation" *ngIf="navigationReady">

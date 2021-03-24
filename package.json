@@ -37,6 +37,7 @@
     "@ionic-native/diagnostic": "4.20.0",
     "@ionic-native/file": "4.20.0",
     "@ionic-native/geolocation": "4.20.0",
+    "@ionic-native/in-app-browser": "4.20.0",
     "@ionic-native/network": "^4.20.0",
     "@ionic-native/onesignal": "4.20.0",
     "@ionic-native/open-native-settings": "4.20.0",
@@ -47,8 +48,7 @@
     "acorn": "^7.4.1",
     "angular2-qrcode": "^2.0.3",
     "com-sarriaroman-photoviewer": "^1.2.5",
-    "cordova": "^7.1.0",
-    "cordova-android": "^8.1.0",
+    "cordova": "^8.1.2",
     "cordova-ios": "^5.1.1",
     "cordova-open-native-settings": "^1.5.3",
     "cordova-plugin-app-version": "^0.1.12",
@@ -57,7 +57,7 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-inappbrowser": "^3.2.0",
-    "cordova-plugin-ionic-webview": "^4.2.1",
+    "cordova-plugin-ionic-webview": "^5.0.0",
     "cordova-plugin-ios-disableshaketoedit": "^1.0.0",
     "cordova-plugin-network-information": "^2.0.2",
     "cordova-plugin-queries-schemes": "^0.1.6",
@@ -77,7 +77,7 @@
     "ionic2-rating": "1.2.2",
     "ionicons": "3.0.0",
     "nan": "^2.14.2",
-    "onesignal-cordova-plugin": "2.8.4",
+    "onesignal-cordova-plugin": "^2.11.3",
     "phonegap-plugin-barcodescanner": "^7.1.2",
     "plist": "2.0.1",
     "rxjs": "5.5.11",
@@ -87,11 +87,10 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.2.3",
-    "typescript": "3.6.5"
+    "typescript": "2.5.3"
   },
   "cordova": {
     "plugins": {
-      "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
       "cordova-plugin-statusbar": {},
       "ionic-plugin-keyboard": {},
@@ -111,9 +110,12 @@
       "cordova-plugin-queries-schemes": {},
       "cordova-plugin-settings-hook": {},
       "onesignal-cordova-plugin": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-inappbrowser": {}
     },
-    "platforms": []
+    "platforms": [
+      "ios"
+    ]
   },
   "description": "partymeister-companion-app: An Ionic project"
 }

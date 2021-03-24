@@ -1,6 +1,6 @@
 // Basics
-import {NgModule, ErrorHandler, Injector} from '@angular/core';
-import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
+import {ErrorHandler, Injector, NgModule} from '@angular/core';
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from "@angular/common/http";
 import {PartyMeisterCompanionApp} from './app.component';
@@ -26,7 +26,6 @@ import {ServiceLocator} from '../services/service-locator';
 import {QRCodeModule} from 'angular2-qrcode';
 import {CacheModule} from "ionic-cache";
 // import {IonicImageLoader} from 'ionic-image-loader';
-
 // Plugins
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
@@ -54,70 +53,72 @@ import {RegistrationPageModule} from "../pages/registration/registration.module"
 import {EntryModalPageModule} from "../pages/entry-modal/entry-modal.module";
 import {SignupModalPageModule} from "../pages/signup-modal/signup-modal.module";
 import {TicketModalPageModule} from "../pages/ticket-modal/ticket-modal.module";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 fontawesome.library.add(solid, brands, regular);
 
 @NgModule({
-    declarations: [
-        PartyMeisterCompanionApp,
-        NavigationItemsComponent,
-    ],
-    imports: [
-        IntroPageModule,
-        ContentPageModule,
-        EntryModalPageModule,
-        SignupModalPageModule,
-        RegistrationPageModule,
-        TicketModalPageModule,
-        BrowserModule,
-        IonicModule.forRoot(PartyMeisterCompanionApp),
-        FormsModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        IonicStorageModule.forRoot({
-            name: '__pmcompanion',
-            driverOrder: ['indexeddb', 'websql']
-        }),
-        QRCodeModule,
-        CacheModule.forRoot(),
-        // IonicImageLoader.forRoot(),
-    ],
-    bootstrap: [IonicApp],
-    entryComponents: [
-        PartyMeisterCompanionApp,
-    ],
-    providers: [
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
-        PagesProvider,
-        Md5,
-        VisitorProvider,
-        SettingsProvider,
-        LinkService,
-        CountryProvider,
-        AuthProvider,
-        VoteProvider,
-        EntryProvider,
-        TicketProvider,
-        ConnectivityService,
-        Diagnostic,
-        OpenNativeSettings,
-        StatusBar,
-        SplashScreen,
-        Network,
-        OneSignal,
-        BarcodeScanner,
-        Camera,
-        AppVersion,
-        PhotoViewer,
-        StorageProvider,
-        AppProvider,
-        NavigationProvider,
-        PushProvider,
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ]
+  declarations: [
+    PartyMeisterCompanionApp,
+    NavigationItemsComponent,
+  ],
+  imports: [
+    IntroPageModule,
+    ContentPageModule,
+    EntryModalPageModule,
+    SignupModalPageModule,
+    RegistrationPageModule,
+    TicketModalPageModule,
+    BrowserModule,
+    IonicModule.forRoot(PartyMeisterCompanionApp),
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    IonicStorageModule.forRoot({
+      name: '__pmcompanion',
+      driverOrder: ['indexeddb', 'websql']
+    }),
+    QRCodeModule,
+    CacheModule.forRoot(),
+    // IonicImageLoader.forRoot(),
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    PartyMeisterCompanionApp,
+  ],
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    PagesProvider,
+    InAppBrowser,
+    Md5,
+    VisitorProvider,
+    SettingsProvider,
+    LinkService,
+    CountryProvider,
+    AuthProvider,
+    VoteProvider,
+    EntryProvider,
+    TicketProvider,
+    ConnectivityService,
+    Diagnostic,
+    OpenNativeSettings,
+    StatusBar,
+    SplashScreen,
+    Network,
+    OneSignal,
+    BarcodeScanner,
+    Camera,
+    AppVersion,
+    PhotoViewer,
+    StorageProvider,
+    AppProvider,
+    NavigationProvider,
+    PushProvider,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+  ]
 })
 export class AppModule {
-    constructor(private injector: Injector) {
-        ServiceLocator.injector = this.injector;
-    }
+  constructor(private injector: Injector) {
+    ServiceLocator.injector = this.injector;
+  }
 }

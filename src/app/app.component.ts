@@ -5,6 +5,8 @@ import {Platform, MenuController, Nav, AlertController, Events} from 'ionic-angu
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Network} from '@ionic-native/network';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 // Providers and services
 import {SettingsProvider} from '../providers/settings';
@@ -55,7 +57,8 @@ export class PartyMeisterCompanionApp {
                 // private imageLoaderConfig: ImageLoaderConfig,
                 private appProvider: AppProvider,
                 private pushProvider: PushProvider,
-                private events: Events) {
+                private events: Events,
+                public iab: InAppBrowser) {
 
         if (SettingsProvider.variables.environment == 'dev') {
             this.cacheService.clearAll();
@@ -105,6 +108,7 @@ export class PartyMeisterCompanionApp {
             return;
         }
         this.platform.ready().then(() => {
+
             this.initialized = true;
 
             // Okay, so the platform is ready and our plugins are available.

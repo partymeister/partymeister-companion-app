@@ -1,5 +1,7 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {LinkService} from '../../services/link';
+
+declare var cordova:any;
 
 @Component({
   selector: 'text-component',
@@ -27,11 +29,12 @@ export class TextComponent {
     [].forEach.call(div.getElementsByTagName("a"), (a) => {
       if (a.getAttribute('href') != null) {
         // if (a.getAttribute('href').search(/\.json/gi) != -1) {
-          let url = a.getAttribute('href');
-          a.removeAttribute('href');
-          a.onclick = () => window.open(url, '_system');
-
-        // }
+        let url = a.getAttribute('href');
+        a.removeAttribute('href');
+        a.onclick = () => {
+          console.log('link clicked: ' + url);
+          window.open(url, '_system');
+        };
       }
     });
 

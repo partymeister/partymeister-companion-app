@@ -70,7 +70,8 @@ export class RegistrationPage extends MasterPage {
         this.authProvider.registrationRequest(this.form.value)
             .subscribe(result => {
                     this.authProvider.doLogin(result['data']).then(res => {
-                        this.linkService.searchPageAndRedirect('https://local.revision-party.net/visitors.json');
+                      console.log("hier");
+                        this.linkService.searchPageAndRedirect('https://pm.revision-party.net/api/frontend/whos-home');
                     });
                 },
                 err => {
